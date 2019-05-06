@@ -11,7 +11,9 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test"
+    "test": "tsdx test",
+    "test-ci": "tsdx test --ci --reporters=default --reporters=jest-junit && prettier --check \"{./src/**/*.tsx,./src/**/*.ts,./src/**/*.json}\"",
+    "prettier": "prettier --write \"{./src/**/*.tsx,./src/**/*.ts,./src/**/*.json}\""
   },
   "peerDependencies": {},
   "husky": {
@@ -28,6 +30,7 @@
   "devDependencies": {
     "@types/jest": "^24.0.12",
     "husky": "^2.2.0",
+    "jest-junit": "^6.4.0",
     "prettier": "^1.17.0",
     "pretty-quick": "^1.10.0",
     "tsdx": "^0.5.6",
