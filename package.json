@@ -1,18 +1,19 @@
 {
   "name": "doov-ts",
   "version": "0.1.0",
+  "source": "src/index.ts",
   "main": "dist/index.js",
-  "umd:main": "dist/doov-ts.umd.production.js",
-  "module": "dist/doov-ts.es.production.js",
-  "typings": "dist/index.d.ts",
+  "umd:main": "dist/doov-ts.umd.js",
+  "module": "dist/doov-ts.es.js",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "test-ci": "tsdx test --ci --reporters=default --reporters=jest-junit && prettier --check \"{./src/**/*.tsx,./src/**/*.ts,./src/**/*.json}\"",
+    "start": "microbundle watch --format es",
+    "build": "microbundle --define process.env.NODE_ENV=production",
+    "test": "jest test",
+    "test-ci": "jest test --ci --reporters=default --reporters=jest-junit && prettier --check \"{./src/**/*.tsx,./src/**/*.ts,./src/**/*.json}\"",
     "prettier": "prettier --write \"{./src/**/*.tsx,./src/**/*.ts,./src/**/*.json}\""
   },
   "peerDependencies": {},
@@ -22,18 +23,21 @@
     }
   },
   "prettier": {
-    "printWidth": 80,
+    "printWidth": 120,
     "semi": true,
     "singleQuote": true,
     "trailingComma": "es5"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.12",
-    "husky": "^2.2.0",
-    "jest-junit": "^6.4.0",
-    "prettier": "^1.17.0",
-    "pretty-quick": "^1.10.0",
-    "tsdx": "^0.5.6",
-    "typescript": "^3.4.5"
+    "@types/jest": "24.0.12",
+    "husky": "2.2.0",
+    "jest": "24.8.0",
+    "jest-junit": "6.4.0",
+    "microbundle": "0.11.0",
+    "prettier": "1.17.0",
+    "pretty-quick": "1.10.0",
+    "rollup": "0.68.0",
+    "rollup-plugin-typescript2": "0.21.0",
+    "typescript": "3.4.5"
   }
 }
