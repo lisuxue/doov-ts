@@ -1,18 +1,28 @@
 {
-  "name": "doov-ts",
+  "name": "doov",
   "version": "0.1.0",
-  "source": "src/index.ts",
-  "main": "dist/index.js",
-  "umd:main": "dist/doov-ts.umd.js",
-  "module": "dist/doov-ts.es.js",
-  "types": "dist/index.d.ts",
+  "desciption": "dOOv (Domain Object Oriented Validation) a fluent API for type-safe bean validation and mapping",
+  "homepage": "https://doov.io",
+  "license": "Apache-2.0",
+  "maintainers": [
+    {
+      "name": "Ozan Gunalp",
+      "email": "ozangunalp@gmail.com",
+      "url": "https://github.com/ozangunalp"
+    }
+  ],
+  "source": "src/doov.ts",
+  "main": "dist/doov.js",
+  "umd:main": "dist/doov.umd.js",
+  "module": "dist/doov.es.js",
+  "types": "dist/doov.d.ts",
   "files": [
     "dist"
   ],
   "scripts": {
     "start": "microbundle watch --format es",
     "build": "microbundle --define process.env.NODE_ENV=production",
-    "test": "jest test",
+    "test": "jest --watch",
     "test-ci": "jest test --ci --reporters=default --reporters=jest-junit && prettier --check \"{./src/**/*.tsx,./src/**/*.ts,./src/**/*.json}\"",
     "prettier": "prettier --write \"{./src/**/*.tsx,./src/**/*.ts,./src/**/*.json}\""
   },
@@ -30,14 +40,20 @@
   },
   "devDependencies": {
     "@types/jest": "24.0.12",
+    "@types/moment": "2.13.0",
     "husky": "2.2.0",
     "jest": "24.8.0",
     "jest-junit": "6.4.0",
+    "jest-watch-typeahead": "0.3.1",
     "microbundle": "0.11.0",
     "prettier": "1.17.0",
     "pretty-quick": "1.10.0",
-    "rollup": "0.68.0",
+    "rollup": "1.11.3",
     "rollup-plugin-typescript2": "0.21.0",
+    "ts-jest": "24.0.2",
     "typescript": "3.4.5"
+  },
+  "dependencies": {
+    "moment": "2.24.0"
   }
 }

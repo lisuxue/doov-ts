@@ -1,7 +1,7 @@
-import { sum } from '../src';
+import { doov } from '../src/doov';
 
 describe('blah', () => {
   it('works', () => {
-    expect(sum(1, 1)).toEqual(2);
+    expect(doov(1, 1)).toEqual(2);
   });
 });
