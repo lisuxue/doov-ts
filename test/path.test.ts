@@ -2,29 +2,35 @@ import { getPath, getPathPromise, setPath, setProp } from '../src/path';
 import { Model, MyMap, User } from './model';
 
 describe('path', () => {
-  it('get from path', () => {
-    let myClass = new Model();
-    let deepClass = new User(1);
-    deepClass.name = 'test';
-    myClass.user = deepClass;
-    expect(getPath(myClass, 'user', 'name')).toEqual('test');
-    expect(getPath(myClass, 'user', 'id')).toEqual(1);
+  let model: Model;
+  let user: User;
+
+  beforeEach(() => {
+    model = new Model();
+    user = new User(1);
+    user.name = 'test';
+    model.user = user;
   });
 
-  it('get from path promise', () => {
-    let myClass = new Model();
-    let deepClass = new User(1);
-    deepClass.name = 'test';
-    myClass.user = deepClass;
-    getPathPromise(myClass, 'user', 'name').then(value => expect(value).toEqual('test'));
-    expect(getPath(myClass, 'user', 'id')).toEqual(1);
+  it('get from path', () => {
+    let path = getPath(model, 'user', 'name');
+    expect(path).toEqual('test');
+    expect(getPath(model, 'user', 'id')).toEqual(1);
+  });
+
+  it('get from path string promise', () => {
+    expect(getPathPromise(model, 'user', 'name')).resolves.toEqual('test');
+  });
+
+  it('get from path number promise', () => {
+    expect(getPathPromise(model, 'user', 'id')).resolves.toEqual(1);
   });
 
   it('get in map', () => {
     let map: MyMap = {
       t: 'test',
     };
-    expect(getPath(map, 't')).toEqual('test');
+    expect(getPathPromise(map, 't')).resolves.toEqual('test');
   });
 
   it('set in object', () => {

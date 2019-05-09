@@ -8,7 +8,7 @@ export const getPathPromise = <T>(obj: any, ...path: (string | number)[]): Promi
   path.reduce((previousPromise, nextID) => {
     return previousPromise.then(xs => {
       return new Promise((resolve, reject) => {
-        xs && xs[nextID] ? resolve(xs[nextID]) : reject(null);
+        xs && xs[nextID] ? resolve(xs[nextID]) : reject(undefined);
       });
     });
   }, Promise.resolve(obj)) as Promise<T>;
