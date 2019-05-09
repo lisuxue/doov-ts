@@ -1,4 +1,4 @@
-import { getPath, setPath, setProp } from '../src/path';
+import { getPath, getPathPromise, setPath, setProp } from '../src/path';
 import { Model, MyMap, User } from './model';
 
 describe('path', () => {
@@ -8,6 +8,15 @@ describe('path', () => {
     deepClass.name = 'test';
     myClass.user = deepClass;
     expect(getPath(myClass, 'user', 'name')).toEqual('test');
+    expect(getPath(myClass, 'user', 'id')).toEqual(1);
+  });
+
+  it('get from path promise', () => {
+    let myClass = new Model();
+    let deepClass = new User(1);
+    deepClass.name = 'test';
+    myClass.user = deepClass;
+    getPathPromise(myClass, 'user', 'name').then(value => expect(value).toEqual('test'));
     expect(getPath(myClass, 'user', 'id')).toEqual(1);
   });
 

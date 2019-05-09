@@ -8,14 +8,14 @@ describe('field', () => {
     user.name = 'test';
     model.user = user;
     let stringField = Field.field<Model, string>('user', 'name');
-    expect(stringField.get(model)).toEqual('test');
+    stringField.get(model).then(value => expect(value).toEqual('test'));
 
     let arrayField = Field.field<Model, string>('user', 'links', 0);
-    expect(arrayField.get(model)).toEqual(null);
+    arrayField.get(model).catch(reason => expect(reason).toEqual(null));
     user.links = [];
-    expect(arrayField.get(model)).toEqual(null);
+    arrayField.get(model).catch(reason => expect(reason).toEqual(null));
     user.links.push('test');
-    expect(arrayField.get(model)).toEqual('test');
+    arrayField.get(model).then(value => expect(value).toEqual('test'));
   });
 
   it('set from field', () => {
@@ -27,9 +27,9 @@ describe('field', () => {
     expect(stringField.set(model, 'test2').user!.name).toEqual('test2');
 
     let arrayField = Field.field<Model, string>('user', 'links', 0);
-    expect(arrayField.get(model)).toEqual(null);
+    arrayField.get(model).catch(reason => expect(reason).toEqual(null));
     let newClass = arrayField.set(model, 'test');
-    expect(arrayField.get(model)).toEqual(null);
+    arrayField.get(model).catch(reason => expect(reason).toEqual(null));
     expect(newClass.user!.links![0]).toEqual('test');
   });
 });
