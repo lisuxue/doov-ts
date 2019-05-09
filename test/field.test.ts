@@ -39,17 +39,24 @@ describe('get field', () => {
 describe('set field', () => {
   it('set from string field', () => {
     let stringField = Field.field<Model, string>('user', 'name');
-    return expect(stringField.set(model, 'test2').user!.name).toEqual('test2');
+    let modelPromise = stringField.set(model, 'test2');
+    return modelPromise.then(value => {
+      expect(value.user!.name).toEqual('test2');
+    });
   });
 
   it('set from array undefined field', () => {
     let arrayField = Field.field<Model, string>('user', 'links', 0);
-    return expect(arrayField.get(model)).rejects.toBeUndefined();
+
+    let stringPromise = arrayField.get(model);
+    return stringPromise.catch(reason => expect(reason).toBeUndefined());
   });
 
   it('set from array field', () => {
     let arrayField = Field.field<Model, string>('user', 'links', 0);
-    let newClass = arrayField.set(model, 'test');
-    expect(newClass.user!.links![0]).toEqual('test');
+    let modelPromise = arrayField.set(model, 'test');
+    return modelPromise.then(value => {
+      expect(value.user!.links![0]).toEqual('test');
+    });
   });
 });

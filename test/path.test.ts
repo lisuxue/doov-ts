@@ -30,34 +30,66 @@ describe('path', () => {
     let map: MyMap = {
       t: 'test',
     };
-    expect(getPathPromise(map, 't')).resolves.toEqual('test');
+    return expect(getPathPromise(map, 't')).resolves.toEqual('test');
   });
 
   it('set in object', () => {
     let user = new User(1);
-    expect(setProp('name', 'test', user).name).toEqual('test');
+    let userPromise = setProp('name', 'test', user);
+    return userPromise.then(value => {
+      expect(value.name).toEqual('test');
+    });
   });
 
   it('set in array', () => {
     let array: string[] = [];
-    expect(setProp(0, 'test', array)[0]).toEqual('test');
+    let arrayPromise = setProp(0, 'test', array);
+    return arrayPromise.then(value => {
+      expect(value[0]).toEqual('test');
+    });
   });
 
   it('set in map', () => {
     let map: MyMap = {
       t: 'test',
     };
-    expect(setProp('t', 'test2', map)['t']).toEqual('test2');
+    let mapPromise = setProp('t', 'test2', map);
+    return mapPromise.then(value => {
+      expect(value['t']).toEqual('test2');
+    });
   });
+});
 
-  it('set from path', () => {
-    let model = new Model();
-    let user = new User(1);
+describe('path', () => {
+  let model: Model;
+  let user: User;
+
+  beforeEach(() => {
+    model = new Model();
+    user = new User(1);
     user.name = 'test';
     model.user = user;
-    expect(setPath(model, 'test2', 'user', 'name').user!.name).toEqual('test2');
-    expect(setPath(model, 0, 'user', 'id').user!.id).toEqual(0);
-    expect(setPath(model, 'array', 'user', 'links', 1).user!.links![1]).toEqual('array');
-    expect(setPath(model, 'array', 'user', 'links', 1).user!.links![0]).toBeUndefined();
+  });
+
+  it('set from path string', () => {
+    let modelPromise = setPath(model, 'test2', 'user', 'name');
+    return modelPromise.then(value => {
+      expect(value.user!.name).toEqual('test2');
+    });
+  });
+
+  it('set from path number', () => {
+    let modelPromise = setPath(model, 0, 'user', 'id');
+    return modelPromise.then(value => {
+      expect(value.user!.id).toEqual(0);
+    });
+  });
+
+  it('set from path array', () => {
+    let modelPromise = setPath(model, 'array', 'user', 'links', 1);
+    return modelPromise.then(value => {
+      expect(value.user!.links![1]).toEqual('array');
+      expect(value.user!.links![0]).toBeUndefined();
+    });
   });
 });
