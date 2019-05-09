@@ -1,5 +1,5 @@
 import { hasProperty, isInteger } from './util';
-import { Getter, Setter } from './doov';
+import { Context, Getter, Setter } from './doov';
 
 // get Path
 
@@ -32,7 +32,7 @@ const setPropPromise = <T>(prop: string | number, val: Promise<any>, obj: T): Pr
   });
 };
 
-const setPathPromise = <T>(obj: T, val: Promise<any>, ...path: (string | number)[]): Promise<T> => {
+const setPathPromise = <T extends object>(obj: T, val: Promise<any>, ...path: (string | number)[]): Promise<T> => {
   const idx = path[0];
   if (path.length > 1) {
     let nextObj = obj != null && hasProperty(idx, obj) ? (obj as any)[idx] : isInteger(path[1]) ? [] : {};
@@ -41,17 +41,17 @@ const setPathPromise = <T>(obj: T, val: Promise<any>, ...path: (string | number)
   return setPropPromise(idx, val, obj);
 };
 
-export const setPath = <T>(obj: T, val: any, ...path: (string | number)[]): Promise<T> => {
+export const setPath = <T extends object>(obj: T, val: any, ...path: (string | number)[]): Promise<T> => {
   if (path.length === 0) {
     return val;
   }
   return setPathPromise(obj, Promise.resolve(val), ...path);
 };
 
-export const getter = <T, C, V>(...path: (string | number)[]): Getter<T, C, V> => {
+export const getter = <T extends object, C extends Context, V>(...path: (string | number)[]): Getter<T, C, V> => {
   return obj => getPathPromise(obj, ...path);
 };
 
-export const setter = <T, C, V>(...path: (string | number)[]): Setter<T, C, V> => {
+export const setter = <T extends object, C extends Context, V>(...path: (string | number)[]): Setter<T, C, V> => {
   return (obj, val) => setPath(obj, val, ...path);
 };

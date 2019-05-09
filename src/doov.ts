@@ -15,10 +15,10 @@ export const doov = (a: number, b: number) => {
 };
 
 export interface Context {
-  //TODO
+  [key: string]: string;
 }
 
-export interface ContextAccessor<T, C, V> {
+export interface ContextAccessor<T extends object, C extends Context, V> {
   get: Getter<T, C, V>;
   set: Setter<T, C, V>;
 }

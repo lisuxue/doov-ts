@@ -2,7 +2,7 @@ export function log(message: string) {
   console.error(message);
 }
 
-export function hasProperty(prop: any, obj: any) {
+export function hasProperty(prop: string | number | symbol, obj: object) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 }
 
