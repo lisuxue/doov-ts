@@ -1,5 +1,7 @@
 import { getter, setter } from './path';
-import { Context, ContextAccessor, Getter, Setter } from './doov';
+import { Getter, Setter } from 'doov';
+import { ContextAccessor } from 'ContextAccessor';
+import { Context } from 'Context';
 
 export class Field<T extends object, C extends Context, V> implements ContextAccessor<T, C, V> {
   public get: Getter<T, C, V>;

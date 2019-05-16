@@ -1,5 +1,6 @@
 import { hasProperty, isInteger } from './util';
-import { Context, Getter, Setter } from './doov';
+import { Getter, Setter } from 'doov';
+import { Context } from 'Context';
 
 // get Path
 

@@ -1,4 +1,4 @@
-import { log } from './util';
+import { log } from 'util';
 import moment from 'moment';
 
 export type Getter<T, C, V> = (obj: T, ctx?: C) => Promise<V>;
@@ -13,12 +13,3 @@ export const doov = (a: number, b: number) => {
   log(moment().fromNow());
   return a + b;
 };
-
-export interface Context {
-  [key: string]: string;
-}
-
-export interface ContextAccessor<T extends object, C extends Context, V> {
-  get: Getter<T, C, V>;
-  set: Setter<T, C, V>;
-}
