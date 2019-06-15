@@ -1,1 +1,3 @@
-export interface FieldModel {}
+export interface FieldModel {
+  [key: string]: any;
+}

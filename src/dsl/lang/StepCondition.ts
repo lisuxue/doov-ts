@@ -11,28 +11,28 @@ export interface StepCondition {
    *
    * @return the predicate
    */
-  predicate: () => ModelPredicate;
+  getPredicate: () => ModelPredicate;
 
-  /**
-   * Returns a condition checking if the node predicate and the given condition predicate evaluate to true.
-   *
-   * @param condition the right side condition
-   * @return the step condition
-   */
-  and: (condition: StepCondition) => StepCondition;
-
-  /**
-   * Returns a condition checking if the node predicate or the given condition predicate evaluate to true.
-   *
-   * @param condition the right side condition
-   * @return the step condition
-   */
-  or: (condition: StepCondition) => StepCondition;
-
-  /**
-   * Returns a condition checking if the node predicate does not evaluate to true.
-   *
-   * @return the step condition
-   */
-  not: (condition: StepCondition) => StepCondition;
+  // /**
+  //  * Returns a condition checking if the node predicate and the given condition predicate evaluate to true.
+  //  *
+  //  * @param condition the right side condition
+  //  * @return the step condition
+  //  */
+  // and: (condition: StepCondition) => StepCondition = ;
+  //
+  // /**
+  //  * Returns a condition checking if the node predicate or the given condition predicate evaluate to true.
+  //  *
+  //  * @param condition the right side condition
+  //  * @return the step condition
+  //  */
+  // or: (condition: StepCondition) => StepCondition;
+  //
+  // /**
+  //  * Returns a condition checking if the node predicate does not evaluate to true.
+  //  *
+  //  * @return the step condition
+  //  */
+  // not: (condition: StepCondition) => StepCondition;
 }
