@@ -16,42 +16,38 @@ beforeEach(() => {
 
 describe('get field', () => {
   it('get from string field', () => {
-    return expect(stringField.get(model)).resolves.toEqual('test');
+    return expect(stringField.get(model)).toEqual('test');
   });
 
   it('get from array field undefined', () => {
-    return expect(arrayField.get(model)).rejects.toBeUndefined();
+    return expect(arrayField.get(model)).toBeNull();
   });
 
   it('get from field array not null', () => {
     user.links = [];
-    return expect(arrayField.get(model)).rejects.toBeUndefined();
+    return expect(arrayField.get(model)).toBeNull();
   });
 
   it('get from field array item', () => {
     user.links = [];
     user.links.push('test');
-    return expect(arrayField.get(model)).resolves.toEqual('test');
+    return expect(arrayField.get(model)).toEqual('test');
   });
 });
 
 describe('set field', () => {
   it('set from string field', () => {
-    let modelPromise = stringField.set(model, 'test2');
-    return modelPromise.then(value => {
-      expect(value.user!.name).toEqual('test2');
-    });
+    let newModel: Model = stringField.set(model, 'test2');
+    expect(newModel.user!.name).toEqual('test2');
   });
 
   it('set from array undefined field', () => {
-    let stringPromise = arrayField.get(model);
-    return stringPromise.catch(reason => expect(reason).toBeUndefined());
+    let str = arrayField.get(model);
+    return expect(str).toBeNull();
   });
 
   it('set from array field', () => {
-    let modelPromise = arrayField.set(model, 'test');
-    return modelPromise.then(value => {
-      expect(value.user!.links![0]).toEqual('test');
-    });
+    let mdl = arrayField.set(model, 'test');
+    expect(mdl.user!.links![0]).toEqual('test');
   });
 });

@@ -8,7 +8,7 @@ export class OuterFunction<T extends object, C extends Context, V> implements Co
   public set: Setter<T, C, V>;
 
   public constructor(getter: (obj: T, ctx?: C) => V, setter: (obj: T, val: V, ctx?: C) => T) {
-    this.get = (obj: T, ctx?: C) => Promise.resolve(getter(obj, ctx));
-    this.set = (obj: T, val: V, ctx?: C) => Promise.resolve(setter(obj, val, ctx));
+    this.get = getter;
+    this.set = setter;
   }
 }

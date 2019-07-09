@@ -1,3 +1,3 @@
 export interface Getter<T, C, V> {
-  (obj: T, ctx?: C): Promise<V>;
+  (obj: T, ctx?: C): V;
 }
