@@ -1,7 +1,31 @@
 import { hasProperty, isInteger } from './util';
-import { Context } from 'Context';
-import { Getter } from 'Getter';
-import { Setter } from 'Setter';
+import { Context } from './Context';
+import { Getter } from './Getter';
+import { Setter } from './Setter';
+
+/**
+ * Parse `some.value.4.path` to ["some", "value", 4, "path"]
+ * @param pathString
+ */
+export function path(pathString: string): (string | number)[] {
+  return pathString.split('.').map(value => {
+    if (isInteger(value)) {
+      return parseInt(value);
+    } else {
+      return value;
+    }
+  });
+}
+
+/**
+ *
+ * @param path
+ */
+export function pathString(...path: (string | number)[]): string {
+  return path.reduce((previousValue, currentValue) => {
+    return previousValue.toString() + currentValue.toString();
+  }, '') as string;
+}
 
 /**
  * Get Path

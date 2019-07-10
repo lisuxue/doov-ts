@@ -6,6 +6,7 @@ export class User {
   public id: number;
   public name?: string;
   public links?: string[];
+  public b?: boolean;
 
   public constructor(id: number) {
     this.id = id;
