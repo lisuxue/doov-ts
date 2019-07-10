@@ -7,8 +7,5 @@ module.exports = {
   collectCoverageFrom: ['src/**/*.{ts,tsx}'],
   testMatch: ['**/test/**/*.(spec|test).{ts,tsx}'],
   testURL: 'http://localhost',
-  watchPlugins: [
-    require.resolve('jest-watch-typeahead/filename'),
-    require.resolve('jest-watch-typeahead/testname'),
-  ],
+  watchPlugins: [require.resolve('jest-watch-typeahead/filename'), require.resolve('jest-watch-typeahead/testname')],
 };
