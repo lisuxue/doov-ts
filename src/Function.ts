@@ -42,9 +42,9 @@ export class Function<T> implements ContextAccessor<object, Context, T>, DslBuil
 
   public static lift<U, F extends Function<U>>(constructor: FunctionConstructor<U, F>, value: U | Function<U>): F {
     if (value instanceof Function) {
-      return new constructor(new DefaultMetadata(value.toString()), value.get);
+      return new constructor(new DefaultMetadata(String(value)), value.get);
     } else {
-      return new constructor(new DefaultMetadata(value.toString()), () => value);
+      return new constructor(new DefaultMetadata(String(value)), () => value);
     }
   }
 
