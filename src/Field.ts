@@ -1,4 +1,4 @@
-import { getter, setter } from './path';
+import { getter, setter } from 'Paths';
 import { ContextAccessor } from 'ContextAccessor';
 import { Context } from 'Context';
 import { Getter } from 'Getter';

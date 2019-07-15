@@ -1,6 +1,6 @@
 import { Metadata } from 'Metadata';
 import { Operator } from 'Operator';
-import { pathString } from './path';
+import { pathString } from 'Paths';
 
 export class FieldMetadata implements Metadata {
   private readonly path: string;

@@ -1,4 +1,4 @@
-import { getPath, getPathPromise, setPath, setPathPromiseValue, setProp } from '../src/path';
+import { getPath, getPathPromise, setPath, setPathPromiseValue, setProp } from '../src/Paths';
 import { Model, MyMap, User } from './model';
 
 describe('path', () => {
