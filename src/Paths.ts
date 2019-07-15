@@ -1,4 +1,4 @@
-import { hasProperty, isInteger } from './util';
+import { hasProperty, isInteger } from 'Utils';
 import { Context } from 'Context';
 import { Getter } from 'Getter';
 import { Setter } from 'Setter';

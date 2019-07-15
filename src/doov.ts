@@ -1,4 +1,4 @@
-import { log } from './util';
+import { log } from 'Utils';
 import moment from 'moment';
 import { Field } from 'Field';
 import { Context } from 'Context';
