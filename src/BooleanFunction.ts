@@ -1,6 +1,6 @@
-import { condition, Function } from './Function';
-import { Context } from './Context';
-import { ContextAccessor } from './ContextAccessor';
+import { condition, Function } from 'Function';
+import { Context } from 'Context';
+import { ContextAccessor } from 'ContextAccessor';
 
 export class BooleanFunction extends Function<boolean> {
   public static boolean(accessor: ContextAccessor<object, Context, boolean>): BooleanFunction {

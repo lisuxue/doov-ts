@@ -1,11 +1,11 @@
-import { ContextAccessor } from './ContextAccessor';
-import { Context } from './Context';
-import { Metadata } from './Metadata';
-import { Getter } from './Getter';
-import { Setter } from './Setter';
-import { DslBuilder } from './DslBuilder';
-import { BooleanFunction } from './BooleanFunction';
-import { DefaultMetadata } from './DefaultMetadata';
+import { ContextAccessor } from 'ContextAccessor';
+import { Context } from 'Context';
+import { Metadata } from 'Metadata';
+import { Getter } from 'Getter';
+import { Setter } from 'Setter';
+import { DslBuilder } from 'DslBuilder';
+import { BooleanFunction } from 'BooleanFunction';
+import { DefaultMetadata } from 'DefaultMetadata';
 
 export type FunctionConstructor<U, F extends Function<U>> = new (
   metadata: Metadata,

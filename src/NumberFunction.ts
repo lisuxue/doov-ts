@@ -1,8 +1,8 @@
-import { ContextAccessor } from './ContextAccessor';
-import { Context } from './Context';
-import { BooleanFunction } from './BooleanFunction';
-import { condition, Function } from './Function';
-import { DefaultMetadata } from './DefaultMetadata';
+import { ContextAccessor } from 'ContextAccessor';
+import { Context } from 'Context';
+import { BooleanFunction } from 'BooleanFunction';
+import { condition, Function } from 'Function';
+import { DefaultMetadata } from 'DefaultMetadata';
 
 export class NumberFunction extends Function<number> {
   public static number(accessor: ContextAccessor<object, Context, number>): NumberFunction {

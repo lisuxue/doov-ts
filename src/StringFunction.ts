@@ -1,8 +1,8 @@
-import { Context } from './Context';
-import { ContextAccessor } from './ContextAccessor';
-import { BooleanFunction } from './BooleanFunction';
-import { NumberFunction } from './NumberFunction';
-import { condition, Function } from './Function';
+import { Context } from 'Context';
+import { ContextAccessor } from 'ContextAccessor';
+import { BooleanFunction } from 'BooleanFunction';
+import { NumberFunction } from 'NumberFunction';
+import { condition, Function } from 'Function';
 
 export class StringFunction extends Function<string> {
   public static string(accessor: ContextAccessor<object, Context, string>): StringFunction {

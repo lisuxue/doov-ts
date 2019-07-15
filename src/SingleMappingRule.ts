@@ -1,9 +1,9 @@
-import { Function } from './Function';
-import { Metadata } from './Metadata';
-import { DefaultMetadata } from './DefaultMetadata';
-import { Context } from './Context';
-import { DefaultContext } from './DefaultContext';
-import { MappingRule } from './MappingRule';
+import { Function } from 'Function';
+import { Metadata } from 'Metadata';
+import { DefaultMetadata } from 'DefaultMetadata';
+import { Context } from 'Context';
+import { DefaultContext } from 'DefaultContext';
+import { MappingRule } from 'MappingRule';
 
 export class SingleMappingRule<T> implements MappingRule {
   private input: Function<T>;

@@ -1,10 +1,10 @@
 import { getter, setter } from './path';
-import { ContextAccessor } from './ContextAccessor';
-import { Context } from './Context';
-import { Getter } from './Getter';
-import { Setter } from './Setter';
-import { Metadata } from './Metadata';
-import { FieldMetadata } from './FieldMetadata';
+import { ContextAccessor } from 'ContextAccessor';
+import { Context } from 'Context';
+import { Getter } from 'Getter';
+import { Setter } from 'Setter';
+import { Metadata } from 'Metadata';
+import { FieldMetadata } from 'FieldMetadata';
 
 export class Field<T extends object = object, C extends Context = Context, V = {}> implements ContextAccessor<T, C, V> {
   public get: Getter<T, C, V | null>;

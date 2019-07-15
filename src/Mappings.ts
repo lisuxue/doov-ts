@@ -1,7 +1,7 @@
-import { MappingRule } from './MappingRule';
-import { Metadata } from './Metadata';
-import { Context } from './Context';
-import { DefaultMetadata } from './DefaultMetadata';
+import { MappingRule } from 'MappingRule';
+import { Metadata } from 'Metadata';
+import { Context } from 'Context';
+import { DefaultMetadata } from 'DefaultMetadata';
 
 export class Mappings implements MappingRule {
   metadata: Metadata;

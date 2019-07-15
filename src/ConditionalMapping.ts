@@ -1,8 +1,8 @@
-import { BooleanFunction } from './BooleanFunction';
-import { Metadata } from './Metadata';
-import { DefaultMetadata } from './DefaultMetadata';
-import { Context } from './Context';
-import { MappingRule } from './MappingRule';
+import { BooleanFunction } from 'BooleanFunction';
+import { Metadata } from 'Metadata';
+import { DefaultMetadata } from 'DefaultMetadata';
+import { Context } from 'Context';
+import { MappingRule } from 'MappingRule';
 
 export class ConditionalMapping implements MappingRule {
   condition: BooleanFunction;

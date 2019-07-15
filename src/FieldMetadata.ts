@@ -1,5 +1,5 @@
-import { Metadata } from './Metadata';
-import { Operator } from './Operator';
+import { Metadata } from 'Metadata';
+import { Operator } from 'Operator';
 import { pathString } from './path';
 
 export class FieldMetadata implements Metadata {

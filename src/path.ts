@@ -1,7 +1,7 @@
 import { hasProperty, isInteger } from './util';
-import { Context } from './Context';
-import { Getter } from './Getter';
-import { Setter } from './Setter';
+import { Context } from 'Context';
+import { Getter } from 'Getter';
+import { Setter } from 'Setter';
 
 /**
  * Parse `some.value.4.path` to ["some", "value", 4, "path"]

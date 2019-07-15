@@ -1,5 +1,5 @@
-import { Readable } from './Readable';
-import { Operator } from './Operator';
+import { Readable } from 'Readable';
+import { Operator } from 'Operator';
 
 export interface Metadata extends Readable {
   operator(): Operator | undefined;

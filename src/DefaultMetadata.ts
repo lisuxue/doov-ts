@@ -1,5 +1,5 @@
-import { Metadata } from './Metadata';
-import { Operator } from './Operator';
+import { Metadata } from 'Metadata';
+import { Operator } from 'Operator';
 
 export class DefaultMetadata implements Metadata {
   _readable: string;

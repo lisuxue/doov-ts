@@ -1,4 +1,4 @@
-import { DslBuilder } from './DslBuilder';
+import { DslBuilder } from 'DslBuilder';
 import { Context } from 'Context';
 
 export interface MappingRule extends DslBuilder {

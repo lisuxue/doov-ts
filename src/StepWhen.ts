@@ -1,10 +1,10 @@
-import { BooleanFunction } from './BooleanFunction';
-import { ValidationRule } from './ValidationRule';
-import { DslBuilder } from './DslBuilder';
-import { Metadata } from './Metadata';
-import { DefaultMetadata } from './DefaultMetadata';
-import { MappingRule } from './MappingRule';
-import { ConditionalMapping } from './ConditionalMapping';
+import { BooleanFunction } from 'BooleanFunction';
+import { ValidationRule } from 'ValidationRule';
+import { DslBuilder } from 'DslBuilder';
+import { Metadata } from 'Metadata';
+import { DefaultMetadata } from 'DefaultMetadata';
+import { MappingRule } from 'MappingRule';
+import { ConditionalMapping } from 'ConditionalMapping';
 
 export class StepWhen implements DslBuilder {
   condition: BooleanFunction;

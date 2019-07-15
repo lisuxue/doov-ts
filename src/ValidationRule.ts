@@ -1,10 +1,10 @@
-import { StepWhen } from './StepWhen';
-import { Context } from './Context';
-import { Result } from './Result';
-import { DefaultContext } from './DefaultContext';
-import { DslBuilder } from './DslBuilder';
-import { Metadata } from './Metadata';
-import { DefaultMetadata } from './DefaultMetadata';
+import { StepWhen } from 'StepWhen';
+import { Context } from 'Context';
+import { Result } from 'Result';
+import { DefaultContext } from 'DefaultContext';
+import { DslBuilder } from 'DslBuilder';
+import { Metadata } from 'Metadata';
+import { DefaultMetadata } from 'DefaultMetadata';
 
 export class ValidationRule implements DslBuilder {
   when: StepWhen;

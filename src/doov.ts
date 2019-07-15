@@ -1,17 +1,17 @@
 import { log } from './util';
 import moment from 'moment';
-import { Field } from './Field';
-import { Context } from './Context';
-import { ContextAccessor } from './ContextAccessor';
-import { BooleanFunction } from './BooleanFunction';
-import { NumberFunction } from './NumberFunction';
-import { StringFunction } from './StringFunction';
-import { DefaultMetadata } from './DefaultMetadata';
-import { Function, FunctionConstructor } from './Function';
-import { StepWhen } from './StepWhen';
-import { StepMap } from './StepMap';
-import { MappingRule } from './MappingRule';
-import { Mappings } from './Mappings';
+import { Field } from 'Field';
+import { Context } from 'Context';
+import { ContextAccessor } from 'ContextAccessor';
+import { BooleanFunction } from 'BooleanFunction';
+import { NumberFunction } from 'NumberFunction';
+import { StringFunction } from 'StringFunction';
+import { DefaultMetadata } from 'DefaultMetadata';
+import { Function, FunctionConstructor } from 'Function';
+import { StepWhen } from 'StepWhen';
+import { StepMap } from 'StepMap';
+import { MappingRule } from 'MappingRule';
+import { Mappings } from 'Mappings';
 
 export const doov = (a: number, b: number) => {
   if ('development' === process.env.NODE_ENV) {

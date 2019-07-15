@@ -8,4 +8,5 @@ module.exports = {
   testMatch: ['**/test/**/*.(spec|test).{ts,tsx}'],
   testURL: 'http://localhost',
   watchPlugins: [require.resolve('jest-watch-typeahead/filename'), require.resolve('jest-watch-typeahead/testname')],
+  modulePaths: ['<rootDir>/src/', '<rootDir>/node_modules'],
 };
