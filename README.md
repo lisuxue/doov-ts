@@ -1,6 +1,11 @@
 # dOOv-TS
 
+[![Build Status](https://travis-ci.org/doov-io/doov-ts.svg?branch=master)](https://travis-ci.org/doov-io/doov-ts)
+[![codecov](https://codecov.io/gh/doov-io/doov-ts/branch/master/graph/badge.svg)](https://codecov.io/gh/doov-io/doov-ts)
+
 dOOv (Domain Object Oriented Validation) a fluent API for type-safe bean validation and mapping in TypeScript
+
+---
 
 ## Local Development
 
