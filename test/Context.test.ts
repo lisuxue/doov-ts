@@ -25,13 +25,32 @@ beforeEach(() => {
 describe('context intercepts values', () => {
   it('get values', () => {
     const validationRule: ValidationRule = DOOV.when(B.and(ID.greaterOrEquals(0).or(NAME.endsWith('st')))).validate();
-    const result = validationRule.execute(model);
+    const context = new DefaultContext(false);
+    const result = validationRule.execute(model, context);
     expect(result.context.getValues).toContainEqual({ metadata: B.metadata, value: true });
     expect(result.context.getValues).toContainEqual({ metadata: ID.metadata, value: 1 });
     expect(result.context.getValues).toContainEqual({ metadata: NAME.metadata, value: 'test' });
   });
 
+  it('get values with short circuit', () => {
+    const validationRule: ValidationRule = DOOV.when(B.and(ID.greaterOrEquals(0).or(NAME.endsWith('st')))).validate();
+    const context = new DefaultContext();
+    const result = validationRule.execute(model, context);
+    expect(result.context.getValues).toContainEqual({ metadata: B.metadata, value: true });
+    expect(result.context.getValues).toContainEqual({ metadata: ID.metadata, value: 1 });
+  });
+
   it('set values', () => {
+    const mappings = DOOV.mappings(DOOV.map(NAME).to(LINK1), DOOV.map(NAME.length()).to(ID));
+    const context = new DefaultContext(false);
+    model = mappings.execute(model, context);
+    expect(context.setValues).toContainEqual({ metadata: ID.metadata, value: 4 });
+    expect(context.setValues).toContainEqual({ metadata: LINK1.metadata, value: 'test' });
+    expect(model!.user!.id).toEqual(4);
+    expect(model!.user!.links![0]).toEqual('test');
+  });
+
+  it('set values with short circuit', () => {
     const mappings = DOOV.mappings(DOOV.map(NAME).to(LINK1), DOOV.map(NAME.length()).to(ID));
     const context = new DefaultContext();
     model = mappings.execute(model, context);

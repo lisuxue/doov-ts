@@ -12,14 +12,40 @@ export class BooleanFunction extends Function<boolean> {
   }
 
   public and(right: BooleanFunction): BooleanFunction {
-    return new BooleanFunction(this.metadata, condition(this, right, (l: boolean, r: boolean) => l && r, false));
+    return new BooleanFunction(this.metadata, (obj, ctx) => {
+      if (ctx && ctx.shortCircuit) {
+        const left = this.get(obj, ctx);
+        if (left != null) {
+          return left && right.get(obj, ctx);
+        } else {
+          return false;
+        }
+      } else {
+        return condition(this, right, (l: boolean, r: boolean) => l && r, false)(obj, ctx);
+      }
+    });
   }
 
   public or(right: boolean | BooleanFunction): BooleanFunction {
-    if (right instanceof BooleanFunction) {
-      return new BooleanFunction(this.metadata, condition(this, right, (l: boolean, r: boolean) => l || r, false));
-    } else {
-      return new BooleanFunction(this.metadata, condition(this, right, (l: boolean, r: boolean) => l || r, false));
-    }
+    return new BooleanFunction(this.metadata, (obj, ctx) => {
+      if (ctx && ctx.shortCircuit) {
+        const left = this.get(obj, ctx);
+        if (left != null) {
+          if (right instanceof BooleanFunction) {
+            return left || right.get(obj, ctx);
+          } else {
+            return left || right;
+          }
+        } else {
+          return false;
+        }
+      } else {
+        if (right instanceof BooleanFunction) {
+          return condition(this, right, (l: boolean, r: boolean) => l || r, false)(obj, ctx);
+        } else {
+          return condition(this, right, (l: boolean, r: boolean) => l || r, false)(obj, ctx);
+        }
+      }
+    });
   }
 }
