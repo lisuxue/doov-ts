@@ -1,6 +1,5 @@
 language: node_js
 node_js:
-  - '12'
   - node
 sudo: false
 before_install:
@@ -11,5 +10,7 @@ cache:
 
 before_script:
   - yarn install
+  - yarn global add codecov
 script:
   - yarn test-ci
+  - codecov
