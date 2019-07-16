@@ -9,8 +9,9 @@ import { Setter } from 'Setter';
  */
 export function path(pathString: string): (string | number)[] {
   return pathString.split('.').map(value => {
-    if (isInteger(value)) {
-      return parseInt(value);
+    const n = parseInt(value);
+    if (!isNaN(n)) {
+      return n;
     } else {
       return value;
     }
@@ -22,9 +23,7 @@ export function path(pathString: string): (string | number)[] {
  * @param path
  */
 export function pathString(...path: (string | number)[]): string {
-  return path.reduce((previousValue, currentValue) => {
-    return previousValue.toString() + currentValue.toString();
-  }, '') as string;
+  return path.join('.');
 }
 
 /**

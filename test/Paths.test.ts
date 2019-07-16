@@ -1,4 +1,4 @@
-import { getPath, getPathPromise, setPath, setPathPromiseValue, setProp } from '../src/Paths';
+import { getPath, getPathPromise, path, pathString, setPath, setPathPromiseValue, setProp } from '../src/Paths';
 import { Model, MyMap, User } from './model';
 
 describe('path', () => {
@@ -113,5 +113,14 @@ describe('path promise', () => {
       expect(value.user!.links![1]).toEqual('array');
       expect(value.user!.links![0]).toBeUndefined();
     });
+  });
+});
+
+describe('path string', () => {
+  it('path string is parsable', () => {
+    const pathArray = ['user', 'name', 0];
+    const pathStr = pathString(...pathArray);
+    expect(pathStr).toEqual('user.name.0');
+    expect(path(pathStr)).toEqual(pathArray);
   });
 });
