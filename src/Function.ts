@@ -1,8 +1,8 @@
 import { ContextAccessor } from 'ContextAccessor';
 import { Context } from 'Context';
 import { Metadata } from 'Metadata';
-import { Getter } from 'Getter';
-import { Setter } from 'Setter';
+import { Getter, interceptGetter } from 'Getter';
+import { interceptSetter, Setter } from 'Setter';
 import { DslBuilder } from 'DslBuilder';
 import { BooleanFunction } from 'BooleanFunction';
 import { DefaultMetadata } from 'DefaultMetadata';
@@ -24,8 +24,8 @@ export class Function<T> implements ContextAccessor<object, Context, T>, DslBuil
     setter?: Setter<object, Context, T | null>
   ) {
     this.metadata = metadata;
-    this.get = getter;
-    this.set = setter;
+    this.get = interceptGetter(metadata, getter);
+    this.set = setter ? interceptSetter(metadata, setter) : undefined;
   }
 
   public static function<T>(accessor: ContextAccessor<object, Context, T>): Function<T> {
