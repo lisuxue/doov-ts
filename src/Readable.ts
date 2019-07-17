@@ -1,3 +1,3 @@
 export interface Readable {
-  readable(): string;
+  readable: string;
 }

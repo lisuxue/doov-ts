@@ -1,32 +1,14 @@
-import { Metadata } from 'Metadata';
+import { MetadataType } from 'Metadata';
 import { Operator } from 'Operator';
+import { AbstractMetadata } from 'AbstractMetadata';
 
-export class DefaultMetadata implements Metadata {
-  _readable: string;
-  _operator?: Operator;
+export class DefaultMetadata extends AbstractMetadata {
+  readonly type: MetadataType;
+  readonly readable: string;
 
   public constructor(readable: string, operator?: Operator) {
-    this._readable = readable;
-    this._operator = operator;
-  }
-
-  children(): Metadata[] {
-    return [];
-  }
-
-  left(): Metadata[] {
-    return [];
-  }
-
-  operator(): Operator | undefined {
-    return this._operator;
-  }
-
-  readable(): string {
-    return this._readable;
-  }
-
-  right(): Metadata[] {
-    return [];
+    super(operator);
+    this.readable = readable;
+    this.type = readable as MetadataType;
   }
 }
