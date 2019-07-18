@@ -1,13 +1,12 @@
 import { AbstractMetadata } from 'AbstractMetadata';
-import { SingleMappingMetadata } from 'SingleMappingMetadata';
 import { Metadata } from 'Metadata';
 import { Operator } from 'Operator';
 
 export class MultipleMappingsMetadata extends AbstractMetadata {
   readonly type = 'MULTIPLE_MAPPING';
-  readonly mappings: SingleMappingMetadata[];
+  readonly mappings: Metadata[];
 
-  constructor(operator: Operator, mappings: SingleMappingMetadata[]) {
+  constructor(mappings: Metadata[], operator?: Operator) {
     super(operator);
     this.mappings = mappings;
   }

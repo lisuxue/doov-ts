@@ -7,7 +7,7 @@ export class BinaryMetadata extends AbstractMetadata {
   readonly left: Metadata;
   readonly right: Metadata;
 
-  public constructor(operator: Operator, left: Metadata, right: Metadata) {
+  public constructor(left: Metadata, operator: Operator, right: Metadata) {
     super(operator);
     this.left = left;
     this.right = right;

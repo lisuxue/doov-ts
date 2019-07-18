@@ -3,16 +3,15 @@ import { Context } from 'Context';
 import { Result } from 'Result';
 import { DefaultContext } from 'DefaultContext';
 import { DslBuilder } from 'DslBuilder';
-import { Metadata } from 'Metadata';
-import { DefaultMetadata } from 'DefaultMetadata';
+import { ValidationRuleMetadata } from 'ValidationRuleMetadata';
 
 export class ValidationRule implements DslBuilder {
-  when: StepWhen;
-  metadata: Metadata;
+  readonly when: StepWhen;
+  readonly metadata: ValidationRuleMetadata;
 
   constructor(when: StepWhen) {
     this.when = when;
-    this.metadata = new DefaultMetadata('validate');
+    this.metadata = new ValidationRuleMetadata(when.metadata);
   }
 
   execute(model: object = {}, ctx?: Context): Result {

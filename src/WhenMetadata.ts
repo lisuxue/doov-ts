@@ -13,7 +13,7 @@ export class WhenMetadata implements Metadata {
   }
 
   get readable(): string {
-    return this.operator.readable + '' + this.metadata.readable;
+    return this.operator.readable + ' ' + this.metadata.readable;
   }
 
   children(): Metadata[] {

@@ -14,7 +14,7 @@ export class UnaryMetadata extends AbstractMetadata {
   }
 
   get readable(): string {
-    return this.operator.readable + '' + this.metadata.readable;
+    return this.metadata.readable + ' ' + this.operator.readable;
   }
 
   children(): Metadata[] {

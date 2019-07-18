@@ -1,5 +1,5 @@
 import { Model, User } from './model';
-import * as DOOV from 'doov';
+import * as DOOV from '../src/doov';
 import { BooleanFunction } from '../src/BooleanFunction';
 import { Field } from '../src/Field';
 import { ValidationRule } from '../src/ValidationRule';

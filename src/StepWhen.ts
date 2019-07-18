@@ -1,18 +1,17 @@
 import { BooleanFunction } from 'BooleanFunction';
 import { ValidationRule } from 'ValidationRule';
 import { DslBuilder } from 'DslBuilder';
-import { Metadata } from 'Metadata';
-import { DefaultMetadata } from 'DefaultMetadata';
 import { MappingRule } from 'MappingRule';
 import { ConditionalMapping } from 'ConditionalMapping';
+import { WhenMetadata } from 'WhenMetadata';
 
 export class StepWhen implements DslBuilder {
-  condition: BooleanFunction;
-  metadata: Metadata;
+  readonly condition: BooleanFunction;
+  readonly metadata: WhenMetadata;
 
   public constructor(condition: BooleanFunction) {
     this.condition = condition;
-    this.metadata = new DefaultMetadata('when');
+    this.metadata = new WhenMetadata(condition.metadata);
   }
 
   public validate(): ValidationRule {
