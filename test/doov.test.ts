@@ -84,33 +84,3 @@ describe('doov map', () => {
     expect(model!.user!.b).toEqual(false);
   });
 });
-
-describe('doov mappings', () => {
-  it('map to execute', () => {
-    const mappings = DOOV.mappings(
-      DOOV.map(id.mapTo(StringFunction, v => 'link of ' + v)).to(link1),
-      DOOV.map(name).to(link2)
-    );
-    model = mappings.execute(model);
-    expect(link1.get(model)).toEqual('link of 1');
-    expect(link2.get(model)).toEqual('test');
-  });
-});
-
-describe('doov conditional mappings', () => {
-  it('map to execute', () => {
-    const mappings = DOOV.when(name.matches('^t.+')).then(
-      DOOV.map(id.mapTo(StringFunction, v => 'link of ' + v)).to(link1),
-      DOOV.map(name).to(link2)
-    );
-    model = mappings.execute(model);
-    expect(link1.get(model)).toEqual('link of 1');
-    expect(link2.get(model)).toEqual('test');
-    model = link1.set!(model, null);
-    model = link2.set!(model, null);
-    model = name.set!(model, 'other');
-    model = mappings.execute(model);
-    expect(link1.get(model)).toBeNull();
-    expect(link2.get(model)).toBeNull();
-  });
-});
