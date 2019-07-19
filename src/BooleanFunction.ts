@@ -20,7 +20,11 @@ export class BooleanFunction extends Function<boolean> {
       if (ctx && ctx.shortCircuit) {
         const left = this.get(obj, ctx);
         if (left != null) {
-          return left && right.get(obj, ctx);
+          if (!left) {
+            return false;
+          }
+          const rValue = right.get(obj, ctx);
+          return left && (rValue != null ? rValue : false);
         } else {
           return false;
         }
@@ -41,6 +45,9 @@ export class BooleanFunction extends Function<boolean> {
         if (ctx && ctx.shortCircuit) {
           const left = this.get(obj, ctx);
           if (left != null) {
+            if (left) {
+              return true;
+            }
             if (right instanceof BooleanFunction) {
               return left || right.get(obj, ctx);
             } else {
