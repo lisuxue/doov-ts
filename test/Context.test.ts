@@ -1,10 +1,10 @@
 import { Model, User } from './model';
-import * as DOOV from '../src/doov';
-import { BooleanFunction } from '../src/BooleanFunction';
-import { Field } from '../src/Field';
-import { ValidationRule } from '../src/ValidationRule';
-import { StringFunction } from '../src/StringFunction';
-import { DefaultContext } from '../src/DefaultContext';
+import * as DOOV from 'doov';
+import { BooleanFunction } from 'BooleanFunction';
+import { Field } from 'Field';
+import { ValidationRule } from 'ValidationRule';
+import { StringFunction } from 'StringFunction';
+import { DefaultContext } from 'DefaultContext';
 
 let model: Model;
 let user: User;

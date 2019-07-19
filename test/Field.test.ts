@@ -1,5 +1,5 @@
 import { Model, User } from './model';
-import { Field } from '../src/Field';
+import { Field } from 'Field';
 
 let model: Model;
 let user: User;

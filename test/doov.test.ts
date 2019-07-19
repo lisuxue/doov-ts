@@ -1,8 +1,8 @@
 import { Model, User } from './model';
-import { Field } from '../src/Field';
-import { StringFunction } from '../src/StringFunction';
-import { BooleanFunction } from '../src/BooleanFunction';
-import * as DOOV from '../src/doov';
+import { Field } from 'Field';
+import { StringFunction } from 'StringFunction';
+import { BooleanFunction } from 'BooleanFunction';
+import * as DOOV from 'doov';
 
 let model: Model;
 let user: User;

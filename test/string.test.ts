@@ -1,7 +1,7 @@
 import { Model, User } from './model';
-import { Field } from '../src/Field';
-import { StringFunction } from '../src/StringFunction';
-import { Function } from '../src/Function';
+import { Field } from 'Field';
+import { StringFunction } from 'StringFunction';
+import { Function } from 'Function';
 
 let model: Model;
 let user: User;
