@@ -1,11 +1,11 @@
 import { Model, User } from './model';
-import { Field } from 'Field';
+import * as DOOV from 'doov';
 
 let model: Model;
 let user: User;
 
-let stringField = Field.field<Model, string>('user', 'name');
-let arrayField = Field.field<Model, string>('user', 'links', 0);
+let stringField = DOOV.field<Model, string>('user', 'name');
+let arrayField = DOOV.field<Model, string>('user', 'links', 0);
 
 beforeEach(() => {
   model = new Model();

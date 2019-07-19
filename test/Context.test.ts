@@ -1,6 +1,5 @@
 import { Model, User } from './model';
 import * as DOOV from 'doov';
-import { BooleanFunction } from 'BooleanFunction';
 import { Field } from 'Field';
 import { ValidationRule } from 'ValidationRule';
 import { StringFunction } from 'StringFunction';
@@ -9,10 +8,10 @@ import { DefaultContext } from 'DefaultContext';
 let model: Model;
 let user: User;
 
-const B = BooleanFunction.boolean(Field.field<Model, boolean>('user', 'b'));
-const ID = DOOV.number(Field.field<Model, number>('user', 'id'));
+const B = DOOV.boolean(DOOV.field<Model, boolean>('user', 'b'));
+const ID = DOOV.number(DOOV.field<Model, number>('user', 'id'));
 const NAME: StringFunction = DOOV.string(Field.field<Model, string>('user', 'name'));
-const LINK1 = DOOV.string(Field.field<Model, string>('user', 'links', 0));
+const LINK1 = DOOV.string(DOOV.field<Model, string>('user', 'links', 0));
 
 beforeEach(() => {
   model = new Model();

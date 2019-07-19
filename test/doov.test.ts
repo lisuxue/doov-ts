@@ -1,17 +1,15 @@
 import { Model, User } from './model';
-import { Field } from 'Field';
 import { StringFunction } from 'StringFunction';
-import { BooleanFunction } from 'BooleanFunction';
 import * as DOOV from 'doov';
 
 let model: Model;
 let user: User;
 
-const name = StringFunction.string(Field.field<Model, string>('user', 'name'));
-const a = BooleanFunction.boolean(Field.field<Model, boolean>('user', 'b'));
-const id = DOOV.number(Field.field<Model, number>('user', 'id'));
-const link1 = DOOV.string(Field.field<Model, string>('user', 'links', 0));
-const link2 = DOOV.string(Field.field<Model, string>('user', 'links', 1));
+const name = DOOV.string(DOOV.field<Model, string>('user', 'name'));
+const a = DOOV.boolean(DOOV.field<Model, boolean>('user', 'b'));
+const id = DOOV.number(DOOV.field<Model, number>('user', 'id'));
+const link1 = DOOV.string(DOOV.field<Model, string>('user', 'links', 0));
+const link2 = DOOV.string(DOOV.field<Model, string>('user', 'links', 1));
 
 beforeEach(() => {
   model = new Model();

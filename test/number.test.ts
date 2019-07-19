@@ -1,14 +1,13 @@
 import { Model, User } from './model';
-import { Field } from 'Field';
 import { NumberFunction } from 'NumberFunction';
 import { StringFunction } from 'StringFunction';
-import { Function } from 'Function';
+import * as DOOV from 'doov';
 
 let model: Model;
 let user: User;
 
-const num = Function.lift(NumberFunction, 3);
-const id = NumberFunction.number(Field.field<Model, number>('user', 'id'));
+const num = DOOV.lift(NumberFunction, 3);
+const id = DOOV.number(DOOV.field<Model, number>('user', 'id'));
 
 beforeEach(() => {
   model = new Model();

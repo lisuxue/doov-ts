@@ -1,5 +1,4 @@
 import { Model, User } from './model';
-import { Field } from 'Field';
 import * as DOOV from 'doov';
 import { Metadata } from 'Metadata';
 import { fieldsOf } from 'MetadataUtils';
@@ -9,10 +8,10 @@ let model: Model;
 let user: User;
 let metadata: Metadata | undefined;
 
-const nameField = Field.field<Model, string>('user', 'name');
+const nameField = DOOV.field<Model, string>('user', 'name');
 let name = DOOV.string(nameField);
-let link1 = DOOV.string(Field.field<Model, string>('user', 'links', 0));
-let id = DOOV.number(Field.field<Model, number>('user', 'id'));
+let link1 = DOOV.string(DOOV.field<Model, string>('user', 'links', 0));
+let id = DOOV.number(DOOV.field<Model, number>('user', 'id'));
 
 beforeEach(() => {
   model = new Model();

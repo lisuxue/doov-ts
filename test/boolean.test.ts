@@ -1,16 +1,15 @@
 import { Model, User } from './model';
-import { Field } from 'Field';
 import { BooleanFunction } from 'BooleanFunction';
-import { Function } from 'Function';
 import { DefaultContext } from 'DefaultContext';
+import * as DOOV from 'doov';
 
 let model: Model;
 let user: User;
 
-const trueFunction = Function.lift(BooleanFunction, true);
-const falseFunction = Function.lift(BooleanFunction, false);
-const trueField = BooleanFunction.boolean(Field.field<Model, boolean>('user', 'b'));
-const nullField = BooleanFunction.boolean(Field.field<Model, boolean>('user', 'a'));
+const trueFunction = DOOV.lift(BooleanFunction, true);
+const falseFunction = DOOV.lift(BooleanFunction, false);
+const trueField = DOOV.boolean(DOOV.field<Model, boolean>('user', 'b'));
+const nullField = DOOV.boolean(DOOV.field<Model, boolean>('user', 'a'));
 
 beforeEach(() => {
   model = new Model();

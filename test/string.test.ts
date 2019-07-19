@@ -1,14 +1,13 @@
 import { Model, User } from './model';
-import { Field } from 'Field';
 import { StringFunction } from 'StringFunction';
-import { Function } from 'Function';
+import * as DOOV from 'doov';
 
 let model: Model;
 let user: User;
 
-const num4 = Function.lift(StringFunction, '#4');
-const name = StringFunction.string(Field.field<Model, string>('user', 'name'));
-const link1 = StringFunction.string(Field.field<Model, string>('user', 'links', 0));
+const num4 = DOOV.lift(StringFunction, '#4');
+const name = DOOV.string(DOOV.field<Model, string>('user', 'name'));
+const link1 = DOOV.string(DOOV.field<Model, string>('user', 'links', 0));
 
 beforeEach(() => {
   model = new Model();
