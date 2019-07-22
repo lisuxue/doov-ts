@@ -1,10 +1,25 @@
 import { Readable } from 'Readable';
 import { Operator } from 'Operator';
 
+export type MetadataType =
+  | 'WHEN'
+  | 'VALIDATION'
+  | 'VALUE'
+  | 'FIELD'
+  | 'ITERABLE_VALUE'
+  | 'ITERABLE'
+  | 'UNARY'
+  | 'BINARY'
+  | 'NARY'
+  | 'SINGLE_MAPPING'
+  | 'MULTIPLE_MAPPING'
+  | 'CONDITIONAL_MAPPING'
+  | 'FUNCTION';
+
 export interface Metadata extends Readable {
-  operator(): Operator | undefined;
-  readable(): string;
-  left(): Metadata[];
-  right(): Metadata[];
-  children(): Metadata[];
+  readonly type: MetadataType;
+  readonly operator?: Operator;
+  readonly readable: string;
+
+  children?(): Metadata[];
 }

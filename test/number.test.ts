@@ -1,14 +1,14 @@
 import { Model, User } from './model';
-import { Field } from '../src/Field';
-import { NumberFunction } from '../src/NumberFunction';
-import { StringFunction } from '../src/StringFunction';
-import { Function } from '../src/Function';
+import { NumberFunction } from 'NumberFunction';
+import { StringFunction } from 'StringFunction';
+import * as DOOV from 'doov';
 
 let model: Model;
 let user: User;
 
-const num = Function.lift(NumberFunction, 3);
-const id = NumberFunction.number(Field.field<Model, number>('user', 'id'));
+const num = DOOV.lift(NumberFunction, 3);
+const id = DOOV.number(DOOV.field<Model, number>('user', 'id'));
+const nullField = DOOV.number(DOOV.field<Model, number>('user', 'a'));
 
 beforeEach(() => {
   model = new Model();
@@ -46,11 +46,11 @@ describe('number function', () => {
   });
 
   it('number greater or equals than function', () => {
-    expect(num.greaterThan(id).get(model)).toEqual(true);
+    expect(num.greaterOrEquals(id).get(model)).toEqual(true);
   });
 
   it('number lesser than value', () => {
-    expect(id.lesserThan(num).get(model)).toEqual(true);
+    expect(id.lesserThan(4).get(model)).toEqual(true);
   });
 
   it('number lesser than function', () => {
@@ -71,15 +71,15 @@ describe('number function', () => {
   });
 
   it('number max', () => {
-    expect(NumberFunction.max(num, id, 15).get(model)).toEqual(15);
+    expect(NumberFunction.max(num, id, 15, nullField).get(model)).toEqual(15);
   });
 
   it('number min', () => {
-    expect(NumberFunction.min(num, id, -2).get(model)).toEqual(-2);
+    expect(NumberFunction.min(num, id, -2, nullField).get(model)).toEqual(-2);
   });
 
   it('number sum', () => {
-    expect(NumberFunction.sum(num, id, 31).get(model)).toEqual(35);
+    expect(NumberFunction.sum(num, id, 31, nullField).get(model)).toEqual(35);
   });
 
   it('number minus value', () => {

@@ -5,7 +5,12 @@ import { Getter, interceptGetter } from 'Getter';
 import { interceptSetter, Setter } from 'Setter';
 import { DslBuilder } from 'DslBuilder';
 import { BooleanFunction } from 'BooleanFunction';
-import { DefaultMetadata } from 'DefaultMetadata';
+import { FunctionMetadata } from 'FunctionMetadata';
+import { BinaryMetadata } from 'BinaryMetadata';
+import { EQ, FUNCTION, IS_NOT_NULL, IS_NULL, MATCH_ALL, MATCH_ANY, NONE_MATCH, NOT_EQ } from 'DefaultOperators';
+import { UnaryMetadata } from 'UnaryMetadata';
+import { ValueMetadata } from 'ValueMetadata';
+import { IterableMetadata } from 'IterableMetadata';
 
 export type FunctionConstructor<U, F extends Function<U>> = new (
   metadata: Metadata,
@@ -16,7 +21,7 @@ export type FunctionConstructor<U, F extends Function<U>> = new (
 export class Function<T> implements ContextAccessor<object, Context, T>, DslBuilder {
   get: Getter<object, Context, T | null>;
   set?: Setter<object, Context, T | null>;
-  metadata: Metadata;
+  readonly metadata: Metadata;
 
   public constructor(
     metadata: Metadata,
@@ -40,76 +45,102 @@ export class Function<T> implements ContextAccessor<object, Context, T>, DslBuil
     return new Function(metadata, () => null, setter);
   }
 
-  public static lift<U, F extends Function<U>>(constructor: FunctionConstructor<U, F>, value: U | Function<U>): F {
-    if (value instanceof Function) {
-      return new constructor(new DefaultMetadata(String(value)), value.get);
-    } else {
-      return new constructor(new DefaultMetadata(String(value)), () => value);
-    }
+  public static lift<U, F extends Function<U>>(constructor: FunctionConstructor<U, F>, value: U): F {
+    return new constructor(new ValueMetadata(value), () => value);
   }
 
   public mapTo<U, F extends Function<U>>(constructor: FunctionConstructor<U, F>, f: { (v: T | null): U }): F {
-    return new constructor(this.metadata, (obj, ctx) => f(this.get(obj, ctx)));
+    return new constructor(
+      new BinaryMetadata(this.metadata, FUNCTION, new FunctionMetadata(f.toString())),
+      (obj, ctx) => f(this.get(obj, ctx))
+    );
   }
 
   public isNull(): BooleanFunction {
-    return new BooleanFunction(this.metadata, (obj, ctx) => this.get(obj, ctx) === null);
+    return new BooleanFunction(new UnaryMetadata(this.metadata, IS_NULL), (obj, ctx) => this.get(obj, ctx) === null);
   }
 
   public isNotNull(): BooleanFunction {
-    return new BooleanFunction(this.metadata, (obj, ctx) => this.get(obj, ctx) !== null);
+    return new BooleanFunction(
+      new UnaryMetadata(this.metadata, IS_NOT_NULL),
+      (obj, ctx) => this.get(obj, ctx) !== null
+    );
   }
 
   public eq(value: T | Function<T>): BooleanFunction {
     if (value instanceof Function) {
-      return new BooleanFunction(this.metadata, (obj, ctx) => this.get(obj, ctx) === value.get(obj, ctx));
+      return new BooleanFunction(
+        new BinaryMetadata(this.metadata, EQ, value.metadata),
+        (obj, ctx) => this.get(obj, ctx) === value.get(obj, ctx)
+      );
     } else {
-      return new BooleanFunction(this.metadata, (obj, ctx) => this.get(obj, ctx) === value);
+      return new BooleanFunction(
+        new BinaryMetadata(this.metadata, EQ, new ValueMetadata(value)),
+        (obj, ctx) => this.get(obj, ctx) === value
+      );
     }
   }
 
   public notEq(value: T | Function<T>): BooleanFunction {
     if (value instanceof Function) {
-      return new BooleanFunction(this.metadata, (obj, ctx) => this.get(obj, ctx) !== value.get(obj, ctx));
+      return new BooleanFunction(
+        new BinaryMetadata(this.metadata, NOT_EQ, value.metadata),
+        (obj, ctx) => this.get(obj, ctx) !== value.get(obj, ctx)
+      );
     } else {
-      return new BooleanFunction(this.metadata, (obj, ctx) => this.get(obj, ctx) !== value);
+      return new BooleanFunction(
+        new BinaryMetadata(this.metadata, NOT_EQ, new ValueMetadata(value)),
+        (obj, ctx) => this.get(obj, ctx) !== value
+      );
     }
   }
 
   public matchAll(...values: (T | Function<T>)[]): BooleanFunction {
-    return new BooleanFunction(this.metadata, (obj, ctx) => {
-      return values.every(value => {
-        if (value instanceof Function) {
-          return this.get(obj, ctx) === value.get(obj, ctx);
-        } else {
-          return this.get(obj, ctx) === value;
-        }
-      });
-    });
+    const metadata = values.map(value => (value instanceof Function ? value.metadata : new ValueMetadata(value)));
+    return new BooleanFunction(
+      new BinaryMetadata(this.metadata, MATCH_ALL, new IterableMetadata(metadata)),
+      (obj, ctx) => {
+        return values.every(value => {
+          if (value instanceof Function) {
+            return this.get(obj, ctx) === value.get(obj, ctx);
+          } else {
+            return this.get(obj, ctx) === value;
+          }
+        });
+      }
+    );
   }
 
   public noneMatch(...values: (T | Function<T>)[]): BooleanFunction {
-    return new BooleanFunction(this.metadata, (obj, ctx) => {
-      return values.every(value => {
-        if (value instanceof Function) {
-          return this.get(obj, ctx) !== value.get(obj, ctx);
-        } else {
-          return this.get(obj, ctx) !== value;
-        }
-      });
-    });
+    const metadata = values.map(value => (value instanceof Function ? value.metadata : new ValueMetadata(value)));
+    return new BooleanFunction(
+      new BinaryMetadata(this.metadata, NONE_MATCH, new IterableMetadata(metadata)),
+      (obj, ctx) => {
+        return values.every(value => {
+          if (value instanceof Function) {
+            return this.get(obj, ctx) !== value.get(obj, ctx);
+          } else {
+            return this.get(obj, ctx) !== value;
+          }
+        });
+      }
+    );
   }
 
   public matchAny(...values: (T | Function<T>)[]): BooleanFunction {
-    return new BooleanFunction(this.metadata, (obj, ctx) => {
-      return values.some(value => {
-        if (value instanceof Function) {
-          return this.get(obj, ctx) === value.get(obj, ctx);
-        } else {
-          return this.get(obj, ctx) === value;
-        }
-      });
-    });
+    const metadata = values.map(value => (value instanceof Function ? value.metadata : new ValueMetadata(value)));
+    return new BooleanFunction(
+      new BinaryMetadata(this.metadata, MATCH_ANY, new IterableMetadata(metadata)),
+      (obj, ctx) => {
+        return values.some(value => {
+          if (value instanceof Function) {
+            return this.get(obj, ctx) === value.get(obj, ctx);
+          } else {
+            return this.get(obj, ctx) === value;
+          }
+        });
+      }
+    );
   }
 }
 

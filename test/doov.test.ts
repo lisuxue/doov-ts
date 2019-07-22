@@ -1,17 +1,15 @@
 import { Model, User } from './model';
-import { Field } from '../src/Field';
-import { StringFunction } from '../src/StringFunction';
-import { BooleanFunction } from '../src/BooleanFunction';
-import * as DOOV from '../src/doov';
+import { StringFunction } from 'StringFunction';
+import * as DOOV from 'doov';
 
 let model: Model;
 let user: User;
 
-const name = StringFunction.string(Field.field<Model, string>('user', 'name'));
-const a = BooleanFunction.boolean(Field.field<Model, boolean>('user', 'b'));
-const id = DOOV.number(Field.field<Model, number>('user', 'id'));
-const link1 = DOOV.string(Field.field<Model, string>('user', 'links', 0));
-const link2 = DOOV.string(Field.field<Model, string>('user', 'links', 1));
+const name = DOOV.string(DOOV.field<Model, string>('user', 'name'));
+const a = DOOV.boolean(DOOV.field<Model, boolean>('user', 'b'));
+const id = DOOV.number(DOOV.field<Model, number>('user', 'id'));
+const link1 = DOOV.string(DOOV.field<Model, string>('user', 'links', 0));
+const link2 = DOOV.string(DOOV.field<Model, string>('user', 'links', 1));
 
 beforeEach(() => {
   model = new Model();
@@ -84,35 +82,5 @@ describe('doov map', () => {
     const booleanMapping = DOOV.map(DOOV.matchNone(name.eq('test'), a.eq(false))).to(a);
     model = booleanMapping.execute(model);
     expect(model!.user!.b).toEqual(false);
-  });
-});
-
-describe('doov mappings', () => {
-  it('map to execute', () => {
-    const mappings = DOOV.mappings(
-      DOOV.map(id.mapTo(StringFunction, v => 'link of ' + v)).to(link1),
-      DOOV.map(name).to(link2)
-    );
-    model = mappings.execute(model);
-    expect(link1.get(model)).toEqual('link of 1');
-    expect(link2.get(model)).toEqual('test');
-  });
-});
-
-describe('doov conditional mappings', () => {
-  it('map to execute', () => {
-    const mappings = DOOV.when(name.matches('^t.+')).then(
-      DOOV.map(id.mapTo(StringFunction, v => 'link of ' + v)).to(link1),
-      DOOV.map(name).to(link2)
-    );
-    model = mappings.execute(model);
-    expect(link1.get(model)).toEqual('link of 1');
-    expect(link2.get(model)).toEqual('test');
-    model = link1.set!(model, null);
-    model = link2.set!(model, null);
-    model = name.set!(model, 'other');
-    model = mappings.execute(model);
-    expect(link1.get(model)).toBeNull();
-    expect(link2.get(model)).toBeNull();
   });
 });

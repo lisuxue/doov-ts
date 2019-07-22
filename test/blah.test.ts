@@ -1,4 +1,4 @@
-import { doov } from '../src/doov';
+import { doov } from 'doov';
 
 describe('blah', () => {
   it('works', () => {

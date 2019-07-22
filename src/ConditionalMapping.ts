@@ -1,19 +1,26 @@
 import { BooleanFunction } from 'BooleanFunction';
 import { Metadata } from 'Metadata';
-import { DefaultMetadata } from 'DefaultMetadata';
 import { Context } from 'Context';
 import { MappingRule } from 'MappingRule';
+import { ConditionalMappingMetadata } from 'ConditionalMappingMetadata';
+import { WhenMetadata } from 'WhenMetadata';
+import { MultipleMappingsMetadata } from 'MultipleMappingsMetadata';
+import { ELSE, THEN } from 'DefaultOperators';
 
 export class ConditionalMapping implements MappingRule {
   condition: BooleanFunction;
-  metadata: Metadata;
+  metadata: ConditionalMappingMetadata;
   mappings: MappingRule[];
   elseMappings?: MappingRule[];
 
   constructor(condition: BooleanFunction, ...mappings: MappingRule[]) {
     this.condition = condition;
     this.mappings = mappings;
-    this.metadata = new DefaultMetadata('conditional');
+    const map: Metadata[] = mappings.map(m => m.metadata);
+    this.metadata = new ConditionalMappingMetadata(
+      new WhenMetadata(condition.metadata),
+      new MultipleMappingsMetadata(map, THEN)
+    );
   }
 
   execute<M extends object>(model: M, ctx?: Context): M {
@@ -26,8 +33,14 @@ export class ConditionalMapping implements MappingRule {
     }
   }
 
-  otherwise(...mappings: MappingRule[]): ConditionalMapping {
+  otherwise(...mappings: MappingRule[]): this {
     this.elseMappings = mappings;
+    const map: Metadata[] = mappings.map(m => m.metadata);
+    this.metadata = new ConditionalMappingMetadata(
+      this.metadata.whenMetadata,
+      this.metadata.thenMetadata,
+      new MultipleMappingsMetadata(map, ELSE)
+    );
     return this;
   }
 }

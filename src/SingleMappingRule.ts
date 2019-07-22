@@ -1,19 +1,19 @@
 import { Function } from 'Function';
-import { Metadata } from 'Metadata';
-import { DefaultMetadata } from 'DefaultMetadata';
 import { Context } from 'Context';
 import { DefaultContext } from 'DefaultContext';
 import { MappingRule } from 'MappingRule';
+import { SingleMappingMetadata } from 'SingleMappingMetadata';
+import { TO } from 'DefaultOperators';
 
 export class SingleMappingRule<T> implements MappingRule {
   private input: Function<T>;
   private output: Function<T>;
-  metadata: Metadata;
+  readonly metadata: SingleMappingMetadata;
 
   constructor(input: Function<T>, output: Function<T>) {
     this.input = input;
     this.output = output;
-    this.metadata = new DefaultMetadata('mapping');
+    this.metadata = new SingleMappingMetadata(input.metadata, output.metadata);
   }
 
   public execute<M extends object>(model: M, ctx?: Context): M {
@@ -23,5 +23,9 @@ export class SingleMappingRule<T> implements MappingRule {
     } else {
       return model;
     }
+  }
+
+  get readable(): string {
+    return this.input.metadata + TO.readable + this.output.metadata;
   }
 }

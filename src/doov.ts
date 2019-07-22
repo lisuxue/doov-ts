@@ -6,12 +6,13 @@ import { ContextAccessor } from 'ContextAccessor';
 import { BooleanFunction } from 'BooleanFunction';
 import { NumberFunction } from 'NumberFunction';
 import { StringFunction } from 'StringFunction';
-import { DefaultMetadata } from 'DefaultMetadata';
 import { Function, FunctionConstructor } from 'Function';
 import { StepWhen } from 'StepWhen';
 import { StepMap } from 'StepMap';
 import { MappingRule } from 'MappingRule';
 import { Mappings } from 'Mappings';
+import { NaryMetadata } from 'NaryMetadata';
+import { MATCH_ALL, MATCH_ANY, NONE_MATCH } from 'DefaultOperators';
 
 export const doov = (a: number, b: number) => {
   if ('development' === process.env.NODE_ENV) {
@@ -30,7 +31,7 @@ export function field<T extends object, V>(...path: (string | number)[]): Field<
   return Field.field(...path);
 }
 
-export function lift<U, F extends Function<U>>(constructor: FunctionConstructor<U, F>, value: U | Function<U>): F {
+export function lift<U, F extends Function<U>>(constructor: FunctionConstructor<U, F>, value: U): F {
   return Function.lift(constructor, value);
 }
 
@@ -59,7 +60,7 @@ export function mappings(...mappings: MappingRule[]): Mappings {
 }
 
 export function matchAny(...values: BooleanFunction[]): BooleanFunction {
-  return new BooleanFunction(new DefaultMetadata('matchAny'), (obj, ctx) => {
+  return new BooleanFunction(new NaryMetadata(values.map(value => value.metadata), MATCH_ANY), (obj, ctx) => {
     return values.some(value => {
       const v = value.get(obj, ctx);
       return v != null ? v : false;
@@ -68,7 +69,7 @@ export function matchAny(...values: BooleanFunction[]): BooleanFunction {
 }
 
 export function matchAll(...values: BooleanFunction[]): BooleanFunction {
-  return new BooleanFunction(new DefaultMetadata('matchAll'), (obj, ctx) => {
+  return new BooleanFunction(new NaryMetadata(values.map(value => value.metadata), MATCH_ALL), (obj, ctx) => {
     return values.every(value => {
       const v = value.get(obj, ctx);
       return v != null ? v : false;
@@ -77,7 +78,7 @@ export function matchAll(...values: BooleanFunction[]): BooleanFunction {
 }
 
 export function matchNone(...values: BooleanFunction[]): BooleanFunction {
-  return new BooleanFunction(new DefaultMetadata('noneMatch'), (obj, ctx) => {
+  return new BooleanFunction(new NaryMetadata(values.map(value => value.metadata), NONE_MATCH), (obj, ctx) => {
     return values.every(value => {
       const v = value.get(obj, ctx);
       return v != null ? !v : false;

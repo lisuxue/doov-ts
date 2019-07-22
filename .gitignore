@@ -4,6 +4,7 @@ node_modules
 .rpt2_cache
 dist
 .idea
+.vscode
 
 junit.xml
 coverage

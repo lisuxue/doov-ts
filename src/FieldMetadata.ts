@@ -1,31 +1,14 @@
-import { Metadata } from 'Metadata';
-import { Operator } from 'Operator';
 import { pathString } from 'Paths';
+import { AbstractMetadata } from 'AbstractMetadata';
 
-export class FieldMetadata implements Metadata {
-  private readonly path: string;
+export class FieldMetadata extends AbstractMetadata {
+  readonly type = 'FIELD';
+  readonly path: (string | number)[];
+  readonly readable: string;
 
-  constructor(path: (string | number)[]) {
-    this.path = pathString(...path);
-  }
-
-  children(): Metadata[] {
-    return [];
-  }
-
-  left(): Metadata[] {
-    return [];
-  }
-
-  operator(): Operator | undefined {
-    return undefined;
-  }
-
-  readable(): string {
-    return this.path;
-  }
-
-  right(): Metadata[] {
-    return [];
+  public constructor(path: (string | number)[]) {
+    super();
+    this.readable = pathString(...path);
+    this.path = [...path];
   }
 }

@@ -1,13 +1,15 @@
 import { Model, User } from './model';
-import { Field } from '../src/Field';
-import { BooleanFunction } from '../src/BooleanFunction';
-import { Function } from '../src/Function';
+import { BooleanFunction } from 'BooleanFunction';
+import { DefaultContext } from 'DefaultContext';
+import * as DOOV from 'doov';
 
 let model: Model;
 let user: User;
 
-const A = Function.lift(BooleanFunction, true);
-const B = BooleanFunction.boolean(Field.field<Model, boolean>('user', 'b'));
+const trueFunction = DOOV.lift(BooleanFunction, true);
+const falseFunction = DOOV.lift(BooleanFunction, false);
+const trueField = DOOV.boolean(DOOV.field<Model, boolean>('user', 'b'));
+const nullField = DOOV.boolean(DOOV.field<Model, boolean>('user', 'a'));
 
 beforeEach(() => {
   model = new Model();
@@ -18,21 +20,189 @@ beforeEach(() => {
 });
 
 describe('boolean function', () => {
-  it('boolean get eq', () => {
-    expect(B.get(model)).toEqual(true);
-    expect(B.isNotNull().get(model)).toEqual(true);
-    expect(B.eq(true).get(model)).toEqual(true);
-    const b = B.isNotNull()
-      .and(B.eq(true))
+  it('get eq', () => {
+    expect(trueField.get(model)).toEqual(true);
+    expect(trueField.isNotNull().get(model)).toEqual(true);
+    expect(trueField.eq(true).get(model)).toEqual(true);
+    const b = trueField
+      .isNotNull()
+      .and(trueField.eq(true))
       .get(model);
     expect(b).toEqual(true);
   });
 
-  it('boolean and', () => {
-    expect(B.and(A).get(model)).toEqual(true);
+  it('and true true', () => {
+    expect(trueField.and(trueFunction).get(model)).toEqual(true);
   });
 
-  it('boolean or', () => {
-    expect(B.or(false).get(model)).toEqual(true);
+  it('and true false', () => {
+    expect(trueField.and(falseFunction).get(model)).toEqual(false);
+  });
+
+  it('and false true', () => {
+    expect(falseFunction.and(trueFunction).get(model)).toEqual(false);
+  });
+
+  it('or true true', () => {
+    expect(trueField.or(true).get(model)).toEqual(true);
+  });
+
+  it('or true false', () => {
+    expect(trueField.or(false).get(model)).toEqual(true);
+  });
+
+  it('or false false ', () => {
+    expect(falseFunction.or(false).get(model, new DefaultContext(true))).toEqual(false);
+  });
+
+  it('or false true function', () => {
+    expect(falseFunction.or(trueField).get(model)).toEqual(true);
+  });
+
+  it('not true', () => {
+    expect(trueFunction.not().get(model)).toEqual(false);
+  });
+  it('not false', () => {
+    expect(falseFunction.not().get(model)).toEqual(true);
+  });
+});
+
+describe('boolean function with left null', () => {
+  it('get eq', () => {
+    expect(nullField.get(model)).toBeNull();
+    expect(nullField.isNull().get(model)).toEqual(true);
+    expect(nullField.eq(true).get(model)).toEqual(false);
+    expect(nullField.eq(false).get(model)).toEqual(false);
+    const b = trueField
+      .isNotNull()
+      .and(nullField)
+      .get(model);
+    expect(b).toEqual(false);
+  });
+
+  it('null', () => {
+    expect(nullField.get(model)).toBeNull();
+  });
+
+  it('and null true', () => {
+    expect(nullField.and(trueFunction).get(model)).toEqual(false);
+  });
+
+  it('and null false', () => {
+    expect(nullField.and(falseFunction).get(model)).toEqual(false);
+  });
+
+  it('and true null', () => {
+    expect(trueFunction.and(nullField).get(model)).toEqual(false);
+  });
+
+  it('or null true', () => {
+    expect(nullField.or(true).get(model)).toEqual(false);
+  });
+
+  it('or null false', () => {
+    expect(nullField.or(false).get(model)).toEqual(false);
+  });
+
+  it('or null true function', () => {
+    expect(nullField.or(trueField).get(model)).toEqual(false);
+  });
+
+  it('not null', () => {
+    expect(nullField.not().get(model)).toEqual(false);
+  });
+});
+
+describe('boolean function with short circuit', () => {
+  it('boolean get eq', () => {
+    expect(trueField.get(model, new DefaultContext(true))).toEqual(true);
+    expect(trueField.isNotNull().get(model, new DefaultContext(true))).toEqual(true);
+    expect(trueField.eq(true).get(model, new DefaultContext(true))).toEqual(true);
+    const b = trueField
+      .isNotNull()
+      .and(trueField.eq(true))
+      .get(model, new DefaultContext(true));
+    expect(b).toEqual(true);
+  });
+
+  it('and true true', () => {
+    expect(trueField.and(trueFunction).get(model, new DefaultContext(true))).toEqual(true);
+  });
+
+  it('and true false', () => {
+    expect(trueField.and(falseFunction).get(model, new DefaultContext(true))).toEqual(false);
+  });
+
+  it('and false true', () => {
+    expect(falseFunction.and(trueFunction).get(model, new DefaultContext(true))).toEqual(false);
+  });
+
+  it('or true true', () => {
+    expect(trueField.or(true).get(model, new DefaultContext(true))).toEqual(true);
+  });
+
+  it('or true false', () => {
+    expect(trueField.or(false).get(model, new DefaultContext(true))).toEqual(true);
+  });
+
+  it('or false false ', () => {
+    expect(falseFunction.or(false).get(model, new DefaultContext(true))).toEqual(false);
+  });
+
+  it('or false true function', () => {
+    expect(falseFunction.or(trueField).get(model, new DefaultContext(true))).toEqual(true);
+  });
+
+  it('not true', () => {
+    expect(trueFunction.not().get(model, new DefaultContext(true))).toEqual(false);
+  });
+  it('not false', () => {
+    expect(falseFunction.not().get(model, new DefaultContext(true))).toEqual(true);
+  });
+});
+
+describe('boolean function with left null with short circuit', () => {
+  it('get eq', () => {
+    expect(nullField.get(model, new DefaultContext(true))).toBeNull();
+    expect(nullField.isNull().get(model, new DefaultContext(true))).toEqual(true);
+    expect(nullField.eq(true).get(model, new DefaultContext(true))).toEqual(false);
+    expect(nullField.eq(false).get(model, new DefaultContext(true))).toEqual(false);
+    const b = trueField
+      .isNotNull()
+      .and(nullField)
+      .get(model, new DefaultContext(true));
+    expect(b).toEqual(false);
+  });
+
+  it('null', () => {
+    expect(nullField.get(model, new DefaultContext(true))).toBeNull();
+  });
+
+  it('and null true', () => {
+    expect(nullField.and(trueFunction).get(model, new DefaultContext(true))).toEqual(false);
+  });
+
+  it('and null false', () => {
+    expect(nullField.and(falseFunction).get(model, new DefaultContext(true))).toEqual(false);
+  });
+
+  it('and true null', () => {
+    expect(trueFunction.and(nullField).get(model, new DefaultContext(true))).toEqual(false);
+  });
+
+  it('or null true', () => {
+    expect(nullField.or(true).get(model, new DefaultContext(true))).toEqual(false);
+  });
+
+  it('or null false', () => {
+    expect(nullField.or(false).get(model, new DefaultContext(true))).toEqual(false);
+  });
+
+  it('or null true function', () => {
+    expect(nullField.or(trueField).get(model, new DefaultContext(true))).toEqual(false);
+  });
+
+  it('not null', () => {
+    expect(nullField.not().get(model, new DefaultContext(true))).toEqual(false);
   });
 });

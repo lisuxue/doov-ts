@@ -1,15 +1,14 @@
 import { MappingRule } from 'MappingRule';
-import { Metadata } from 'Metadata';
 import { Context } from 'Context';
-import { DefaultMetadata } from 'DefaultMetadata';
+import { MultipleMappingsMetadata } from 'MultipleMappingsMetadata';
 
 export class Mappings implements MappingRule {
-  metadata: Metadata;
-  mappings: MappingRule[];
+  readonly metadata: MultipleMappingsMetadata;
+  readonly mappings: MappingRule[];
 
-  constructor(...mappings: MappingRule[]) {
-    this.metadata = new DefaultMetadata('mappings');
-    this.mappings = mappings;
+  constructor(...mappings: (Mappings | MappingRule)[]) {
+    this.mappings = mappings.flatMap(value => (value instanceof Mappings ? value.mappings : [value]));
+    this.metadata = new MultipleMappingsMetadata(this.mappings.map(value => value.metadata));
   }
 
   execute<M extends object>(model: M, ctx?: Context): M {
