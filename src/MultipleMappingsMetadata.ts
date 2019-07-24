@@ -12,7 +12,7 @@ export class MultipleMappingsMetadata extends AbstractMetadata {
   }
 
   get readable(): string {
-    return this.mappings.map(m => m.readable).join(',');
+    return this.mappings.map(m => m.readable).join(' , ');
   }
 
   children(): Metadata[] {

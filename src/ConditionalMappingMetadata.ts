@@ -31,6 +31,7 @@ export class ConditionalMappingMetadata extends AbstractMetadata {
       this.whenMetadata.readable +
       ' ' +
       THEN.readable +
+      ' ' +
       this.thenMetadata.readable +
       (this.elseMetadata != undefined ? ' ' + ELSE.readable + ' ' + this.elseMetadata.readable : '')
     );

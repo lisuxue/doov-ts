@@ -1,6 +1,6 @@
 import { AbstractMetadata } from 'AbstractMetadata';
 import { Metadata } from 'Metadata';
-import { SINGLE_MAPPING } from 'DefaultOperators';
+import { SINGLE_MAPPING, TO } from 'DefaultOperators';
 
 export class SingleMappingMetadata extends AbstractMetadata {
   readonly type = 'SINGLE_MAPPING';
@@ -14,7 +14,7 @@ export class SingleMappingMetadata extends AbstractMetadata {
   }
 
   get readable(): string {
-    return this.sourceMetadata.readable + ' ' + this.operator!.readable + ' ' + this.targetMetadata.readable;
+    return this.sourceMetadata.readable + ' ' + TO.readable + ' ' + this.targetMetadata.readable;
   }
 
   children(): Metadata[] {

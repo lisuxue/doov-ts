@@ -3,7 +3,6 @@ import { Context } from 'Context';
 import { DefaultContext } from 'DefaultContext';
 import { MappingRule } from 'MappingRule';
 import { SingleMappingMetadata } from 'SingleMappingMetadata';
-import { TO } from 'DefaultOperators';
 
 export class SingleMappingRule<T> implements MappingRule {
   private input: Function<T>;
@@ -23,9 +22,5 @@ export class SingleMappingRule<T> implements MappingRule {
     } else {
       return model;
     }
-  }
-
-  get readable(): string {
-    return this.input.metadata + TO.readable + this.output.metadata;
   }
 }
