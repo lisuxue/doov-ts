@@ -1,5 +1,3 @@
-import { log } from 'Utils';
-import moment from 'moment';
 import { Field } from 'Field';
 import { Context } from 'Context';
 import { ContextAccessor } from 'ContextAccessor';
@@ -13,15 +11,6 @@ import { MappingRule } from 'MappingRule';
 import { Mappings } from 'Mappings';
 import { NaryMetadata } from 'NaryMetadata';
 import { MATCH_ALL, MATCH_ANY, NONE_MATCH } from 'DefaultOperators';
-
-export const doov = (a: number, b: number) => {
-  if ('development' === process.env.NODE_ENV) {
-    log('boop');
-  }
-  log('prod');
-  log(moment().fromNow());
-  return a + b;
-};
 
 export function f<T>(accessor: ContextAccessor<object, Context, T>): Function<T> {
   return Function.function(accessor);

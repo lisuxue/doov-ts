@@ -69,7 +69,5 @@
     "typedoc": "0.14.2",
     "typescript": "3.4.5"
   },
-  "dependencies": {
-    "moment": "2.24.0"
-  }
+  "dependencies": {}
 }
