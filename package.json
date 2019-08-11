@@ -24,8 +24,8 @@
     "prebuild": "rimraf dist",
     "build": "rollup -c rollup.config.ts --environment INCLUDE_DEPS,BUILD:production && typedoc --out docs --mode file src",
     "test": "jest --watch",
-    "test-ci": "jest test --coverage --ci --reporters=default --reporters=jest-junit && prettier --check \"{./src/**/*.tsx,./src/**/*.ts,./src/**/*.json}\" && eslint ./src/**",
-    "lint": "eslint ./src/**",
+    "test-ci": "jest test --coverage --ci --reporters=default --reporters=jest-junit && prettier --check \"{./src/**/*.tsx,./src/**/*.ts,./src/**/*.json}\" && eslint \"./src/**\"",
+    "lint": "eslint \"./src/**\"",
     "prettier": "prettier --write \"{./src/**/*.tsx,./src/**/*.ts,./src/**/*.json}\""
   },
   "peerDependencies": {},
