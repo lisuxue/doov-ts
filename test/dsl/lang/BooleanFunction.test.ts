@@ -8,8 +8,9 @@ let user: User;
 
 const trueFunction = DOOV.lift(BooleanFunction, true);
 const falseFunction = DOOV.lift(BooleanFunction, false);
+const nullField = DOOV.lift(BooleanFunction, null as any);
 const trueField = DOOV.boolean(DOOV.field<Model, boolean>('user', 'b'));
-const nullField = DOOV.boolean(DOOV.field<Model, boolean>('user', 'a'));
+const undefinedField = DOOV.boolean(DOOV.field<Model, boolean>('user', 'a'));
 
 beforeEach(() => {
   model = new Model();
@@ -78,6 +79,10 @@ describe('boolean function with left null', () => {
       .and(nullField)
       .get(model);
     expect(b).toEqual(false);
+  });
+
+  it('undefined', () => {
+    expect(undefinedField.get(model)).toBeUndefined();
   });
 
   it('null', () => {

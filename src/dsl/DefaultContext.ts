@@ -12,11 +12,11 @@ export class DefaultContext implements Context {
     this.shortCircuit = shortCircuit;
   }
 
-  addGetValue(metadata: Metadata, value: any) {
+  addGetValue(metadata: Metadata, value: unknown) {
     this.getValues.push({ metadata, value });
   }
 
-  addSetValue(metadata: Metadata, value: any) {
+  addSetValue(metadata: Metadata, value: unknown) {
     this.setValues.push({ metadata, value });
   }
 }

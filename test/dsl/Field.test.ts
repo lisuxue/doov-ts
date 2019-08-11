@@ -20,11 +20,17 @@ describe('get field', () => {
   });
 
   it('get from array field undefined', () => {
-    return expect(arrayField.get(model)).toBeNull();
+    return expect(arrayField.get(model)).toBeUndefined();
   });
 
   it('get from field array not null', () => {
     user.links = [];
+    return expect(arrayField.get(model)).toBeUndefined();
+  });
+
+  it('get from field array null', () => {
+    user.links = [];
+    user.links.push(null as any);
     return expect(arrayField.get(model)).toBeNull();
   });
 
@@ -43,7 +49,12 @@ describe('set field', () => {
 
   it('set from array undefined field', () => {
     let str = arrayField.get(model);
-    return expect(str).toBeNull();
+    return expect(str).toBeUndefined();
+  });
+
+  it('set null from array field', () => {
+    let mdl = arrayField.set(model, null);
+    expect(mdl.user!.links![0]).toBeNull();
   });
 
   it('set from array field', () => {
