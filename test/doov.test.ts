@@ -1,5 +1,5 @@
 import { Model, User } from './model';
-import { StringFunction } from 'StringFunction';
+import { StringFunction } from 'dsl/lang/StringFunction';
 import * as DOOV from 'doov';
 
 let model: Model;

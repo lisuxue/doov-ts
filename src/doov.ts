@@ -1,16 +1,16 @@
-import { Field } from 'Field';
-import { Context } from 'Context';
-import { ContextAccessor } from 'ContextAccessor';
-import { BooleanFunction } from 'BooleanFunction';
-import { NumberFunction } from 'NumberFunction';
-import { StringFunction } from 'StringFunction';
-import { Function, FunctionConstructor } from 'Function';
-import { StepWhen } from 'StepWhen';
-import { StepMap } from 'StepMap';
-import { MappingRule } from 'MappingRule';
-import { Mappings } from 'Mappings';
-import { NaryMetadata } from 'NaryMetadata';
-import { MATCH_ALL, MATCH_ANY, NONE_MATCH } from 'DefaultOperators';
+import { Field } from 'dsl/Field';
+import { Context } from 'dsl/Context';
+import { ContextAccessor } from 'dsl/ContextAccessor';
+import { BooleanFunction } from 'dsl/lang/BooleanFunction';
+import { NumberFunction } from 'dsl/lang/NumberFunction';
+import { StringFunction } from 'dsl/lang/StringFunction';
+import { Function, FunctionConstructor } from 'dsl/lang/Function';
+import { StepWhen } from 'dsl/lang/StepWhen';
+import { StepMap } from 'dsl/lang/StepMap';
+import { MappingRule } from 'dsl/lang/MappingRule';
+import { Mappings } from 'dsl/lang/Mappings';
+import { NaryMetadata } from 'dsl/meta/NaryMetadata';
+import { MATCH_ALL, MATCH_ANY, NONE_MATCH } from 'dsl/lang/DefaultOperators';
 
 export function f<T>(accessor: ContextAccessor<object, Context, T>): Function<T> {
   return Function.function(accessor);

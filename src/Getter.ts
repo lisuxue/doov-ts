@@ -1,5 +1,5 @@
-import { Context } from 'Context';
-import { Metadata } from 'Metadata';
+import { Context } from 'dsl/Context';
+import { Metadata } from 'dsl/meta/Metadata';
 import { hasProperty } from 'Utils';
 
 export interface Getter<T extends object = object, C extends Context = Context, V = any> {

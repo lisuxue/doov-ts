@@ -1,5 +1,5 @@
 import { hasProperty, isInteger } from 'Utils';
-import { Context } from 'Context';
+import { Context } from 'dsl/Context';
 import { Getter } from 'Getter';
 import { Setter } from 'Setter';
 
