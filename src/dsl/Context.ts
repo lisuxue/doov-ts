@@ -2,7 +2,7 @@ import { Metadata } from 'dsl/meta/Metadata';
 
 export interface ValueAccess {
   metadata: Metadata;
-  value: any;
+  value: unknown;
 }
 
 export interface Context {
@@ -11,6 +11,6 @@ export interface Context {
   getValues: ValueAccess[];
   setValues: ValueAccess[];
 
-  addGetValue(metadata: Metadata, value: any): void;
-  addSetValue(metadata: Metadata, value: any): void;
+  addGetValue(metadata: Metadata, value: unknown): void;
+  addSetValue(metadata: Metadata, value: unknown): void;
 }

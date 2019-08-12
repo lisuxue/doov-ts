@@ -92,7 +92,7 @@ describe('string function', () => {
   });
   it('string composed', () => {
     expect(name.get(model)).toEqual('test');
-    expect(link1.get(model)).toBeNull();
+    expect(link1.get(model)).toBeUndefined();
     model = link1.set!(model, 'test');
     expect(name.eq(link1).get(model)).toEqual(true);
     model = name.set!(model, 'other test');

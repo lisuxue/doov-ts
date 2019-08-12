@@ -4,6 +4,6 @@ import { Setter } from 'Setter';
 import { DslBuilder } from 'dsl/DslBuilder';
 
 export interface ContextAccessor<T extends object, C extends Context, V> extends DslBuilder {
-  get: Getter<T, C, V | null>;
-  set?: Setter<T, C, V | null>;
+  get: Getter<T, C, V | null | undefined>;
+  set?: Setter<T, C, V | null | undefined>;
 }

@@ -10,8 +10,11 @@ import { BinaryMetadata } from 'dsl/meta/BinaryMetadata';
 import {
   EQ,
   FUNCTION,
+  HAS_VALUE,
+  IS_DEFINED,
   IS_NOT_NULL,
   IS_NULL,
+  IS_UNDEFINED,
   MATCH_ALL,
   MATCH_ANY,
   NONE_MATCH,
@@ -28,14 +31,14 @@ export type FunctionConstructor<U, F extends Function<U>> = new (
 ) => F;
 
 export class Function<T> implements ContextAccessor<object, Context, T>, DslBuilder {
-  get: Getter<object, Context, T | null>;
-  set?: Setter<object, Context, T | null>;
+  get: Getter<object, Context, T | null | undefined>;
+  set?: Setter<object, Context, T | null | undefined>;
   readonly metadata: Metadata;
 
   public constructor(
     metadata: Metadata,
-    getter: Getter<object, Context, T | null>,
-    setter?: Setter<object, Context, T | null>
+    getter: Getter<object, Context, T | null | undefined>,
+    setter?: Setter<object, Context, T | null | undefined>
   ) {
     this.metadata = metadata;
     this.get = interceptGetter(metadata, getter);
@@ -50,7 +53,7 @@ export class Function<T> implements ContextAccessor<object, Context, T>, DslBuil
     return new Function(metadata, getter);
   }
 
-  public static consumer<U>(metadata: Metadata, setter: Setter<object, Context, U | null>): Function<U> {
+  public static consumer<U>(metadata: Metadata, setter: Setter<object, Context, U | null | undefined>): Function<U> {
     return new Function(metadata, () => null, setter);
   }
 
@@ -58,10 +61,38 @@ export class Function<T> implements ContextAccessor<object, Context, T>, DslBuil
     return new constructor(new ValueMetadata(value), () => value);
   }
 
-  public mapTo<U, F extends Function<U>>(constructor: FunctionConstructor<U, F>, f: { (v: T | null): U }): F {
+  public mapTo<U, F extends Function<U>>(
+    constructor: FunctionConstructor<U, F>,
+    f: { (v: T | null | undefined): U }
+  ): F {
     return new constructor(
       new BinaryMetadata(this.metadata, FUNCTION, new FunctionMetadata(f.toString())),
       (obj, ctx) => f(this.get(obj, ctx))
+    );
+  }
+
+  public hasValue(): BooleanFunction {
+    return new BooleanFunction(new UnaryMetadata(this.metadata, HAS_VALUE), (obj, ctx) => {
+      const value = this.get(obj, ctx);
+      return value !== undefined && value !== null;
+    });
+  }
+
+  public isNullOrUndefined(): BooleanFunction {
+    return this.isNull().or(this.isUndefined());
+  }
+
+  public isDefined(): BooleanFunction {
+    return new BooleanFunction(new UnaryMetadata(this.metadata, IS_DEFINED), (obj, ctx) => {
+      const value = this.get(obj, ctx);
+      return value !== undefined;
+    });
+  }
+
+  public isUndefined(): BooleanFunction {
+    return new BooleanFunction(
+      new UnaryMetadata(this.metadata, IS_UNDEFINED),
+      (obj, ctx) => this.get(obj, ctx) === undefined
     );
   }
 
@@ -176,7 +207,7 @@ export function condition<T, F extends Function<T>, V>(
       const v = left.get(obj, ctx);
       if (v != null) {
         const searchString = right.get(obj, ctx);
-        if (searchString != null) {
+        if (searchString != undefined || searchString != null) {
           return predicate(v, searchString);
         } else {
           return nullCase;
@@ -188,7 +219,7 @@ export function condition<T, F extends Function<T>, V>(
   } else {
     return (obj, ctx) => {
       const v = left.get(obj, ctx);
-      if (v != null) {
+      if (v != undefined || v != null) {
         return predicate(v, right);
       } else {
         return nullCase;

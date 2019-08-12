@@ -36,7 +36,7 @@ export function pathString(...path: (string | number)[]): string {
  * @param path
  */
 export function getPath<T>(obj: any, ...path: (string | number)[]): T {
-  return path.reduce((xs, x) => (xs && xs[x] ? xs[x] : null), obj);
+  return path.reduce((xs, x) => (xs && xs[x] !== undefined ? xs[x] : undefined), obj);
 }
 
 /**
@@ -48,7 +48,7 @@ export function getPathPromise<T>(obj: any, ...path: (string | number)[]): Promi
   return path.reduce((previousPromise, nextID) => {
     return previousPromise.then(xs => {
       return new Promise((resolve, reject) => {
-        xs && xs[nextID] ? resolve(xs[nextID]) : reject(undefined);
+        xs && xs[nextID] !== undefined ? resolve(xs[nextID]) : reject(undefined);
       });
     });
   }, Promise.resolve(obj)) as Promise<T>;
@@ -64,7 +64,7 @@ export function getPathPromise<T>(obj: any, ...path: (string | number)[]): Promi
  * @param val value
  * @param obj target object
  */
-export function setProp<T>(prop: string | number, val: any, obj: T): T {
+export function setProp<T>(prop: string | number, val: unknown, obj: T): T {
   const result = { ...obj };
   (result as any)[prop] = val;
   return result;
@@ -76,7 +76,7 @@ export function setProp<T>(prop: string | number, val: any, obj: T): T {
  * @param val promise
  * @param obj target object
  */
-export function setPropPromise<T>(prop: string | number, val: Promise<any>, obj: T): Promise<T> {
+export function setPropPromise<T>(prop: string | number, val: Promise<unknown>, obj: T): Promise<T> {
   return val.then(value => {
     const result = { ...obj };
     (result as any)[prop] = value;
@@ -90,7 +90,11 @@ export function setPropPromise<T>(prop: string | number, val: Promise<any>, obj:
  * @param val promise
  * @param path
  */
-export function setPathPromise<T extends object>(obj: T, val: Promise<any>, ...path: (string | number)[]): Promise<T> {
+export function setPathPromise<T extends object>(
+  obj: T,
+  val: Promise<unknown>,
+  ...path: (string | number)[]
+): Promise<T> {
   const idx = path[0];
   if (path.length > 1) {
     let nextObj = obj != null && hasProperty(idx, obj) ? (obj as any)[idx] : isInteger(path[1]) ? [] : {};
@@ -105,7 +109,7 @@ export function setPathPromise<T extends object>(obj: T, val: Promise<any>, ...p
  * @param val value
  * @param path
  */
-export function setPathPromiseValue<T extends object>(obj: T, val: any, ...path: (string | number)[]): Promise<T> {
+export function setPathPromiseValue<T extends object>(obj: T, val: unknown, ...path: (string | number)[]): Promise<T> {
   return setPathPromise(obj, Promise.resolve(val), ...path);
 }
 
@@ -115,7 +119,7 @@ export function setPathPromiseValue<T extends object>(obj: T, val: any, ...path:
  * @param val value
  * @param path
  */
-export function setPath<T extends object>(obj: T, val: any, ...path: (string | number)[]): T {
+export function setPath<T extends object>(obj: T, val: unknown, ...path: (string | number)[]): T {
   const idx = path[0];
   if (path.length > 1) {
     let nextObj = obj != null && hasProperty(idx, obj) ? (obj as any)[idx] : isInteger(path[1]) ? [] : {};

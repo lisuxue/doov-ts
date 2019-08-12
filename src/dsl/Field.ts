@@ -6,8 +6,8 @@ import { Setter } from 'Setter';
 import { FieldMetadata } from 'dsl/meta/FieldMetadata';
 
 export class Field<T extends object = object, C extends Context = Context, V = {}> implements ContextAccessor<T, C, V> {
-  public get: Getter<T, C, V | null>;
-  public set: Setter<T, C, V | null>;
+  public get: Getter<T, C, V | null | undefined>;
+  public set: Setter<T, C, V | null | undefined>;
   public readonly metadata: FieldMetadata;
 
   public constructor(path: (string | number)[]) {
