@@ -14,7 +14,8 @@ export type MetadataType =
   | 'SINGLE_MAPPING'
   | 'MULTIPLE_MAPPING'
   | 'CONDITIONAL_MAPPING'
-  | 'FUNCTION';
+  | 'FUNCTION'
+  | 'TYPE_CONVERTER';
 
 export interface Metadata extends Readable {
   readonly type: MetadataType;

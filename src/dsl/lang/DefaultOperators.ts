@@ -42,3 +42,4 @@ export const PLUS: Operator = { readable: '+' };
 export const MINUS: Operator = { readable: '-' };
 export const TIMES: Operator = { readable: '*' };
 export const TO: Operator = { readable: '->' };
+export const USING: Operator = { readable: 'using' };

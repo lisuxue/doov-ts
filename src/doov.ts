@@ -11,6 +11,8 @@ import { MappingRule } from 'dsl/lang/MappingRule';
 import { Mappings } from 'dsl/lang/Mappings';
 import { NaryMetadata } from 'dsl/meta/NaryMetadata';
 import { MATCH_ALL, MATCH_ANY, NONE_MATCH } from 'dsl/lang/DefaultOperators';
+import { BiStepMap } from 'dsl/lang/BiStepMap';
+import { ConverterFunction, TypeConverter } from 'dsl/lang/TypeConverter';
 
 export function f<T>(accessor: ContextAccessor<object, Context, T>): Function<T> {
   return Function.function(accessor);
@@ -40,8 +42,21 @@ export function when(condition: BooleanFunction): StepWhen {
   return new StepWhen(condition);
 }
 
-export function map<T>(input: Function<T>): StepMap<T> {
-  return new StepMap(input);
+export function map<T, U>(input: Function<T>): StepMap<T>;
+export function map<T, U>(input: Function<T>, input2: Function<U>): BiStepMap<T, U>;
+export function map<T, U>(input: Function<T>, input2?: Function<U>) {
+  if (input2) {
+    return new BiStepMap(input, input2);
+  } else {
+    return new StepMap(input);
+  }
+}
+
+export function converter<T, U, V>(
+  converter: ConverterFunction<T, U, V>,
+  description?: string
+): TypeConverter<T, U, V> {
+  return new TypeConverter(converter, description);
 }
 
 export function mappings(...mappings: MappingRule[]): Mappings {

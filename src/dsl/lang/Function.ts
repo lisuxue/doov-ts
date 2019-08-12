@@ -63,10 +63,11 @@ export class Function<T> implements ContextAccessor<object, Context, T>, DslBuil
 
   public mapTo<U, F extends Function<U>>(
     constructor: FunctionConstructor<U, F>,
-    f: { (v: T | null | undefined): U }
+    f: { (v: T | null | undefined): U },
+    description?: string
   ): F {
     return new constructor(
-      new BinaryMetadata(this.metadata, FUNCTION, new FunctionMetadata(f.toString())),
+      new BinaryMetadata(this.metadata, FUNCTION, new FunctionMetadata(description ? description : f.toString())),
       (obj, ctx) => f(this.get(obj, ctx))
     );
   }

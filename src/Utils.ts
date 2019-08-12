@@ -5,3 +5,7 @@ export function hasProperty(prop: string | number | symbol, obj: object): boolea
 export function isInteger(obj: any): obj is number {
   return Number.isInteger(obj) || obj << 0 === obj;
 }
+
+export function nullOrUndefined(obj: any): obj is null | undefined {
+  return obj === null || obj === undefined;
+}
