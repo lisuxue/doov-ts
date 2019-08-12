@@ -1,5 +1,6 @@
 # dOOv-TS
 
+[![npm version](https://img.shields.io/npm/v/doov.svg?style=flat&color=blue)](https://www.npmjs.com/package/doov)
 [![Build Status](https://travis-ci.org/doov-io/doov-ts.svg?branch=master)](https://travis-ci.org/doov-io/doov-ts)
 [![codecov](https://codecov.io/gh/doov-io/doov-ts/branch/master/graph/badge.svg)](https://codecov.io/gh/doov-io/doov-ts)
 
