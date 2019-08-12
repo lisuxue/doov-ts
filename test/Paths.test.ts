@@ -33,24 +33,64 @@ describe('path', () => {
     return expect(getPathPromise(map, 't')).resolves.toEqual('test');
   });
 
-  it('set in object', () => {
+  it('set value in object', () => {
     let user = new User(1);
     let usr = setProp('name', 'test', user);
     expect(usr.name).toEqual('test');
   });
 
-  it('set in array', () => {
+  it('set null in object', () => {
+    let user = new User(1);
+    let usr = setProp('name', null, user);
+    expect(usr.name).toBeNull();
+  });
+
+  it('set undefined in object', () => {
+    let user = new User(1);
+    let usr = setProp('name', undefined, user);
+    expect(usr.name).toBeUndefined();
+  });
+
+  it('set value in array', () => {
     let array: string[] = [];
     let ary = setProp(0, 'test', array);
     expect(ary[0]).toEqual('test');
   });
 
-  it('set in map', () => {
+  it('set null in array', () => {
+    let array: string[] = [];
+    let ary = setProp(0, null, array);
+    expect(ary[0]).toBeNull();
+  });
+
+  it('set undefined in array', () => {
+    let array: string[] = [];
+    let ary = setProp(0, undefined, array);
+    expect(ary[0]).toBeUndefined();
+  });
+
+  it('set value in map', () => {
     let map: MyMap = {
       t: 'test',
     };
     let mp = setProp('t', 'test2', map);
     expect(mp['t']).toEqual('test2');
+  });
+
+  it('set null in map', () => {
+    let map: MyMap = {
+      t: 'test',
+    };
+    let mp = setProp('t', null, map);
+    expect(mp['t']).toBeNull();
+  });
+
+  it('set undefined in map', () => {
+    let map: MyMap = {
+      t: 'test',
+    };
+    let mp = setProp('t', undefined, map);
+    expect(mp['t']).toBeUndefined();
   });
 });
 
@@ -112,6 +152,20 @@ describe('path promise', () => {
     return modelPromise.then(value => {
       expect(value.user!.links![1]).toEqual('array');
       expect(value.user!.links![0]).toBeUndefined();
+    });
+  });
+
+  it('set null from path', () => {
+    let modelPromise = setPathPromiseValue(model, null, 'user', 'name');
+    return modelPromise.then(value => {
+      expect(value.user!.name).toBeNull();
+    });
+  });
+
+  it('set undefined from path', () => {
+    let modelPromise = setPathPromiseValue(model, undefined, 'user', 'name');
+    return modelPromise.then(value => {
+      expect(value.user!.name).toBeUndefined();
     });
   });
 });
