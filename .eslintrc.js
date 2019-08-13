@@ -15,5 +15,15 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-non-null-assertion': 'warn',
+    'comma-dangle': [
+      'error',
+      {
+        arrays: 'never',
+        objects: 'never',
+        imports: 'always-multiline',
+        exports: 'never',
+        functions: 'never',
+      },
+    ],
   },
 };
