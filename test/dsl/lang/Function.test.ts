@@ -14,7 +14,8 @@ const trueFunction = DOOV.lift(BooleanFunction, true);
 const someStrFunction = DOOV.lift(StringFunction, 'some');
 const nullField = DOOV.lift(StringFunction, null as any);
 const otherStrFunction = DOOV.lift(StringFunction, 'other');
-const nameField = DOOV.string(DOOV.field<Model, string>('user', 'name'));
+// re-wrap function, to test getter/setter interception
+const nameField = DOOV.f(DOOV.string(DOOV.field<Model, string>('user', 'name')));
 const undefinedField = DOOV.boolean(DOOV.field<Model, boolean>('user', 'a'));
 const booleanFunction = DOOV.f(DOOV.field<Model, boolean>('user', 'b'));
 
@@ -37,6 +38,26 @@ describe('generic function contextual', () => {
     const ctx = new DefaultContext();
     ctx.props['prop'] = 'something';
     expect(contextual.get(model, ctx)).toEqual('something');
+  });
+});
+
+describe('generic function consumer', () => {
+  const consumer = Function.consumer<string>(new FunctionMetadata('ctx.props["prop"] = val'), (obj, val, ctx) => {
+    if (val && ctx) {
+      ctx.props['prop'] = val;
+    }
+    return obj;
+  });
+
+  it('should return empty value without context', () => {
+    const ctx = new DefaultContext();
+    consumer.set!(model, '');
+    expect(ctx.props['prop']).toBeUndefined();
+  });
+  it('should return value from context', () => {
+    const ctx = new DefaultContext();
+    consumer.set!(model, 'something', ctx);
+    expect(ctx.props['prop']).toEqual('something');
   });
 });
 

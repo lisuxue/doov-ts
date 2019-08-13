@@ -37,6 +37,10 @@ describe('string function', () => {
   it('string matches value', () => {
     expect(num4.matches('^#').get(model)).toEqual(true);
   });
+  it('string matches function', () => {
+    const regexFunction = DOOV.lift(StringFunction, '^#');
+    expect(num4.matches(regexFunction).get(model)).toEqual(true);
+  });
   it('string starts with value', () => {
     expect(name.startsWith('tes').get(model)).toEqual(true);
   });

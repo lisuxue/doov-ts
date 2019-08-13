@@ -72,10 +72,16 @@ describe('doov map', () => {
     expect(link1.get(model)).toEqual('link of 1');
   });
 
-  it('map to execute', () => {
+  it('map to execute 2', () => {
     const stringMapping = DOOV.map(name).to(link2);
     model = stringMapping.execute(model);
     expect(link2.get(model)).toEqual('test');
+  });
+
+  it('map to with get only function execute', () => {
+    const stringMapping = DOOV.map(name).to(DOOV.lift(StringFunction, undefined));
+    const model2 = stringMapping.execute(model);
+    expect(model2).toEqual(model);
   });
 
   it('when validate execute result false', () => {
