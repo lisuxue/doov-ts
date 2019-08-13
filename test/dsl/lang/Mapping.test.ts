@@ -131,3 +131,41 @@ describe('type converter mapping', () => {
     expect(fields).toContainEqual(path(name.metadata.readable));
   });
 });
+
+describe('nary type converter mapping', () => {
+  const typeConverter = DOOV.naryConverter((obj, inputs, ctx) => {
+    const in2 = inputs[1].get(obj, ctx);
+    return (!nullOrUndefined(in2) ? in2 : 0) + 1;
+  }, '+ 1 converter');
+
+  const mappings = DOOV.mappings(
+    DOOV.mapAll(name, id, link1)
+      .using(
+        (obj, inputs, ctx) =>
+          (inputs[2].get(obj, ctx) as string) + ':' + inputs[1].get(obj, ctx) + ':' + inputs[0].get(obj, ctx)
+      )
+      .to(link2),
+    DOOV.mapAll(name, id, link1)
+      .using(typeConverter)
+      .to(id)
+  );
+
+  it('execute mapping', () => {
+    model = mappings.execute(model);
+    expect(name.get(model)).toEqual('test');
+    expect(id.get(model)).toEqual(2);
+    expect(link2.get(model)).toEqual('undefined:1:test');
+    expect(link1.get(model)).toEqual(undefined);
+  });
+
+  it('metadata fields', () => {
+    for (let child of mappings.metadata.children()) {
+      console.log(child.readable);
+    }
+    const fields = fieldsOf(mappings.metadata);
+    expect(fields).toContainEqual(path(id.metadata.readable));
+    expect(fields).toContainEqual(path(link1.metadata.readable));
+    expect(fields).toContainEqual(path(link2.metadata.readable));
+    expect(fields).toContainEqual(path(name.metadata.readable));
+  });
+});

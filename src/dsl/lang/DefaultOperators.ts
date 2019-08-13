@@ -43,3 +43,4 @@ export const MINUS: Operator = { readable: '-' };
 export const TIMES: Operator = { readable: '*' };
 export const TO: Operator = { readable: '->' };
 export const USING: Operator = { readable: 'using' };
+export const MULTIPLE_INPUTS: Operator = { readable: 'multiple inputs' };
