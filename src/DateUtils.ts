@@ -7,40 +7,76 @@ function pad(val: string | number, len: number): string {
   return val;
 }
 
-export function formatISO(date: Date): string {
-  return date.toISOString();
+export function now(): Date {
+  return new Date(Date.now());
+}
+
+export function clone(date: Date): Date {
+  return new Date(date.valueOf());
+}
+
+export function newUTCDate(
+  year: number,
+  month: number,
+  date?: number,
+  hours?: number,
+  minutes?: number,
+  seconds?: number,
+  ms?: number
+): Date {
+  return new Date(
+    Date.UTC(year, month, date ? date : 0, hours ? hours : 0, minutes ? minutes : 0, seconds ? seconds : 0, ms ? ms : 0)
+  );
 }
 
 export function formatYYYYMMdd(date: Date): string {
-  return date.getFullYear().toString() + pad(date.getMonth() + 1, 2) + pad(date.getDate(), 2);
+  const utcDate = clone(date);
+  return utcDate.getFullYear().toString() + pad(utcDate.getMonth() + 1, 2) + pad(utcDate.getDate(), 2);
 }
 
 export function formatddMMYYYY(date: Date): string {
-  return pad(date.getDate(), 2) + pad(date.getMonth() + 1, 2) + date.getFullYear();
+  const utcDate = clone(date);
+  return pad(utcDate.getDate(), 2) + pad(utcDate.getMonth() + 1, 2) + utcDate.getFullYear();
 }
 
 export function formatReadable(date: Date): string {
-  return pad(date.getDate(), 2) + '/' + pad(date.getMonth() + 1, 2) + '/' + date.getFullYear();
+  const utcDate = clone(date);
+  return pad(utcDate.getDate(), 2) + '/' + pad(utcDate.getMonth() + 1, 2) + '/' + utcDate.getFullYear();
 }
 
 export function formatMMMMYYYY(date: Date, locale?: string): string {
-  const month = date.toLocaleDateString(locale, { month: 'long' });
-  return month + ' ' + date.getFullYear();
+  const utcDate = clone(date);
+  const month = utcDate.toLocaleDateString(locale, { month: 'long' });
+  return month + ' ' + utcDate.getFullYear();
 }
 
 export function formatEEEEddMMMM(date: Date, locale?: string): string {
-  const weekday = date.toLocaleDateString(locale, { weekday: 'long' });
-  const month = date.toLocaleDateString(locale, { month: 'long' });
-  return weekday + ' ' + pad(date.getDate(), 2) + ' ' + month;
+  const utcDate = clone(date);
+  const weekday = utcDate.toLocaleDateString(locale, { weekday: 'long' });
+  const month = utcDate.toLocaleDateString(locale, { month: 'long' });
+  return weekday + ' ' + pad(utcDate.getDate(), 2) + ' ' + month;
 }
 
 export function formatTime(date: Date): string {
-  return pad(date.getHours(), 2) + pad(date.getMinutes(), 2) + pad(date.getSeconds(), 2);
+  const utcDate = clone(date);
+  return pad(date.getHours(), 2) + pad(utcDate.getMinutes(), 2) + pad(date.getSeconds(), 2);
 }
 
 export function parse(yyyyMMdd: string): Date {
   const year = Number.parseInt(yyyyMMdd.slice(0, 4));
   const month = Number.parseInt(yyyyMMdd.slice(4, 6)) - 1;
   const day = Number.parseInt(yyyyMMdd.slice(6, 8));
-  return new Date(year, month, day);
+  return newUTCDate(year, month, day);
+}
+
+export function numberOfFullMonthsBetween(left: Date, right?: Date): number {
+  const today = right ? right : now();
+  const y = today.getFullYear() - left.getFullYear();
+  const m = today.getMonth() - left.getMonth();
+  const d = today.getDay() - left.getDate();
+  const res = y * 12 + m;
+  if (d >= 0) {
+    return res;
+  }
+  return res - 1;
 }

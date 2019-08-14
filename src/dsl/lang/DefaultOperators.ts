@@ -44,3 +44,33 @@ export const TIMES: Operator = { readable: '*' };
 export const TO: Operator = { readable: '->' };
 export const USING: Operator = { readable: 'using' };
 export const MULTIPLE_INPUTS: Operator = { readable: 'multiple inputs' };
+
+// Date
+export const AFTER: Operator = { readable: '>' };
+export const AFTER_OR_EQUALS: Operator = { readable: '>=' };
+export const BEFORE: Operator = { readable: '<' };
+export const BEFORE_OR_EQUALS: Operator = { readable: '<=' };
+export const PLUS_DAYS: Operator = { readable: 'plus days' };
+export const MINUS_DAYS: Operator = { readable: 'minus days' };
+export const PLUS_MONTHS: Operator = { readable: 'plus months' };
+export const MINUS_MONTHS: Operator = { readable: 'minus months' };
+export const PLUS_YEARS: Operator = { readable: 'plus years' };
+export const MINUS_YEARS: Operator = { readable: 'minus years' };
+export const FORMAT_ISO: Operator = { readable: 'format iso' };
+export const FORMAT_DAY_MONTH_YEAR: Operator = { readable: 'format day month year' };
+
+export const THIS_YEAR: Operator = { readable: 'this year' };
+export const THIS_MONTH: Operator = { readable: 'this month' };
+export const TODAY: Operator = { readable: 'today' };
+export const TOMORROW: Operator = { readable: 'tomorrow' };
+
+export const WITH_DAY_OF_MONTH: Operator = { readable: 'with day of month' };
+export const WITH_MONTH: Operator = { readable: 'with month' };
+export const WITH_YEAR: Operator = { readable: 'with year' };
+export const WITH_FIRST_DAY_OF_NEXT_YEAR: Operator = { readable: 'with first day of next year' };
+export const WITH_LAST_DAY_OF_LAST_YEAR: Operator = { readable: 'with last day of last year' };
+export const MONTH_OF: Operator = { readable: 'month of' };
+export const YEAR_OF: Operator = { readable: 'year of' };
+export const DATE_OF: Operator = { readable: 'date of' };
+export const NB_OF_MONTHS_SINCE: Operator = { readable: 'number of months since' };
+export const NB_OF_MONTHS_BETWEEN: Operator = { readable: 'number of months between' };

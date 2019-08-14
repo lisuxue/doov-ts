@@ -15,6 +15,7 @@ import { BiStepMap } from 'dsl/lang/BiStepMap';
 import { ConverterFunction, TypeConverter } from 'dsl/lang/TypeConverter';
 import { NaryConverterFunction, NaryTypeConverter } from 'dsl/lang/NaryTypeConverter';
 import { NaryStepMap } from 'dsl/lang/NaryStepMap';
+import { DateFunction } from 'dsl/lang/DateFunction';
 
 export function f<T>(accessor: ContextAccessor<object, Context, T>): Function<T> {
   return Function.function(accessor);
@@ -38,6 +39,10 @@ export function string(field: Field<object, Context, string>): StringFunction {
 
 export function number(field: Field<object, Context, number>): NumberFunction {
   return NumberFunction.number(field);
+}
+
+export function date(field: Field<object, Context, Date>): DateFunction {
+  return DateFunction.date(field);
 }
 
 export function when(condition: BooleanFunction): StepWhen {

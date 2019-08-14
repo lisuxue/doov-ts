@@ -7,6 +7,7 @@ export class User {
   public name?: string;
   public links?: string[];
   public b?: boolean;
+  public birth?: Date;
 
   public constructor(id: number) {
     this.id = id;

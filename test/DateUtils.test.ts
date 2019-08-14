@@ -5,7 +5,9 @@ import {
   formatReadable,
   formatTime,
   formatYYYYMMdd,
+  newUTCDate,
   parse,
+  clone,
 } from 'DateUtils';
 
 describe('format dates', () => {
@@ -66,21 +68,34 @@ describe('format dates', () => {
     expect(formatTime(date2)).toEqual('121011');
   });
   it('parse yyyyMMdd', () => {
-    const expected = new Date(2019, 3, 28);
+    const expected = newUTCDate(2019, 3, 28);
     expect(parse('20190428')).toEqual(expected);
 
-    const expected2 = new Date(2019, 11, 3);
+    const expected2 = newUTCDate(2019, 11, 3);
     expect(parse('20191203')).toEqual(expected2);
   });
 
   it('format and parse yyyyMMdd', () => {
-    const expected = new Date(2019, 3, 28);
+    const expected = newUTCDate(2019, 3, 28);
     expect(parse(formatYYYYMMdd(expected))).toEqual(expected);
 
-    const expected2 = new Date(2019, 11, 3);
+    const expected2 = newUTCDate(2019, 11, 3);
     expect(parse(formatYYYYMMdd(expected2))).toEqual(expected2);
 
-    const expected3 = new Date(2019, 11);
+    const expected3 = newUTCDate(2019, 11);
     expect(parse(formatYYYYMMdd(expected3))).toEqual(expected3);
+  });
+  it('clone date', () => {
+    const date = new Date();
+    const polly = clone(date);
+    const molly = clone(polly);
+    expect(polly).toEqual(molly);
+  });
+  it('new UTC date', () => {
+    const utcDate = newUTCDate(2019, 9, 5);
+    const date = new Date(2019, 9, 5);
+    const timezoneOffset = date.getTimezoneOffset();
+    expect(utcDate.toISOString()).not.toEqual(date.toISOString());
+    expect(utcDate.valueOf()).toEqual(date.valueOf() - timezoneOffset * 60000);
   });
 });
