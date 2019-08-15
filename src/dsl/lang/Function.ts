@@ -206,7 +206,7 @@ export function condition<T, U, E extends Function<T>, F extends Function<U>, V>
   if (right instanceof Function) {
     return (obj, ctx) => {
       const v = left.get(obj, ctx);
-      if (v != null) {
+      if (v != undefined || v != null) {
         const searchString = right.get(obj, ctx);
         if (searchString != undefined || searchString != null) {
           return predicate(v, searchString);
