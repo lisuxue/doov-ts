@@ -40,6 +40,7 @@ import { NumberFunction } from 'dsl/lang/NumberFunction';
 import { StringFunction } from 'dsl/lang/StringFunction';
 import { formatddMMYYYY, formatYYYYMMdd, newUTCDate, parse, clone, now, numberOfFullMonthsBetween } from 'DateUtils';
 import { FunctionMetadata } from 'dsl/meta/FunctionMetadata';
+import { nullOrUndefined } from 'Utils';
 
 export class DateFunction extends Function<Date> {
   public static MAX_DATE = new Date(8640000000000000);
@@ -47,6 +48,27 @@ export class DateFunction extends Function<Date> {
 
   public static date(accessor: ContextAccessor<object, Context, Date>): DateFunction {
     return new DateFunction(accessor.metadata, accessor.get, accessor.set);
+  }
+
+  public static dateIso(accessor: ContextAccessor<object, Context, string>): DateFunction {
+    return new DateFunction(
+      accessor.metadata,
+      (obj, ctx) => {
+        const yyyyMMdd = accessor.get(obj, ctx);
+        if (nullOrUndefined(yyyyMMdd)) {
+          return yyyyMMdd;
+        } else {
+          return parse(yyyyMMdd);
+        }
+      },
+      (obj, val, ctx) => {
+        if (nullOrUndefined(val)) {
+          return accessor.set ? accessor.set(obj, val, ctx) : obj;
+        } else {
+          return accessor.set ? accessor.set(obj, formatYYYYMMdd(val), ctx) : obj;
+        }
+      }
+    );
   }
 
   public static min(...values: (Date | DateFunction)[]): DateFunction {

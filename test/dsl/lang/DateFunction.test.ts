@@ -11,6 +11,8 @@ const date = new Date(2019, 8, 11);
 const birthDate = new Date(2000, 0, 2);
 const dateFunction = DOOV.lift(DateFunction, date);
 const dateField = DOOV.date(DOOV.field<object, Date>('user', 'birth'));
+const nameField = DOOV.string(DOOV.field<object, string>('user', 'name'));
+const dateNameField = DOOV.dateIso(nameField);
 
 beforeEach(() => {
   model = new Model();
@@ -180,4 +182,18 @@ describe('date function', () => {
     const monthsSince = DateFunction.nbFullMonthsBetween(DateFunction.dateFrom('20010203'), dateFunction);
     expect(monthsSince.get(model)).toEqual(116);
   });
+});
+
+describe('date iso function', () => {
+  const newDate = newUTCDate(2019, 6, 24);
+  model = dateNameField.set!(model, newDate);
+  expect(model.user!.name).toEqual('20190724');
+  expect(nameField.get(model)).toEqual('20190724');
+  expect(dateNameField.get(model)).toEqual(newDate);
+});
+
+describe('date iso function get set null', () => {
+  model = dateNameField.set!(model, null);
+  expect(dateNameField.get(model)).toBeNull();
+  expect(model.user!.name).toBeNull();
 });
