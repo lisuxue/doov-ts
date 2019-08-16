@@ -46,14 +46,16 @@ export function formatReadable(date: Date): string {
 
 export function formatMMMMYYYY(date: Date, locale?: string): string {
   const utcDate = clone(date);
-  const month = utcDate.toLocaleDateString(locale, { month: 'long' });
-  return month + ' ' + utcDate.getFullYear();
+  const monthFormat = new Intl.DateTimeFormat(locale, { month: 'long' });
+  return monthFormat.format(date) + ' ' + utcDate.getFullYear();
 }
 
 export function formatEEEEddMMMM(date: Date, locale?: string): string {
   const utcDate = clone(date);
-  const weekday = utcDate.toLocaleDateString(locale, { weekday: 'long' });
-  const month = utcDate.toLocaleDateString(locale, { month: 'long' });
+  const weekdayFormat = new Intl.DateTimeFormat(locale, { weekday: 'long' });
+  const weekday = weekdayFormat.format(utcDate);
+  const monthFormat = new Intl.DateTimeFormat(locale, { month: 'long' });
+  const month = monthFormat.format(utcDate);
   return weekday + ' ' + pad(utcDate.getDate(), 2) + ' ' + month;
 }
 
