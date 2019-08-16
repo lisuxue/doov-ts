@@ -95,7 +95,9 @@ describe('format dates', () => {
     const utcDate = newUTCDate(2019, 9, 5);
     const date = new Date(2019, 9, 5);
     const timezoneOffset = date.getTimezoneOffset();
-    expect(utcDate.toISOString()).not.toEqual(date.toISOString());
+    if (timezoneOffset !== 0) {
+      expect(utcDate.toISOString()).not.toEqual(date.toISOString());
+    }
     expect(utcDate.valueOf()).toEqual(date.valueOf() - timezoneOffset * 60000);
   });
 });
