@@ -327,7 +327,7 @@ export class DateFunction extends Function<Date> {
   public static nbFullMonthsSince(value: DateFunction): NumberFunction {
     return new NumberFunction(
       new UnaryMetadata(value.metadata, NB_OF_MONTHS_SINCE),
-      condition(value, undefined, numberOfFullMonthsBetween, null)
+      condition(value, undefined, (left: Date) => numberOfFullMonthsBetween(left), null)
     );
   }
 
@@ -335,7 +335,7 @@ export class DateFunction extends Function<Date> {
     if (value2 instanceof DateFunction) {
       return new NumberFunction(
         new BinaryMetadata(value.metadata, NB_OF_MONTHS_BETWEEN, value2.metadata),
-        condition(value, value2, numberOfFullMonthsBetween, null)
+        condition(value, value2, (left: Date, right: Date) => numberOfFullMonthsBetween(left, right), null)
       );
     } else {
       return new NumberFunction(
