@@ -15,6 +15,7 @@ import { BiStepMap } from 'dsl/lang/BiStepMap';
 import { ConverterFunction, TypeConverter } from 'dsl/lang/TypeConverter';
 import { NaryConverterFunction, NaryTypeConverter } from 'dsl/lang/NaryTypeConverter';
 import { NaryStepMap } from 'dsl/lang/NaryStepMap';
+import { DateFunction } from 'dsl/lang/DateFunction';
 
 export function f<T>(accessor: ContextAccessor<object, Context, T>): Function<T> {
   return Function.function(accessor);
@@ -28,16 +29,24 @@ export function lift<U, F extends Function<U>>(constructor: FunctionConstructor<
   return Function.lift(constructor, value);
 }
 
-export function boolean(field: Field<object, Context, boolean>): BooleanFunction {
+export function boolean(field: ContextAccessor<object, Context, boolean>): BooleanFunction {
   return BooleanFunction.boolean(field);
 }
 
-export function string(field: Field<object, Context, string>): StringFunction {
+export function string(field: ContextAccessor<object, Context, string>): StringFunction {
   return StringFunction.string(field);
 }
 
-export function number(field: Field<object, Context, number>): NumberFunction {
+export function number(field: ContextAccessor<object, Context, number>): NumberFunction {
   return NumberFunction.number(field);
+}
+
+export function date(field: ContextAccessor<object, Context, Date>): DateFunction {
+  return DateFunction.date(field);
+}
+
+export function dateIso(field: ContextAccessor<object, Context, string>): DateFunction {
+  return DateFunction.dateIso(field);
 }
 
 export function when(condition: BooleanFunction): StepWhen {

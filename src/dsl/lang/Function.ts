@@ -185,28 +185,28 @@ export class Function<T> implements ContextAccessor<object, Context, T>, DslBuil
   }
 }
 
-export function condition<T, F extends Function<T>, V>(
-  left: F,
-  right: T,
-  predicate: { (left: T, right: T): V },
+export function condition<T, U, E extends Function<T>, F extends Function<U>, V>(
+  left: E,
+  right: U,
+  predicate: { (left: T, right: U): V },
   nullCase: V
 ): Getter<object, Context, V>;
-export function condition<T, F extends Function<T>, V>(
-  left: F,
+export function condition<T, U, E extends Function<T>, F extends Function<U>, V>(
+  left: E,
   right: F,
-  predicate: { (left: T, right: T): V },
+  predicate: { (left: T, right: U): V },
   nullCase: V
 ): Getter<object, Context, V>;
-export function condition<T, F extends Function<T>, V>(
-  left: F,
-  right: T | F,
-  predicate: { (left: T, right: T): V },
+export function condition<T, U, E extends Function<T>, F extends Function<U>, V>(
+  left: E,
+  right: U | F,
+  predicate: { (left: T, right: U): V },
   nullCase: V
 ): Getter<object, Context, V> {
   if (right instanceof Function) {
     return (obj, ctx) => {
       const v = left.get(obj, ctx);
-      if (v != null) {
+      if (v != undefined || v != null) {
         const searchString = right.get(obj, ctx);
         if (searchString != undefined || searchString != null) {
           return predicate(v, searchString);

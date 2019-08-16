@@ -93,21 +93,21 @@ export class StringFunction extends Function<string> {
   public length(): NumberFunction {
     return new NumberFunction(
       new UnaryMetadata(this.metadata, LENGTH),
-      condition(this, '', (value: string, _) => value.length, 0)
+      condition(this, undefined, (value: string) => value.length, 0)
     );
   }
 
   public parseInt(): NumberFunction {
     return new NumberFunction(
       new UnaryMetadata(this.metadata, AS_INT),
-      condition(this, '', (value: string, _) => parseInt(value), null)
+      condition(this, undefined, (value: string) => parseInt(value), null)
     );
   }
 
   public trim(): StringFunction {
     return new StringFunction(
       new UnaryMetadata(this.metadata, TRIM),
-      condition(this, '', (value: string, _) => value.trim(), null)
+      condition(this, undefined, (value: string) => value.trim(), null)
     );
   }
 
@@ -119,7 +119,7 @@ export class StringFunction extends Function<string> {
         REPLACE_ALL,
         new BinaryMetadata(new ValueMetadata(regex), AND, new ValueMetadata(replace))
       ),
-      condition(this, '', (value: string, _) => value.replace(regex, replace), null)
+      condition(this, undefined, (value: string) => value.replace(regex, replace), null)
     );
   }
 
@@ -131,21 +131,21 @@ export class StringFunction extends Function<string> {
         SUB_STRING,
         new BinaryMetadata(new ValueMetadata(beginIndex), AND, new ValueMetadata(endIndex))
       ),
-      condition(this, '', (value: string, _) => value.substring(beginIndex, endIndex), null)
+      condition(this, undefined, (value: string) => value.substring(beginIndex, endIndex), null)
     );
   }
 
   public localeUpperCase(): StringFunction {
     return new StringFunction(
       new UnaryMetadata(this.metadata, UPPER_CASE),
-      condition(this, '', (value: string, _) => value.toLocaleUpperCase(), null)
+      condition(this, undefined, (value: string) => value.toLocaleUpperCase(), null)
     );
   }
 
   public localeLowerCase(): StringFunction {
     return new StringFunction(
       new UnaryMetadata(this.metadata, LOWER_CASE),
-      condition(this, '', (value: string, _) => value.toLocaleLowerCase(), null)
+      condition(this, undefined, (value: string) => value.toLocaleLowerCase(), null)
     );
   }
 

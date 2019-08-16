@@ -12,7 +12,10 @@ export class BooleanFunction extends Function<boolean> {
   }
 
   public not(): BooleanFunction {
-    return new BooleanFunction(new UnaryMetadata(this.metadata, NOT), condition(this, false, left => !left, false));
+    return new BooleanFunction(
+      new UnaryMetadata(this.metadata, NOT),
+      condition(this, false, (left: boolean) => !left, false)
+    );
   }
 
   public and(right: BooleanFunction): BooleanFunction {
