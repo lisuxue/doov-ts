@@ -74,3 +74,10 @@ export const YEAR_OF: Operator = { readable: 'year of' };
 export const DATE_OF: Operator = { readable: 'date of' };
 export const NB_OF_MONTHS_SINCE: Operator = { readable: 'number of months since' };
 export const NB_OF_MONTHS_BETWEEN: Operator = { readable: 'number of months between' };
+
+// Iterable
+export const CONTAINS_ALL: Operator = { readable: 'contains all' };
+export const IS_EMPTY: Operator = { readable: 'is empty' };
+export const IS_NOT_EMPTY: Operator = { readable: 'is not empty' };
+export const HAS_SIZE: Operator = { readable: 'has size' };
+export const HAS_NOT_SIZE: Operator = { readable: 'has not size' };

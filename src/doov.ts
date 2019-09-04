@@ -16,6 +16,7 @@ import { ConverterFunction, TypeConverter } from 'dsl/lang/TypeConverter';
 import { NaryConverterFunction, NaryTypeConverter } from 'dsl/lang/NaryTypeConverter';
 import { NaryStepMap } from 'dsl/lang/NaryStepMap';
 import { DateFunction } from 'dsl/lang/DateFunction';
+import { IterableFunction } from 'dsl/lang/IterableFunction';
 
 export function f<T>(accessor: ContextAccessor<object, Context, T>): Function<T> {
   return Function.function(accessor);
@@ -27,6 +28,10 @@ export function field<T extends object, V>(...path: (string | number)[]): Field<
 
 export function lift<U, F extends Function<U>>(constructor: FunctionConstructor<U, F>, value: U): F {
   return Function.lift(constructor, value);
+}
+
+export function iterable<T>(field: ContextAccessor<object, Context, T[]>): IterableFunction<T> {
+  return IterableFunction.iterable(field);
 }
 
 export function boolean(field: ContextAccessor<object, Context, boolean>): BooleanFunction {
