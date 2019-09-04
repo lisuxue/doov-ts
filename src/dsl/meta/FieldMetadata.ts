@@ -1,5 +1,6 @@
 import { pathString } from 'Paths';
 import { AbstractMetadata } from 'dsl/meta/AbstractMetadata';
+import { isInteger } from 'Utils';
 
 export class FieldMetadata extends AbstractMetadata {
   readonly type = 'FIELD';
@@ -13,6 +14,7 @@ export class FieldMetadata extends AbstractMetadata {
     this.readable = pathString(...path);
     this.path = [...path];
     this.tags = tags;
-    this.position = position;
+    const numbers = path.filter(value => isInteger(value)) as number[];
+    this.position = position === -1 && numbers.length >= 1 ? numbers[numbers.length - 1] : position;
   }
 }
