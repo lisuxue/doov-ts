@@ -81,3 +81,7 @@ export const IS_EMPTY: Operator = { readable: 'is empty' };
 export const IS_NOT_EMPTY: Operator = { readable: 'is not empty' };
 export const HAS_SIZE: Operator = { readable: 'has size' };
 export const HAS_NOT_SIZE: Operator = { readable: 'has not size' };
+
+// field
+export const POSITION: Operator = { readable: 'position of' };
+export const TAGS: Operator = { readable: 'tags of' };

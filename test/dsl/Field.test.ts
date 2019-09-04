@@ -6,6 +6,8 @@ let user: User;
 
 let stringField = DOOV.field<Model, string>('user', 'name');
 let arrayField = DOOV.field<Model, string>('user', 'links', 0);
+let userIdField = DOOV.field<Model, string>('user', 'id').withTags('id');
+let birthDateField = DOOV.field<Model, string>('user', 'birth').withPosition(1);
 
 beforeEach(() => {
   model = new Model();
@@ -60,5 +62,22 @@ describe('set field', () => {
   it('set from array field', () => {
     let mdl = arrayField.set(model, 'test');
     expect(mdl.user!.links![0]).toEqual('test');
+  });
+
+  describe('field position', () => {
+    expect(stringField.position().get(model)).toEqual(-1);
+    expect(arrayField.position().get(model)).toEqual(0);
+    expect(userIdField.position().get(model)).toEqual(-1);
+    expect(birthDateField.position().get(model)).toEqual(1);
+  });
+
+  describe('field tags', () => {
+    expect(userIdField.tags().get(model)).toEqual(['id']);
+    expect(
+      userIdField
+        .tags()
+        .contains('id')
+        .get(model)
+    ).toEqual(true);
   });
 });
