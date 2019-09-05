@@ -96,8 +96,8 @@ describe('conditional mapping otherwise', () => {
   });
 });
 
-describe('type converter mapping', () => {
-  const typeConverter = DOOV.converter((obj, _: Function<any>, input2: Function<number>) => {
+describe('type bi converter mapping', () => {
+  const typeConverter = DOOV.biConverter((obj, _: Function<any>, input2: Function<number>) => {
     const value = input2.get(obj);
     return (!nullOrUndefined(value) ? value : 0) + 1;
   }, '+ 1 converter');

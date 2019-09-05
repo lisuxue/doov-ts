@@ -12,7 +12,7 @@ import { Mappings } from 'dsl/lang/Mappings';
 import { NaryMetadata } from 'dsl/meta/NaryMetadata';
 import { MATCH_ALL, MATCH_ANY, NONE_MATCH } from 'dsl/lang/DefaultOperators';
 import { BiStepMap } from 'dsl/lang/BiStepMap';
-import { ConverterFunction, TypeConverter } from 'dsl/lang/TypeConverter';
+import { BiConverterFunction, BiTypeConverter } from 'dsl/lang/BiTypeConverter';
 import { NaryConverterFunction, NaryTypeConverter } from 'dsl/lang/NaryTypeConverter';
 import { NaryStepMap } from 'dsl/lang/NaryStepMap';
 import { DateFunction } from 'dsl/lang/DateFunction';
@@ -72,11 +72,11 @@ export function mapAll(...inputs: Function<any>[]): NaryStepMap {
   return new NaryStepMap(inputs);
 }
 
-export function converter<T, U, V>(
-  converter: ConverterFunction<T, U, V>,
+export function biConverter<T, U, V>(
+  converter: BiConverterFunction<T, U, V>,
   description?: string
-): TypeConverter<T, U, V> {
-  return new TypeConverter(converter, description);
+): BiTypeConverter<T, U, V> {
+  return new BiTypeConverter(converter, description);
 }
 
 export function naryConverter<V>(converter: NaryConverterFunction<V>, description?: string): NaryTypeConverter<V> {

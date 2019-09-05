@@ -1,5 +1,5 @@
 import { Function } from 'dsl/lang/Function';
-import { ConverterFunction, TypeConverter } from 'dsl/lang/TypeConverter';
+import { BiConverterFunction, BiTypeConverter } from 'dsl/lang/BiTypeConverter';
 import { BiStepMapping } from 'dsl/lang/BiStepMapping';
 
 export class BiStepMap<T, U> {
@@ -11,13 +11,13 @@ export class BiStepMap<T, U> {
     this.input2 = input2;
   }
 
-  public using<V>(converter: ConverterFunction<T, U, V> | TypeConverter<T, U, V>): BiStepMapping<T, U, V>;
-  public using<V>(converter: TypeConverter<T, U, V>): BiStepMapping<T, U, V>;
-  public using<V>(converter: ConverterFunction<T, U, V> | TypeConverter<T, U, V>) {
-    if (converter instanceof TypeConverter) {
+  public using<V>(converter: BiConverterFunction<T, U, V> | BiTypeConverter<T, U, V>): BiStepMapping<T, U, V>;
+  public using<V>(converter: BiTypeConverter<T, U, V>): BiStepMapping<T, U, V>;
+  public using<V>(converter: BiConverterFunction<T, U, V> | BiTypeConverter<T, U, V>) {
+    if (converter instanceof BiTypeConverter) {
       return new BiStepMapping(this.input, this.input2, converter);
     } else {
-      return new BiStepMapping(this.input, this.input2, new TypeConverter<T, U, V>(converter));
+      return new BiStepMapping(this.input, this.input2, new BiTypeConverter<T, U, V>(converter));
     }
   }
 }
