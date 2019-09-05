@@ -1,11 +1,21 @@
 import { Model, User } from '../model';
 import * as DOOV from 'doov';
+import { DateFunction } from 'dsl/lang/DateFunction';
+import { Field } from 'dsl/Field';
+import { FieldMetadata } from 'dsl/meta/FieldMetadata';
+import { StringFunction } from 'dsl/lang/StringFunction';
 
 let model: Model;
 let user: User;
 
-let stringField = DOOV.field<Model, string>('user', 'name');
-let arrayField = DOOV.field<Model, string>('user', 'links', 0);
+const stringField = DOOV.field<Model, string>('user', 'name');
+const arrayField = DOOV.field<Model, string>('user', 'links', 0);
+const userIdField = DOOV.field<Model, string>('user', 'id').withTags('id');
+const birthDateField = DOOV.field<Model, Date>('user', 'birth').withPosition(1);
+const birthDateFunction = DOOV.date(birthDateField);
+const userIdFunction = DOOV.string(userIdField);
+const liftedDateFunction = DOOV.lift(DateFunction, new Date());
+const liftedStringFunction = DOOV.lift(StringFunction, 'name');
 
 beforeEach(() => {
   model = new Model();
@@ -60,5 +70,32 @@ describe('set field', () => {
   it('set from array field', () => {
     let mdl = arrayField.set(model, 'test');
     expect(mdl.user!.links![0]).toEqual('test');
+  });
+
+  describe('field position', () => {
+    expect(stringField.position().get(model)).toEqual(-1);
+    expect(arrayField.position().get(model)).toEqual(0);
+    expect(userIdField.position().get(model)).toEqual(-1);
+    expect(birthDateField.position().get(model)).toEqual(1);
+  });
+
+  describe('function position', () => {
+    expect(new Field(birthDateFunction.metadata as FieldMetadata).position().get(model)).toEqual(1);
+    expect(new Field(liftedDateFunction.metadata as FieldMetadata).position().get(model)).toBeUndefined();
+  });
+
+  describe('function tags', () => {
+    expect(new Field(userIdFunction.metadata as FieldMetadata).tags().get(model)).toContain('id');
+    expect(new Field(liftedStringFunction.metadata as FieldMetadata).tags().get(model)).toBeUndefined();
+  });
+
+  describe('field tags', () => {
+    expect(userIdField.tags().get(model)).toEqual(['id']);
+    expect(
+      userIdField
+        .tags()
+        .contains('id')
+        .get(model)
+    ).toEqual(true);
   });
 });

@@ -1,0 +1,14 @@
+<html>
+  <script type="module">
+    // import * as DOOV from './dist/doov.es.js';
+    import * as DOOV from 'https://unpkg.com/doov/dist/doov.es.js';
+    window.DOOV = DOOV;
+    const f = DOOV.field('toto');
+    const o = { toto: 'value' };
+    console.log(f.get(o));
+    document.getElementById('toto').innerText = f.get(o);
+  </script>
+  <body>
+    <p id="toto"></p>
+  </body>
+</html>

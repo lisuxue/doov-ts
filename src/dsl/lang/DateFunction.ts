@@ -3,7 +3,6 @@ import { Context } from 'dsl/Context';
 import { BooleanFunction } from 'dsl/lang/BooleanFunction';
 import { condition, Function } from 'dsl/lang/Function';
 import { UnaryMetadata } from 'dsl/meta/UnaryMetadata';
-import { IterableMetadata } from 'dsl/meta/IterableMetadata';
 import { ValueMetadata } from 'dsl/meta/ValueMetadata';
 import {
   AFTER,
@@ -41,6 +40,7 @@ import { StringFunction } from 'dsl/lang/StringFunction';
 import { formatddMMYYYY, formatYYYYMMdd, newUTCDate, parse, clone, now, numberOfFullMonthsBetween } from 'DateUtils';
 import { FunctionMetadata } from 'dsl/meta/FunctionMetadata';
 import { nullOrUndefined } from 'Utils';
+import { NaryMetadata } from 'dsl/meta/NaryMetadata';
 
 export class DateFunction extends Function<Date> {
   public static MAX_DATE = new Date(8640000000000000);
@@ -73,7 +73,7 @@ export class DateFunction extends Function<Date> {
 
   public static min(...values: (Date | DateFunction)[]): DateFunction {
     const metadata = values.map(value => (value instanceof DateFunction ? value.metadata : new ValueMetadata(value)));
-    return new DateFunction(new UnaryMetadata(new IterableMetadata(metadata), MIN), (obj, ctx) => {
+    return new DateFunction(new NaryMetadata(metadata, MIN), (obj, ctx) => {
       const f = (l: Date, r: Date) => (l < r ? l : r);
       return values.reduce((previousValue: Date, currentValue) => {
         if (currentValue instanceof Function) {
@@ -92,7 +92,7 @@ export class DateFunction extends Function<Date> {
 
   public static max(...values: (Date | DateFunction)[]): DateFunction {
     const metadata = values.map(value => (value instanceof DateFunction ? value.metadata : new ValueMetadata(value)));
-    return new DateFunction(new UnaryMetadata(new IterableMetadata(metadata), MAX), (obj, ctx) => {
+    return new DateFunction(new NaryMetadata(metadata, MAX), (obj, ctx) => {
       const f = (l: Date, r: Date) => (l > r ? l : r);
       return values.reduce((previousValue: Date, currentValue) => {
         if (currentValue instanceof Function) {

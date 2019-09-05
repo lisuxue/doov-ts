@@ -2,8 +2,6 @@ import { ContextAccessor } from 'dsl/ContextAccessor';
 import { Context } from 'dsl/Context';
 import { BooleanFunction } from 'dsl/lang/BooleanFunction';
 import { condition, Function } from 'dsl/lang/Function';
-import { UnaryMetadata } from 'dsl/meta/UnaryMetadata';
-import { IterableMetadata } from 'dsl/meta/IterableMetadata';
 import { ValueMetadata } from 'dsl/meta/ValueMetadata';
 import {
   GREATER_OR_EQUALS,
@@ -18,6 +16,7 @@ import {
   TIMES,
 } from 'dsl/lang/DefaultOperators';
 import { BinaryMetadata } from 'dsl/meta/BinaryMetadata';
+import { NaryMetadata } from 'dsl/meta/NaryMetadata';
 
 export class NumberFunction extends Function<number> {
   public static number(accessor: ContextAccessor<object, Context, number>): NumberFunction {
@@ -26,7 +25,7 @@ export class NumberFunction extends Function<number> {
 
   public static min(...values: (number | NumberFunction)[]): NumberFunction {
     const metadata = values.map(value => (value instanceof NumberFunction ? value.metadata : new ValueMetadata(value)));
-    return new NumberFunction(new UnaryMetadata(new IterableMetadata(metadata), MIN), (obj, ctx) => {
+    return new NumberFunction(new NaryMetadata(metadata, MIN), (obj, ctx) => {
       const f = (l: number, r: number) => (l < r ? l : r);
       return values.reduce((previousValue: number, currentValue) => {
         if (currentValue instanceof Function) {
@@ -45,7 +44,7 @@ export class NumberFunction extends Function<number> {
 
   public static max(...values: (number | NumberFunction)[]): NumberFunction {
     const metadata = values.map(value => (value instanceof NumberFunction ? value.metadata : new ValueMetadata(value)));
-    return new NumberFunction(new UnaryMetadata(new IterableMetadata(metadata), MAX), (obj, ctx) => {
+    return new NumberFunction(new NaryMetadata(metadata, MAX), (obj, ctx) => {
       const f = (l: number, r: number) => (l > r ? l : r);
       return values.reduce((previousValue: number, currentValue) => {
         if (currentValue instanceof Function) {
@@ -64,7 +63,7 @@ export class NumberFunction extends Function<number> {
 
   public static sum(...values: (number | NumberFunction)[]): NumberFunction {
     const metadata = values.map(value => (value instanceof NumberFunction ? value.metadata : new ValueMetadata(value)));
-    return new NumberFunction(new UnaryMetadata(new IterableMetadata(metadata), SUM), (obj, ctx) => {
+    return new NumberFunction(new NaryMetadata(metadata, SUM), (obj, ctx) => {
       const f = (l: number, r: number) => l + r;
       return values.reduce((previousValue: number, currentValue) => {
         if (currentValue instanceof Function) {
