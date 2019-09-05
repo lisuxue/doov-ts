@@ -3,6 +3,8 @@ import { BiTypeConverter } from 'dsl/lang/BiTypeConverter';
 import { SingleMappingRule } from 'dsl/lang/SingleMappingRule';
 import { BinaryMetadata } from 'dsl/meta/BinaryMetadata';
 import { AND, USING } from 'dsl/lang/DefaultOperators';
+import { TypeConverter } from 'dsl/lang/TypeConverter';
+import { StepMapping } from 'dsl/lang/StepMapping';
 
 export class BiStepMapping<T, U, V> extends Function<V> {
   public readonly input: Function<T>;
@@ -17,6 +19,10 @@ export class BiStepMapping<T, U, V> extends Function<V> {
     this.input = input;
     this.input2 = input2;
     this.converter = converter;
+  }
+
+  public using<W>(converter: TypeConverter<V, W>): StepMapping<V, W> {
+    return new StepMapping(this, converter);
   }
 
   public to(output: Function<V>) {

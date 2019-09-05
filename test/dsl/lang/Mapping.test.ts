@@ -15,6 +15,36 @@ const name = DOOV.string(DOOV.field<Model, string>('user', 'name'));
 const link1 = DOOV.string(DOOV.field<Model, string>('user', 'links', 0));
 const link2 = DOOV.string(DOOV.field<Model, string>('user', 'links', 1));
 
+const reverse = DOOV.converter((obj, input: Function<string>) => {
+  const value = input.get(obj);
+  return !nullOrUndefined(value)
+    ? value
+        .split('')
+        .reverse()
+        .join('')
+    : value;
+}, 'reverse');
+
+const underline = DOOV.converter((obj, input: Function<string>) => {
+  const value = input.get(obj);
+  return !nullOrUndefined(value) ? '_' + value + '_' : value;
+}, 'underline');
+
+const plusOne = DOOV.converter((obj, input: Function<number>) => {
+  const value = input.get(obj);
+  return (!nullOrUndefined(value) ? value : 0) + 1;
+}, 'plusOne');
+
+const plusOneSecond = DOOV.biConverter((obj, _: Function<any>, input2: Function<number>) => {
+  const value = input2.get(obj);
+  return (!nullOrUndefined(value) ? value : 0) + 1;
+}, 'plusOneSecond');
+
+const plusOneFirst = DOOV.naryConverter((obj, inputs, ctx) => {
+  const in2 = inputs[1].get(obj, ctx);
+  return (!nullOrUndefined(in2) ? in2 : 0) + 1;
+}, 'plusOneFirst');
+
 beforeEach(() => {
   model = new Model();
   user = new User(1);
@@ -96,26 +126,55 @@ describe('conditional mapping otherwise', () => {
   });
 });
 
-describe('type bi converter mapping', () => {
-  const typeConverter = DOOV.biConverter((obj, _: Function<any>, input2: Function<number>) => {
-    const value = input2.get(obj);
-    return (!nullOrUndefined(value) ? value : 0) + 1;
-  }, '+ 1 converter');
+describe('type converter mapping', () => {
+  const mappings = DOOV.mappings(
+    DOOV.map(name)
+      .using(reverse)
+      .using(underline)
+      .to(name),
+    DOOV.map(name, id)
+      .using((obj, input, input2) => input.get(obj) + ':' + input2.get(obj))
+      .using(reverse)
+      .to(link2),
+    DOOV.map(id.mapTo(StringFunction, v => '' + v)).to(link1)
+  );
 
+  it('execute mapping', () => {
+    model = mappings.execute(model);
+    expect(name.get(model)).toEqual('_tset_');
+    expect(id.get(model)).toEqual(1);
+    expect(link2.get(model)).toEqual('1:_test_');
+    expect(link1.get(model)).toEqual('1');
+  });
+
+  it('metadata fields', () => {
+    for (let child of mappings.metadata.children()) {
+      console.log(child.readable);
+    }
+    const fields = fieldsOf(mappings.metadata);
+    expect(fields).toContainEqual(path(id.metadata.readable));
+    expect(fields).toContainEqual(path(link1.metadata.readable));
+    expect(fields).toContainEqual(path(link2.metadata.readable));
+    expect(fields).toContainEqual(path(name.metadata.readable));
+  });
+});
+
+describe('type bi converter mapping', () => {
   const mappings = DOOV.mappings(
     DOOV.map(name, id)
       .using((obj, input, input2) => input.get(obj) + ':' + input2.get(obj))
       .to(link2),
     DOOV.map(id.mapTo(StringFunction, v => '' + v)).to(link1),
     DOOV.map(name, id)
-      .using(typeConverter)
+      .using(plusOneSecond)
+      .using(plusOne)
       .to(id)
   );
 
   it('execute mapping', () => {
     model = mappings.execute(model);
     expect(name.get(model)).toEqual('test');
-    expect(id.get(model)).toEqual(2);
+    expect(id.get(model)).toEqual(3);
     expect(link2.get(model)).toEqual('test:1');
     expect(link1.get(model)).toEqual('1');
   });
@@ -133,11 +192,6 @@ describe('type bi converter mapping', () => {
 });
 
 describe('nary type converter mapping', () => {
-  const typeConverter = DOOV.naryConverter((obj, inputs, ctx) => {
-    const in2 = inputs[1].get(obj, ctx);
-    return (!nullOrUndefined(in2) ? in2 : 0) + 1;
-  }, '+ 1 converter');
-
   const mappings = DOOV.mappings(
     DOOV.mapAll(name, id, link1)
       .using(
@@ -146,14 +200,15 @@ describe('nary type converter mapping', () => {
       )
       .to(link2),
     DOOV.mapAll(name, id, link1)
-      .using(typeConverter)
+      .using(plusOneFirst)
+      .using(plusOne)
       .to(id)
   );
 
   it('execute mapping', () => {
     model = mappings.execute(model);
     expect(name.get(model)).toEqual('test');
-    expect(id.get(model)).toEqual(2);
+    expect(id.get(model)).toEqual(3);
     expect(link2.get(model)).toEqual('undefined:1:test');
     expect(link1.get(model)).toEqual(undefined);
   });

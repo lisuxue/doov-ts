@@ -4,6 +4,8 @@ import { BinaryMetadata } from 'dsl/meta/BinaryMetadata';
 import { MULTIPLE_INPUTS, USING } from 'dsl/lang/DefaultOperators';
 import { NaryMetadata } from 'dsl/meta/NaryMetadata';
 import { NaryTypeConverter } from 'dsl/lang/NaryTypeConverter';
+import { TypeConverter } from 'dsl/lang/TypeConverter';
+import { StepMapping } from 'dsl/lang/StepMapping';
 
 export class NaryStepMapping<V> extends Function<V> {
   public readonly inputs: Function<any>[];
@@ -16,6 +18,10 @@ export class NaryStepMapping<V> extends Function<V> {
     );
     this.inputs = inputs;
     this.converter = converter;
+  }
+
+  public using<W>(converter: TypeConverter<V, W>): StepMapping<V, W> {
+    return new StepMapping(this, converter);
   }
 
   public to(output: Function<V>) {

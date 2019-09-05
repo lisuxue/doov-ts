@@ -17,6 +17,7 @@ import { NaryConverterFunction, NaryTypeConverter } from 'dsl/lang/NaryTypeConve
 import { NaryStepMap } from 'dsl/lang/NaryStepMap';
 import { DateFunction } from 'dsl/lang/DateFunction';
 import { IterableFunction } from 'dsl/lang/IterableFunction';
+import { ConverterFunction, TypeConverter } from 'dsl/lang/TypeConverter';
 
 export function f<T>(accessor: ContextAccessor<object, Context, T>): Function<T> {
   return Function.function(accessor);
@@ -70,6 +71,10 @@ export function map<T, U>(input: Function<T>, input2?: Function<U>) {
 
 export function mapAll(...inputs: Function<any>[]): NaryStepMap {
   return new NaryStepMap(inputs);
+}
+
+export function converter<T, V>(converter: ConverterFunction<T, V>, description?: string): TypeConverter<T, V> {
+  return new TypeConverter(converter, description);
 }
 
 export function biConverter<T, U, V>(
