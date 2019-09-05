@@ -1,12 +1,10 @@
 # dOOv-TS
 
+dOOv (Domain Object Oriented Validation) a fluent API for type-safe bean validation and mapping in TypeScript
+
 [![npm version](https://img.shields.io/npm/v/doov.svg?style=flat&color=blue)](https://www.npmjs.com/package/doov)
 [![Build Status](https://travis-ci.org/doov-io/doov-ts.svg?branch=master)](https://travis-ci.org/doov-io/doov-ts)
 [![codecov](https://codecov.io/gh/doov-io/doov-ts/branch/master/graph/badge.svg)](https://codecov.io/gh/doov-io/doov-ts)
-
-dOOv (Domain Object Oriented Validation) a fluent API for type-safe bean validation and mapping in TypeScript
-
----
 
 ## Local Development
 
@@ -32,4 +30,14 @@ Runs the code formatter Prettier
 
 ### Travis CI
 
-Runs `yarn test-ci` which executes all tests and checks for formatting errors.
+Runs `yarn test-ci` which executes all tests, checks for code coverage, formatting errors and linting.
+
+## Release
+
+### `yarn version`
+
+Set the new version according to the release with`--major` `--minor`, `--patch` or `--new -version`
+
+### `yarn publish`
+
+Publish to npm registry
