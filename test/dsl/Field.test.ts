@@ -1,9 +1,9 @@
 import { Model, User } from '../model';
-import * as DOOV from 'doov';
-import { DateFunction } from 'dsl/lang/DateFunction';
-import { Field } from 'dsl/Field';
-import { FieldMetadata } from 'dsl/meta/FieldMetadata';
-import { StringFunction } from 'dsl/lang/StringFunction';
+import * as DOOV from '../../src/doov';
+import { DateFunction } from '../../src/dsl/lang/DateFunction';
+import { Field } from '../../src/dsl/Field';
+import { FieldMetadata } from '../../src/dsl/meta/FieldMetadata';
+import { StringFunction } from '../../src/dsl/lang/StringFunction';
 
 let model: Model;
 let user: User;

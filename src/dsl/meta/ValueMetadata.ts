@@ -1,4 +1,4 @@
-import { AbstractMetadata } from 'dsl/meta/AbstractMetadata';
+import { AbstractMetadata } from './AbstractMetadata';
 
 export class ValueMetadata extends AbstractMetadata {
   readonly type = 'VALUE';

@@ -1,4 +1,4 @@
-import { Context } from 'dsl/Context';
+import { Context } from './Context';
 
 export class Result {
   value: boolean | null | undefined;

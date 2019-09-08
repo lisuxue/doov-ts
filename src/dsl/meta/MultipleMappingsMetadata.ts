@@ -1,6 +1,6 @@
-import { AbstractMetadata } from 'dsl/meta/AbstractMetadata';
-import { Metadata } from 'dsl/meta/Metadata';
-import { Operator } from 'dsl/Operator';
+import { AbstractMetadata } from './AbstractMetadata';
+import { Metadata } from './Metadata';
+import { Operator } from '../Operator';
 
 export class MultipleMappingsMetadata extends AbstractMetadata {
   readonly type = 'MULTIPLE_MAPPING';

@@ -1,8 +1,8 @@
-import { Function } from 'dsl/lang/Function';
-import { Context } from 'dsl/Context';
-import { DefaultContext } from 'dsl/DefaultContext';
-import { MappingRule } from 'dsl/lang/MappingRule';
-import { SingleMappingMetadata } from 'dsl/meta/SingleMappingMetadata';
+import { Function } from './Function';
+import { Context } from '../Context';
+import { DefaultContext } from '../DefaultContext';
+import { MappingRule } from './MappingRule';
+import { SingleMappingMetadata } from '../meta/SingleMappingMetadata';
 
 export class SingleMappingRule<T> implements MappingRule {
   private input: Function<T>;

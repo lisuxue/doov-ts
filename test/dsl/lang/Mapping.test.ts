@@ -1,11 +1,11 @@
 import { Model, User } from '../../model';
-import { StringFunction } from 'dsl/lang/StringFunction';
-import * as DOOV from 'doov';
-import { Function } from 'dsl/lang/Function';
-import { NumberFunction } from 'dsl/lang/NumberFunction';
-import { fieldsOf } from 'dsl/meta/MetadataUtils';
-import { path } from 'Paths';
-import { nullOrUndefined } from 'Utils';
+import { StringFunction } from '../../../src/dsl/lang/StringFunction';
+import * as DOOV from '../../../src/doov';
+import { Function } from '../../../src/dsl/lang/Function';
+import { NumberFunction } from '../../../src/dsl/lang/NumberFunction';
+import { fieldsOf } from '../../../src/dsl/meta/MetadataUtils';
+import { path } from '../../../src/Paths';
+import { nullOrUndefined } from '../../../src/Utils';
 
 let model: Model;
 let user: User;

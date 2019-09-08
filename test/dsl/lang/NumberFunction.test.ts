@@ -1,7 +1,7 @@
 import { Model, User } from '../../model';
-import { NumberFunction } from 'dsl/lang/NumberFunction';
-import { StringFunction } from 'dsl/lang/StringFunction';
-import * as DOOV from 'doov';
+import { NumberFunction } from '../../../src/dsl/lang/NumberFunction';
+import { StringFunction } from '../../../src/dsl/lang/StringFunction';
+import * as DOOV from '../../../src/doov';
 
 let model: Model;
 let user: User;

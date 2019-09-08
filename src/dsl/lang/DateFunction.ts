@@ -1,9 +1,9 @@
-import { ContextAccessor } from 'dsl/ContextAccessor';
-import { Context } from 'dsl/Context';
-import { BooleanFunction } from 'dsl/lang/BooleanFunction';
-import { condition, Function } from 'dsl/lang/Function';
-import { UnaryMetadata } from 'dsl/meta/UnaryMetadata';
-import { ValueMetadata } from 'dsl/meta/ValueMetadata';
+import { ContextAccessor } from '../ContextAccessor';
+import { Context } from '../Context';
+import { BooleanFunction } from './BooleanFunction';
+import { condition, Function } from './Function';
+import { UnaryMetadata } from '../meta/UnaryMetadata';
+import { ValueMetadata } from '../meta/ValueMetadata';
 import {
   AFTER,
   AFTER_OR_EQUALS,
@@ -33,14 +33,22 @@ import {
   WITH_MONTH,
   WITH_YEAR,
   YEAR_OF,
-} from 'dsl/lang/DefaultOperators';
-import { BinaryMetadata } from 'dsl/meta/BinaryMetadata';
-import { NumberFunction } from 'dsl/lang/NumberFunction';
-import { StringFunction } from 'dsl/lang/StringFunction';
-import { formatddMMYYYY, formatYYYYMMdd, newUTCDate, parse, clone, now, numberOfFullMonthsBetween } from 'DateUtils';
-import { FunctionMetadata } from 'dsl/meta/FunctionMetadata';
-import { nullOrUndefined } from 'Utils';
-import { NaryMetadata } from 'dsl/meta/NaryMetadata';
+} from './DefaultOperators';
+import { BinaryMetadata } from '../meta/BinaryMetadata';
+import { NumberFunction } from './NumberFunction';
+import { StringFunction } from './StringFunction';
+import {
+  formatddMMYYYY,
+  formatYYYYMMdd,
+  newUTCDate,
+  parse,
+  clone,
+  now,
+  numberOfFullMonthsBetween,
+} from '../../DateUtils';
+import { FunctionMetadata } from '../meta/FunctionMetadata';
+import { nullOrUndefined } from '../../Utils';
+import { NaryMetadata } from '../meta/NaryMetadata';
 
 export class DateFunction extends Function<Date> {
   public static MAX_DATE = new Date(8640000000000000);

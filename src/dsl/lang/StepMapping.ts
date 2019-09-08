@@ -1,8 +1,8 @@
-import { Function } from 'dsl/lang/Function';
-import { TypeConverter } from 'dsl/lang/TypeConverter';
-import { BinaryMetadata } from 'dsl/meta/BinaryMetadata';
-import { USING } from 'dsl/lang/DefaultOperators';
-import { SingleMappingRule } from 'dsl/lang/SingleMappingRule';
+import { Function } from './Function';
+import { TypeConverter } from './TypeConverter';
+import { BinaryMetadata } from '../meta/BinaryMetadata';
+import { USING } from './DefaultOperators';
+import { SingleMappingRule } from './SingleMappingRule';
 
 export class StepMapping<T, U> extends Function<U> {
   public readonly input: Function<T>;

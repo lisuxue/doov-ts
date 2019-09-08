@@ -1,5 +1,5 @@
-import { Metadata, MetadataType } from 'dsl/meta/Metadata';
-import { Operator } from 'dsl/Operator';
+import { Metadata, MetadataType } from './Metadata';
+import { Operator } from '../Operator';
 
 export abstract class AbstractMetadata implements Metadata {
   abstract readonly type: MetadataType;

@@ -1,6 +1,6 @@
-import { AbstractMetadata } from 'dsl/meta/AbstractMetadata';
-import { Metadata } from 'dsl/meta/Metadata';
-import { SINGLE_MAPPING, TO } from 'dsl/lang/DefaultOperators';
+import { AbstractMetadata } from './AbstractMetadata';
+import { Metadata } from './Metadata';
+import { SINGLE_MAPPING, TO } from '../lang/DefaultOperators';
 
 export class SingleMappingMetadata extends AbstractMetadata {
   readonly type = 'SINGLE_MAPPING';

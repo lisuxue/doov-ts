@@ -1,12 +1,12 @@
-import { condition, Function } from 'dsl/lang/Function';
-import { ContextAccessor } from 'dsl/ContextAccessor';
-import { Context } from 'dsl/Context';
-import { BooleanFunction } from 'dsl/lang/BooleanFunction';
-import { BinaryMetadata } from 'dsl/meta/BinaryMetadata';
-import { ValueMetadata } from 'dsl/meta/ValueMetadata';
-import { CONTAINS, CONTAINS_ALL, HAS_NOT_SIZE, HAS_SIZE, IS_EMPTY, IS_NOT_EMPTY } from 'dsl/lang/DefaultOperators';
-import { IterableMetadata } from 'dsl/meta/IterableMetadata';
-import { UnaryMetadata } from 'dsl/meta/UnaryMetadata';
+import { condition, Function } from './Function';
+import { ContextAccessor } from '../ContextAccessor';
+import { Context } from '../Context';
+import { BooleanFunction } from './BooleanFunction';
+import { BinaryMetadata } from '../meta/BinaryMetadata';
+import { ValueMetadata } from '../meta/ValueMetadata';
+import { CONTAINS, CONTAINS_ALL, HAS_NOT_SIZE, HAS_SIZE, IS_EMPTY, IS_NOT_EMPTY } from './DefaultOperators';
+import { IterableMetadata } from '../meta/IterableMetadata';
+import { UnaryMetadata } from '../meta/UnaryMetadata';
 export class IterableFunction<T> extends Function<T[]> {
   public static iterable<T>(accessor: ContextAccessor<object, Context, T[]>): IterableFunction<T> {
     return new IterableFunction(accessor.metadata, accessor.get, accessor.set);

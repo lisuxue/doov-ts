@@ -1,9 +1,9 @@
-import { StepWhen } from 'dsl/lang/StepWhen';
-import { Context } from 'dsl/Context';
-import { Result } from 'dsl/Result';
-import { DefaultContext } from 'dsl/DefaultContext';
-import { DslBuilder } from 'dsl/DslBuilder';
-import { ValidationRuleMetadata } from 'dsl/meta/ValidationRuleMetadata';
+import { StepWhen } from './StepWhen';
+import { Context } from '../Context';
+import { Result } from '../Result';
+import { DefaultContext } from '../DefaultContext';
+import { DslBuilder } from '../DslBuilder';
+import { ValidationRuleMetadata } from '../meta/ValidationRuleMetadata';
 
 export class ValidationRule implements DslBuilder {
   readonly when: StepWhen;

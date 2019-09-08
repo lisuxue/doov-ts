@@ -1,12 +1,12 @@
-import { ContextAccessor } from 'dsl/ContextAccessor';
-import { Context } from 'dsl/Context';
-import { Metadata } from 'dsl/meta/Metadata';
-import { Getter, interceptGetter } from 'Getter';
-import { interceptSetter, Setter } from 'Setter';
-import { DslBuilder } from 'dsl/DslBuilder';
-import { BooleanFunction } from 'dsl/lang/BooleanFunction';
-import { FunctionMetadata } from 'dsl/meta/FunctionMetadata';
-import { BinaryMetadata } from 'dsl/meta/BinaryMetadata';
+import { ContextAccessor } from '../ContextAccessor';
+import { Context } from '../Context';
+import { Metadata } from '../meta/Metadata';
+import { Getter, interceptGetter } from '../../Getter';
+import { interceptSetter, Setter } from '../../Setter';
+import { DslBuilder } from '../DslBuilder';
+import { BooleanFunction } from './BooleanFunction';
+import { FunctionMetadata } from '../meta/FunctionMetadata';
+import { BinaryMetadata } from '../meta/BinaryMetadata';
 import {
   EQ,
   FUNCTION,
@@ -19,10 +19,10 @@ import {
   MATCH_ANY,
   NONE_MATCH,
   NOT_EQ,
-} from 'dsl/lang/DefaultOperators';
-import { UnaryMetadata } from 'dsl/meta/UnaryMetadata';
-import { ValueMetadata } from 'dsl/meta/ValueMetadata';
-import { IterableMetadata } from 'dsl/meta/IterableMetadata';
+} from './DefaultOperators';
+import { UnaryMetadata } from '../meta/UnaryMetadata';
+import { ValueMetadata } from '../meta/ValueMetadata';
+import { IterableMetadata } from '../meta/IterableMetadata';
 
 export type FunctionConstructor<U, F extends Function<U>> = new (
   metadata: Metadata,

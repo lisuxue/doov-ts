@@ -1,8 +1,8 @@
-import { AbstractMetadata } from 'dsl/meta/AbstractMetadata';
-import { MultipleMappingsMetadata } from 'dsl/meta/MultipleMappingsMetadata';
-import { WhenMetadata } from 'dsl/meta/WhenMetadata';
-import { Metadata } from 'dsl/meta/Metadata';
-import { ELSE, THEN } from 'dsl/lang/DefaultOperators';
+import { AbstractMetadata } from './AbstractMetadata';
+import { MultipleMappingsMetadata } from './MultipleMappingsMetadata';
+import { WhenMetadata } from './WhenMetadata';
+import { Metadata } from './Metadata';
+import { ELSE, THEN } from '../lang/DefaultOperators';
 
 export class ConditionalMappingMetadata extends AbstractMetadata {
   readonly type = 'CONDITIONAL_MAPPING';

@@ -1,5 +1,5 @@
-import { Context, ValueAccess } from 'dsl/Context';
-import { Metadata } from 'dsl/meta/Metadata';
+import { Context, ValueAccess } from './Context';
+import { Metadata } from './meta/Metadata';
 
 export class DefaultContext implements Context {
   props: { [key: string]: string } = {};

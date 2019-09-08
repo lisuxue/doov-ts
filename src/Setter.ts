@@ -1,6 +1,6 @@
-import { Context } from 'dsl/Context';
-import { Metadata } from 'dsl/meta/Metadata';
-import { hasProperty } from 'Utils';
+import { Context } from './dsl/Context';
+import { Metadata } from './dsl/meta/Metadata';
+import { hasProperty } from './Utils';
 
 export interface Setter<T extends object = object, C extends Context = Context, V = unknown> {
   (obj: T, val: V, ctx?: C): T;

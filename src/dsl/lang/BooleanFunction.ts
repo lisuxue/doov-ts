@@ -1,10 +1,10 @@
-import { condition, Function } from 'dsl/lang/Function';
-import { Context } from 'dsl/Context';
-import { ContextAccessor } from 'dsl/ContextAccessor';
-import { UnaryMetadata } from 'dsl/meta/UnaryMetadata';
-import { AND, NOT, OR } from 'dsl/lang/DefaultOperators';
-import { BinaryMetadata } from 'dsl/meta/BinaryMetadata';
-import { ValueMetadata } from 'dsl/meta/ValueMetadata';
+import { condition, Function } from './Function';
+import { Context } from '../Context';
+import { ContextAccessor } from '../ContextAccessor';
+import { UnaryMetadata } from '../meta/UnaryMetadata';
+import { AND, NOT, OR } from './DefaultOperators';
+import { BinaryMetadata } from '../meta/BinaryMetadata';
+import { ValueMetadata } from '../meta/ValueMetadata';
 
 export class BooleanFunction extends Function<boolean> {
   public static boolean(accessor: ContextAccessor<object, Context, boolean>): BooleanFunction {
