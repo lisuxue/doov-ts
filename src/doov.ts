@@ -118,3 +118,10 @@ export function matchNone(...values: BooleanFunction[]): BooleanFunction {
     });
   });
 }
+
+export { Function } from './dsl/lang/Function';
+export { BooleanFunction } from './dsl/lang/BooleanFunction';
+export { NumberFunction } from './dsl/lang/NumberFunction';
+export { StringFunction } from './dsl/lang/StringFunction';
+export { DateFunction } from './dsl/lang/DateFunction';
+export { IterableFunction } from './dsl/lang/IterableFunction';
