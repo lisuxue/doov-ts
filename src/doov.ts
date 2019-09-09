@@ -128,9 +128,40 @@ export function matchNone(...values: BooleanFunction[]): BooleanFunction {
   });
 }
 
+// Functions
 export { Function } from './dsl/lang/Function';
 export { BooleanFunction } from './dsl/lang/BooleanFunction';
 export { NumberFunction } from './dsl/lang/NumberFunction';
 export { StringFunction } from './dsl/lang/StringFunction';
 export { DateFunction } from './dsl/lang/DateFunction';
 export { IterableFunction } from './dsl/lang/IterableFunction';
+
+export { DefaultContext } from './dsl/DefaultContext';
+export { Field } from './dsl/Field';
+
+// Metadata
+export { AbstractMetadata } from './dsl/meta/AbstractMetadata';
+export { BinaryMetadata } from './dsl/meta/BinaryMetadata';
+export { ConditionalMappingMetadata } from './dsl/meta/ConditionalMappingMetadata';
+export { FieldMetadata } from './dsl/meta/FieldMetadata';
+export { FunctionMetadata } from './dsl/meta/FunctionMetadata';
+export { IterableMetadata } from './dsl/meta/IterableMetadata';
+export { Metadata } from './dsl/meta/Metadata';
+export { MultipleMappingsMetadata } from './dsl/meta/MultipleMappingsMetadata';
+export { NaryMetadata } from './dsl/meta/NaryMetadata';
+export { SingleMappingMetadata } from './dsl/meta/SingleMappingMetadata';
+export { TypeConverterMetadata } from './dsl/meta/TypeConverterMetadata';
+export { UnaryMetadata } from './dsl/meta/UnaryMetadata';
+export { ValidationRuleMetadata } from './dsl/meta/ValidationRuleMetadata';
+export { ValueMetadata } from './dsl/meta/ValueMetadata';
+export { WhenMetadata } from './dsl/meta/WhenMetadata';
+
+// Utils
+import * as MetadataUtils from './dsl/meta/MetadataUtils';
+export { MetadataUtils };
+import * as DateUtils from './DateUtils';
+export { DateUtils };
+import * as Utils from './Utils';
+export { Utils };
+import * as Paths from './Paths';
+export { Paths };
