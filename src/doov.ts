@@ -19,6 +19,7 @@ import { DateFunction } from './dsl/lang/DateFunction';
 import { IterableFunction } from './dsl/lang/IterableFunction';
 import { ConverterFunction, TypeConverter } from './dsl/lang/TypeConverter';
 import { ValueMetadata } from './dsl/meta/ValueMetadata';
+import { SingleMappingRule } from './dsl/lang/SingleMappingRule';
 
 export function f<T>(accessor: ContextAccessor<object, Context, T>): Function<T> {
   return Function.function(accessor);
@@ -71,6 +72,10 @@ export function map<T, U>(input: T | Function<T>, input2?: U | Function<U>) {
   } else {
     return new StepMap(input instanceof Function ? input : new Function(new ValueMetadata(input), _ => input));
   }
+}
+
+export function mapNull<T>(output: Function<T>): SingleMappingRule<T> {
+  return new SingleMappingRule(new Function<T>(new ValueMetadata(null), _ => null), output);
 }
 
 export function mapAll(...inputs: Function<any>[]): NaryStepMap {

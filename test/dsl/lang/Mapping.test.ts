@@ -228,6 +228,7 @@ describe('nary type converter mapping', () => {
 
 describe('static value mapping', () => {
   const mappings = DOOV.mappings(
+    DOOV.mapNull(link1),
     DOOV.map('google.com').to(link2),
     DOOV.map(3, 4)
       .using(plusOneSecond)
