@@ -18,6 +18,7 @@ import { NaryStepMap } from './dsl/lang/NaryStepMap';
 import { DateFunction } from './dsl/lang/DateFunction';
 import { IterableFunction } from './dsl/lang/IterableFunction';
 import { ConverterFunction, TypeConverter } from './dsl/lang/TypeConverter';
+import { ValueMetadata } from './dsl/meta/ValueMetadata';
 
 export function f<T>(accessor: ContextAccessor<object, Context, T>): Function<T> {
   return Function.function(accessor);
@@ -59,13 +60,16 @@ export function when(condition: BooleanFunction): StepWhen {
   return new StepWhen(condition);
 }
 
-export function map<T, U>(input: Function<T>): StepMap<T>;
-export function map<T, U>(input: Function<T>, input2: Function<U>): BiStepMap<T, U>;
-export function map<T, U>(input: Function<T>, input2?: Function<U>) {
+export function map<T, U>(input: T | Function<T>): StepMap<T>;
+export function map<T, U>(input: T | Function<T>, input2: U | Function<U>): BiStepMap<T, U>;
+export function map<T, U>(input: T | Function<T>, input2?: U | Function<U>) {
   if (input2) {
-    return new BiStepMap(input, input2);
+    return new BiStepMap(
+      input instanceof Function ? input : new Function(new ValueMetadata(input), _ => input),
+      input2 instanceof Function ? input2 : new Function(new ValueMetadata(input2), _ => input2)
+    );
   } else {
-    return new StepMap(input);
+    return new StepMap(input instanceof Function ? input : new Function(new ValueMetadata(input), _ => input));
   }
 }
 
