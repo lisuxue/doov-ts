@@ -1,8 +1,8 @@
-import { DslBuilder } from 'dsl/DslBuilder';
-import { Context } from 'dsl/Context';
-import { Metadata } from 'dsl/meta/Metadata';
-import { TypeConverterMetadata } from 'dsl/meta/TypeConverterMetadata';
-import { Function } from 'dsl/lang/Function';
+import { DslBuilder } from '../DslBuilder';
+import { Context } from '../Context';
+import { Metadata } from '../meta/Metadata';
+import { TypeConverterMetadata } from '../meta/TypeConverterMetadata';
+import { Function } from './Function';
 
 export type NaryConverterFunction<V> = (obj: object, inputs: Function<any>[], context?: Context | undefined) => V;
 

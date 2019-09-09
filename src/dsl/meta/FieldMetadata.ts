@@ -1,6 +1,6 @@
-import { pathString } from 'Paths';
-import { AbstractMetadata } from 'dsl/meta/AbstractMetadata';
-import { isInteger } from 'Utils';
+import { pathString } from '../../Paths';
+import { AbstractMetadata } from './AbstractMetadata';
+import { isInteger } from '../../Utils';
 
 export class FieldMetadata extends AbstractMetadata {
   readonly type = 'FIELD';

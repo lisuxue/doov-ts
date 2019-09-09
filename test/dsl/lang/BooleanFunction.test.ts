@@ -1,7 +1,7 @@
 import { Model, User } from '../../model';
-import { BooleanFunction } from 'dsl/lang/BooleanFunction';
-import { DefaultContext } from 'dsl/DefaultContext';
-import * as DOOV from 'doov';
+import { BooleanFunction } from '../../../src/dsl/lang/BooleanFunction';
+import { DefaultContext } from '../../../src/dsl/DefaultContext';
+import * as DOOV from '../../../src/doov';
 
 let model: Model;
 let user: User;

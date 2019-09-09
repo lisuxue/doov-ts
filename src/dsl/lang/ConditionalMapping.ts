@@ -1,11 +1,11 @@
-import { BooleanFunction } from 'dsl/lang/BooleanFunction';
-import { Metadata } from 'dsl/meta/Metadata';
-import { Context } from 'dsl/Context';
-import { MappingRule } from 'dsl/lang/MappingRule';
-import { ConditionalMappingMetadata } from 'dsl/meta/ConditionalMappingMetadata';
-import { WhenMetadata } from 'dsl/meta/WhenMetadata';
-import { MultipleMappingsMetadata } from 'dsl/meta/MultipleMappingsMetadata';
-import { ELSE, THEN } from 'dsl/lang/DefaultOperators';
+import { BooleanFunction } from './BooleanFunction';
+import { Metadata } from '../meta/Metadata';
+import { Context } from '../Context';
+import { MappingRule } from './MappingRule';
+import { ConditionalMappingMetadata } from '../meta/ConditionalMappingMetadata';
+import { WhenMetadata } from '../meta/WhenMetadata';
+import { MultipleMappingsMetadata } from '../meta/MultipleMappingsMetadata';
+import { ELSE, THEN } from './DefaultOperators';
 
 export class ConditionalMapping implements MappingRule {
   condition: BooleanFunction;

@@ -1,6 +1,6 @@
-import { MappingRule } from 'dsl/lang/MappingRule';
-import { Context } from 'dsl/Context';
-import { MultipleMappingsMetadata } from 'dsl/meta/MultipleMappingsMetadata';
+import { MappingRule } from './MappingRule';
+import { Context } from '../Context';
+import { MultipleMappingsMetadata } from '../meta/MultipleMappingsMetadata';
 
 export class Mappings implements MappingRule {
   readonly metadata: MultipleMappingsMetadata;

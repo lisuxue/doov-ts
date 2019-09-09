@@ -1,6 +1,6 @@
-import { Metadata } from 'dsl/meta/Metadata';
-import { WHEN } from 'dsl/lang/DefaultOperators';
-import { Operator } from 'dsl/Operator';
+import { Metadata } from './Metadata';
+import { WHEN } from '../lang/DefaultOperators';
+import { Operator } from '../Operator';
 
 export class WhenMetadata implements Metadata {
   readonly type = 'WHEN';

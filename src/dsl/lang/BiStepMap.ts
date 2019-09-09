@@ -1,6 +1,6 @@
-import { Function } from 'dsl/lang/Function';
-import { BiConverterFunction, BiTypeConverter } from 'dsl/lang/BiTypeConverter';
-import { BiStepMapping } from 'dsl/lang/BiStepMapping';
+import { Function } from './Function';
+import { BiConverterFunction, BiTypeConverter } from './BiTypeConverter';
+import { BiStepMapping } from './BiStepMapping';
 
 export class BiStepMap<T, U> {
   private readonly input: Function<T>;

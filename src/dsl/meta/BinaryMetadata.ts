@@ -1,6 +1,6 @@
-import { AbstractMetadata } from 'dsl/meta/AbstractMetadata';
-import { Operator } from 'dsl/Operator';
-import { Metadata } from 'dsl/meta/Metadata';
+import { AbstractMetadata } from './AbstractMetadata';
+import { Operator } from '../Operator';
+import { Metadata } from './Metadata';
 
 export class BinaryMetadata extends AbstractMetadata {
   readonly type = 'BINARY';

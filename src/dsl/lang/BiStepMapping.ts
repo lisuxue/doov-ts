@@ -1,10 +1,10 @@
-import { Function } from 'dsl/lang/Function';
-import { BiTypeConverter } from 'dsl/lang/BiTypeConverter';
-import { SingleMappingRule } from 'dsl/lang/SingleMappingRule';
-import { BinaryMetadata } from 'dsl/meta/BinaryMetadata';
-import { AND, USING } from 'dsl/lang/DefaultOperators';
-import { TypeConverter } from 'dsl/lang/TypeConverter';
-import { StepMapping } from 'dsl/lang/StepMapping';
+import { Function } from './Function';
+import { BiTypeConverter } from './BiTypeConverter';
+import { SingleMappingRule } from './SingleMappingRule';
+import { BinaryMetadata } from '../meta/BinaryMetadata';
+import { AND, USING } from './DefaultOperators';
+import { TypeConverter } from './TypeConverter';
+import { StepMapping } from './StepMapping';
 
 export class BiStepMapping<T, U, V> extends Function<V> {
   public readonly input: Function<T>;

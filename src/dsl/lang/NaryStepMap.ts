@@ -1,6 +1,6 @@
-import { Function } from 'dsl/lang/Function';
-import { NaryStepMapping } from 'dsl/lang/NaryStepMapping';
-import { NaryConverterFunction, NaryTypeConverter } from 'dsl/lang/NaryTypeConverter';
+import { Function } from './Function';
+import { NaryStepMapping } from './NaryStepMapping';
+import { NaryConverterFunction, NaryTypeConverter } from './NaryTypeConverter';
 
 export class NaryStepMap {
   private readonly inputs: Function<any>[];

@@ -1,5 +1,5 @@
-import { Operator } from 'dsl/Operator';
-import { Metadata } from 'dsl/meta/Metadata';
+import { Operator } from '../Operator';
+import { Metadata } from './Metadata';
 
 export class FunctionMetadata implements Metadata {
   readonly type: 'FUNCTION';

@@ -1,9 +1,9 @@
-import { BooleanFunction } from 'dsl/lang/BooleanFunction';
-import { ValidationRule } from 'dsl/lang/ValidationRule';
-import { DslBuilder } from 'dsl/DslBuilder';
-import { MappingRule } from 'dsl/lang/MappingRule';
-import { ConditionalMapping } from 'dsl/lang/ConditionalMapping';
-import { WhenMetadata } from 'dsl/meta/WhenMetadata';
+import { BooleanFunction } from './BooleanFunction';
+import { ValidationRule } from './ValidationRule';
+import { DslBuilder } from '../DslBuilder';
+import { MappingRule } from './MappingRule';
+import { ConditionalMapping } from './ConditionalMapping';
+import { WhenMetadata } from '../meta/WhenMetadata';
 
 export class StepWhen implements DslBuilder {
   readonly condition: BooleanFunction;

@@ -1,23 +1,25 @@
-import { Field } from 'dsl/Field';
-import { Context } from 'dsl/Context';
-import { ContextAccessor } from 'dsl/ContextAccessor';
-import { BooleanFunction } from 'dsl/lang/BooleanFunction';
-import { NumberFunction } from 'dsl/lang/NumberFunction';
-import { StringFunction } from 'dsl/lang/StringFunction';
-import { Function, FunctionConstructor } from 'dsl/lang/Function';
-import { StepWhen } from 'dsl/lang/StepWhen';
-import { StepMap } from 'dsl/lang/StepMap';
-import { MappingRule } from 'dsl/lang/MappingRule';
-import { Mappings } from 'dsl/lang/Mappings';
-import { NaryMetadata } from 'dsl/meta/NaryMetadata';
-import { MATCH_ALL, MATCH_ANY, NONE_MATCH } from 'dsl/lang/DefaultOperators';
-import { BiStepMap } from 'dsl/lang/BiStepMap';
-import { BiConverterFunction, BiTypeConverter } from 'dsl/lang/BiTypeConverter';
-import { NaryConverterFunction, NaryTypeConverter } from 'dsl/lang/NaryTypeConverter';
-import { NaryStepMap } from 'dsl/lang/NaryStepMap';
-import { DateFunction } from 'dsl/lang/DateFunction';
-import { IterableFunction } from 'dsl/lang/IterableFunction';
-import { ConverterFunction, TypeConverter } from 'dsl/lang/TypeConverter';
+import { Field } from './dsl/Field';
+import { Context } from './dsl/Context';
+import { ContextAccessor } from './dsl/ContextAccessor';
+import { BooleanFunction } from './dsl/lang/BooleanFunction';
+import { NumberFunction } from './dsl/lang/NumberFunction';
+import { StringFunction } from './dsl/lang/StringFunction';
+import { Function, FunctionConstructor } from './dsl/lang/Function';
+import { StepWhen } from './dsl/lang/StepWhen';
+import { StepMap } from './dsl/lang/StepMap';
+import { MappingRule } from './dsl/lang/MappingRule';
+import { Mappings } from './dsl/lang/Mappings';
+import { NaryMetadata } from './dsl/meta/NaryMetadata';
+import { MATCH_ALL, MATCH_ANY, NONE_MATCH } from './dsl/lang/DefaultOperators';
+import { BiStepMap } from './dsl/lang/BiStepMap';
+import { BiConverterFunction, BiTypeConverter } from './dsl/lang/BiTypeConverter';
+import { NaryConverterFunction, NaryTypeConverter } from './dsl/lang/NaryTypeConverter';
+import { NaryStepMap } from './dsl/lang/NaryStepMap';
+import { DateFunction } from './dsl/lang/DateFunction';
+import { IterableFunction } from './dsl/lang/IterableFunction';
+import { ConverterFunction, TypeConverter } from './dsl/lang/TypeConverter';
+import { ValueMetadata } from './dsl/meta/ValueMetadata';
+import { SingleMappingRule } from './dsl/lang/SingleMappingRule';
 
 export function f<T>(accessor: ContextAccessor<object, Context, T>): Function<T> {
   return Function.function(accessor);
@@ -27,7 +29,7 @@ export function field<T extends object, V>(...path: (string | number)[]): Field<
   return Field.field(...path);
 }
 
-export function lift<U, F extends Function<U>>(constructor: FunctionConstructor<U, F>, value: U): F {
+export function lift<U, F extends Function<U>>(constructor: FunctionConstructor<U, F>, value: U | null | undefined): F {
   return Function.lift(constructor, value);
 }
 
@@ -59,14 +61,21 @@ export function when(condition: BooleanFunction): StepWhen {
   return new StepWhen(condition);
 }
 
-export function map<T, U>(input: Function<T>): StepMap<T>;
-export function map<T, U>(input: Function<T>, input2: Function<U>): BiStepMap<T, U>;
-export function map<T, U>(input: Function<T>, input2?: Function<U>) {
+export function map<T, U>(input: T | Function<T>): StepMap<T>;
+export function map<T, U>(input: T | Function<T>, input2: U | Function<U>): BiStepMap<T, U>;
+export function map<T, U>(input: T | Function<T>, input2?: U | Function<U>) {
   if (input2) {
-    return new BiStepMap(input, input2);
+    return new BiStepMap(
+      input instanceof Function ? input : new Function(new ValueMetadata(input), _ => input),
+      input2 instanceof Function ? input2 : new Function(new ValueMetadata(input2), _ => input2)
+    );
   } else {
-    return new StepMap(input);
+    return new StepMap(input instanceof Function ? input : new Function(new ValueMetadata(input), _ => input));
   }
+}
+
+export function mapNull<T>(output: Function<T>): SingleMappingRule<T> {
+  return new SingleMappingRule(new Function<T>(new ValueMetadata(null), _ => null), output);
 }
 
 export function mapAll(...inputs: Function<any>[]): NaryStepMap {
@@ -118,3 +127,10 @@ export function matchNone(...values: BooleanFunction[]): BooleanFunction {
     });
   });
 }
+
+export { Function } from './dsl/lang/Function';
+export { BooleanFunction } from './dsl/lang/BooleanFunction';
+export { NumberFunction } from './dsl/lang/NumberFunction';
+export { StringFunction } from './dsl/lang/StringFunction';
+export { DateFunction } from './dsl/lang/DateFunction';
+export { IterableFunction } from './dsl/lang/IterableFunction';

@@ -1,8 +1,8 @@
-import { Function } from 'dsl/lang/Function';
-import { Context } from 'dsl/Context';
-import { DslBuilder } from 'dsl/DslBuilder';
-import { Metadata } from 'dsl/meta/Metadata';
-import { TypeConverterMetadata } from 'dsl/meta/TypeConverterMetadata';
+import { Function } from './Function';
+import { Context } from '../Context';
+import { DslBuilder } from '../DslBuilder';
+import { Metadata } from '../meta/Metadata';
+import { TypeConverterMetadata } from '../meta/TypeConverterMetadata';
 
 export type ConverterFunction<T, V> = (obj: object, input: Function<T>, context?: Context | undefined) => V;
 

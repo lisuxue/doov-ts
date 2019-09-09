@@ -1,9 +1,9 @@
 import { Model, User } from '../../model';
-import * as DOOV from 'doov';
-import { Function } from 'dsl/lang/Function';
-import { IterableFunction } from 'dsl/lang/IterableFunction';
-import { NumberFunction } from 'dsl/lang/NumberFunction';
-import { StringFunction } from 'dsl/lang/StringFunction';
+import * as DOOV from '../../../src/doov';
+import { Function } from '../../../src/dsl/lang/Function';
+import { IterableFunction } from '../../../src/dsl/lang/IterableFunction';
+import { NumberFunction } from '../../../src/dsl/lang/NumberFunction';
+import { StringFunction } from '../../../src/dsl/lang/StringFunction';
 
 let model: Model;
 let user: User;

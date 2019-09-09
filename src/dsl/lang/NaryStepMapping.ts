@@ -1,11 +1,11 @@
-import { Function } from 'dsl/lang/Function';
-import { SingleMappingRule } from 'dsl/lang/SingleMappingRule';
-import { BinaryMetadata } from 'dsl/meta/BinaryMetadata';
-import { MULTIPLE_INPUTS, USING } from 'dsl/lang/DefaultOperators';
-import { NaryMetadata } from 'dsl/meta/NaryMetadata';
-import { NaryTypeConverter } from 'dsl/lang/NaryTypeConverter';
-import { TypeConverter } from 'dsl/lang/TypeConverter';
-import { StepMapping } from 'dsl/lang/StepMapping';
+import { Function } from './Function';
+import { SingleMappingRule } from './SingleMappingRule';
+import { BinaryMetadata } from '../meta/BinaryMetadata';
+import { MULTIPLE_INPUTS, USING } from './DefaultOperators';
+import { NaryMetadata } from '../meta/NaryMetadata';
+import { NaryTypeConverter } from './NaryTypeConverter';
+import { TypeConverter } from './TypeConverter';
+import { StepMapping } from './StepMapping';
 
 export class NaryStepMapping<V> extends Function<V> {
   public readonly inputs: Function<any>[];

@@ -13,6 +13,7 @@
   ],
   "source": "src/doov.ts",
   "main": "dist/doov.js",
+  "umd:name": "DOOV",
   "umd:main": "dist/doov.umd.js",
   "module": "dist/doov.es.js",
   "types": "dist/types/doov.d.ts",

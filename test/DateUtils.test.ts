@@ -8,7 +8,7 @@ import {
   newUTCDate,
   parse,
   clone,
-} from 'DateUtils';
+} from '../src/DateUtils';
 
 describe('format dates', () => {
   it('format YYYYMMdd', () => {

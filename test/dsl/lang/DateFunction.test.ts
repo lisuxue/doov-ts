@@ -1,8 +1,8 @@
 import { Model, User } from '../../model';
-import * as DOOV from 'doov';
-import { DateFunction } from 'dsl/lang/DateFunction';
-import { newUTCDate } from 'DateUtils';
-import { NumberFunction } from 'dsl/lang/NumberFunction';
+import * as DOOV from '../../../src/doov';
+import { DateFunction } from '../../../src/dsl/lang/DateFunction';
+import { newUTCDate } from '../../../src/DateUtils';
+import { NumberFunction } from '../../../src/dsl/lang/NumberFunction';
 
 let model: Model;
 let user: User;

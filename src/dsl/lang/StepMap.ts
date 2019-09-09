@@ -1,7 +1,7 @@
-import { Function } from 'dsl/lang/Function';
-import { SingleMappingRule } from 'dsl/lang/SingleMappingRule';
-import { TypeConverter } from 'dsl/lang/TypeConverter';
-import { StepMapping } from 'dsl/lang/StepMapping';
+import { Function } from './Function';
+import { SingleMappingRule } from './SingleMappingRule';
+import { TypeConverter } from './TypeConverter';
+import { StepMapping } from './StepMapping';
 
 export class StepMap<T> {
   private readonly input: Function<T>;

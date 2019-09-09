@@ -1,5 +1,5 @@
-import { AbstractMetadata } from 'dsl/meta/AbstractMetadata';
-import { Metadata } from 'dsl/meta/Metadata';
+import { AbstractMetadata } from './AbstractMetadata';
+import { Metadata } from './Metadata';
 
 export class IterableMetadata extends AbstractMetadata {
   readonly type = 'ITERABLE';

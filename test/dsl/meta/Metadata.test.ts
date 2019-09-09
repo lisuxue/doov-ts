@@ -1,8 +1,8 @@
 import { Model, User } from '../../model';
-import * as DOOV from 'doov';
-import { Metadata } from 'dsl/meta/Metadata';
-import { fieldsOf } from 'dsl/meta/MetadataUtils';
-import { path } from 'Paths';
+import * as DOOV from '../../../src/doov';
+import { Metadata } from '../../../src/dsl/meta/Metadata';
+import { fieldsOf } from '../../../src/dsl/meta/MetadataUtils';
+import { path } from '../../../src/Paths';
 
 let model: Model;
 let user: User;

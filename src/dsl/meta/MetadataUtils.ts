@@ -1,16 +1,16 @@
-import { Metadata } from 'dsl/meta/Metadata';
-import { WhenMetadata } from 'dsl/meta/WhenMetadata';
-import { ValidationRuleMetadata } from 'dsl/meta/ValidationRuleMetadata';
-import { ValueMetadata } from 'dsl/meta/ValueMetadata';
-import { FieldMetadata } from 'dsl/meta/FieldMetadata';
-import { UnaryMetadata } from 'dsl/meta/UnaryMetadata';
-import { BinaryMetadata } from 'dsl/meta/BinaryMetadata';
-import { NaryMetadata } from 'dsl/meta/NaryMetadata';
-import { SingleMappingMetadata } from 'dsl/meta/SingleMappingMetadata';
-import { MultipleMappingsMetadata } from 'dsl/meta/MultipleMappingsMetadata';
-import { ConditionalMappingMetadata } from 'dsl/meta/ConditionalMappingMetadata';
-import { FunctionMetadata } from 'dsl/meta/FunctionMetadata';
-import { IterableMetadata } from 'dsl/meta/IterableMetadata';
+import { Metadata } from './Metadata';
+import { WhenMetadata } from './WhenMetadata';
+import { ValidationRuleMetadata } from './ValidationRuleMetadata';
+import { ValueMetadata } from './ValueMetadata';
+import { FieldMetadata } from './FieldMetadata';
+import { UnaryMetadata } from './UnaryMetadata';
+import { BinaryMetadata } from './BinaryMetadata';
+import { NaryMetadata } from './NaryMetadata';
+import { SingleMappingMetadata } from './SingleMappingMetadata';
+import { MultipleMappingsMetadata } from './MultipleMappingsMetadata';
+import { ConditionalMappingMetadata } from './ConditionalMappingMetadata';
+import { FunctionMetadata } from './FunctionMetadata';
+import { IterableMetadata } from './IterableMetadata';
 
 export type TypedMetadata =
   | WhenMetadata

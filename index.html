@@ -1,14 +1,17 @@
 <html>
+  <script src="./dist/doov.js"></script>
   <script type="module">
     // import * as DOOV from './dist/doov.es.js';
-    import * as DOOV from 'https://unpkg.com/doov/dist/doov.es.js';
-    window.DOOV = DOOV;
+    // window.DOOV = DOOV;
+    const num = DOOV.lift(DOOV.NumberFunction, 4);
     const f = DOOV.field('toto');
-    const o = { toto: 'value' };
+    const o = { toto: 'value', titi: 5 };
     console.log(f.get(o));
     document.getElementById('toto').innerText = f.get(o);
+    document.getElementById('titi').innerText = num.get(o);
   </script>
   <body>
     <p id="toto"></p>
+    <p id="titi"></p>
   </body>
 </html>

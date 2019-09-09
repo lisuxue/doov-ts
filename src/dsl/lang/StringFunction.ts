@@ -1,9 +1,9 @@
-import { Context } from 'dsl/Context';
-import { ContextAccessor } from 'dsl/ContextAccessor';
-import { BooleanFunction } from 'dsl/lang/BooleanFunction';
-import { NumberFunction } from 'dsl/lang/NumberFunction';
-import { condition, Function } from 'dsl/lang/Function';
-import { BinaryMetadata } from 'dsl/meta/BinaryMetadata';
+import { Context } from '../Context';
+import { ContextAccessor } from '../ContextAccessor';
+import { BooleanFunction } from './BooleanFunction';
+import { NumberFunction } from './NumberFunction';
+import { condition, Function } from './Function';
+import { BinaryMetadata } from '../meta/BinaryMetadata';
 import {
   AND,
   AS_INT,
@@ -18,9 +18,9 @@ import {
   SUB_STRING,
   TRIM,
   UPPER_CASE,
-} from 'dsl/lang/DefaultOperators';
-import { ValueMetadata } from 'dsl/meta/ValueMetadata';
-import { UnaryMetadata } from 'dsl/meta/UnaryMetadata';
+} from './DefaultOperators';
+import { ValueMetadata } from '../meta/ValueMetadata';
+import { UnaryMetadata } from '../meta/UnaryMetadata';
 
 export class StringFunction extends Function<string> {
   public static string(accessor: ContextAccessor<object, Context, string>): StringFunction {

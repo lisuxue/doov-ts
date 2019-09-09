@@ -1,4 +1,4 @@
-import { Metadata } from 'dsl/meta/Metadata';
+import { Metadata } from './meta/Metadata';
 
 export interface ValueAccess {
   metadata: Metadata;

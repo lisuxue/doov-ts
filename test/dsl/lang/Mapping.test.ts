@@ -1,11 +1,12 @@
 import { Model, User } from '../../model';
-import { StringFunction } from 'dsl/lang/StringFunction';
-import * as DOOV from 'doov';
-import { Function } from 'dsl/lang/Function';
-import { NumberFunction } from 'dsl/lang/NumberFunction';
-import { fieldsOf } from 'dsl/meta/MetadataUtils';
-import { path } from 'Paths';
-import { nullOrUndefined } from 'Utils';
+import { StringFunction } from '../../../src/dsl/lang/StringFunction';
+import * as DOOV from '../../../src/doov';
+import { Function } from '../../../src/dsl/lang/Function';
+import { NumberFunction } from '../../../src/dsl/lang/NumberFunction';
+import { fieldsOf } from '../../../src/dsl/meta/MetadataUtils';
+import { path } from '../../../src/Paths';
+import { nullOrUndefined } from '../../../src/Utils';
+import { biConverter } from '../../../src/doov';
 
 let model: Model;
 let user: User;
@@ -222,5 +223,38 @@ describe('nary type converter mapping', () => {
     expect(fields).toContainEqual(path(link1.metadata.readable));
     expect(fields).toContainEqual(path(link2.metadata.readable));
     expect(fields).toContainEqual(path(name.metadata.readable));
+  });
+});
+
+describe('static value mapping', () => {
+  const mappings = DOOV.mappings(
+    DOOV.mapNull(link1),
+    DOOV.map('google.com').to(link2),
+    DOOV.map(3, 4)
+      .using(plusOneSecond)
+      .to(id),
+    DOOV.map(id, 3)
+      .using(plusOneSecond)
+      .to(id),
+    DOOV.map('amazon.com', link2)
+      .using(biConverter((obj, input, input2, ctx) => input2.get(obj, ctx) + '?q=' + input.get(obj, ctx)))
+      .to(link1)
+  );
+
+  it('execute mapping', () => {
+    model = mappings.execute(model);
+    expect(name.get(model)).toEqual('test');
+    expect(id.get(model)).toEqual(4);
+    expect(link2.get(model)).toEqual('google.com');
+    expect(link1.get(model)).toEqual('google.com?q=amazon.com');
+  });
+
+  it('metadata fields', () => {
+    for (let child of mappings.metadata.children()) {
+      console.log(child.readable);
+    }
+    const fields = fieldsOf(mappings.metadata);
+    expect(fields).toContainEqual(path(id.metadata.readable));
+    expect(fields).toContainEqual(path(link2.metadata.readable));
   });
 });

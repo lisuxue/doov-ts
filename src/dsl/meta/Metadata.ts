@@ -1,5 +1,5 @@
-import { Readable } from 'dsl/Readable';
-import { Operator } from 'dsl/Operator';
+import { Readable } from '../Readable';
+import { Operator } from '../Operator';
 
 export type MetadataType =
   | 'WHEN'

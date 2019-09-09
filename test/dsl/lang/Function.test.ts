@@ -1,11 +1,11 @@
 import { Model, User } from '../../model';
-import { BooleanFunction } from 'dsl/lang/BooleanFunction';
-import { Function } from 'dsl/lang/Function';
-import { DefaultContext } from 'dsl/DefaultContext';
-import { FunctionMetadata } from 'dsl/meta/FunctionMetadata';
-import { StringFunction } from 'dsl/lang/StringFunction';
-import { NumberFunction } from 'dsl/lang/NumberFunction';
-import * as DOOV from 'doov';
+import { BooleanFunction } from '../../../src/dsl/lang/BooleanFunction';
+import { Function } from '../../../src/dsl/lang/Function';
+import { DefaultContext } from '../../../src/dsl/DefaultContext';
+import { FunctionMetadata } from '../../../src/dsl/meta/FunctionMetadata';
+import { StringFunction } from '../../../src/dsl/lang/StringFunction';
+import { NumberFunction } from '../../../src/dsl/lang/NumberFunction';
+import * as DOOV from '../../../src/doov';
 
 let model: Model;
 let user: User;

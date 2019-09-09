@@ -1,7 +1,7 @@
-import { AbstractMetadata } from 'dsl/meta/AbstractMetadata';
-import { WhenMetadata } from 'dsl/meta/WhenMetadata';
-import { VALIDATE } from 'dsl/lang/DefaultOperators';
-import { Metadata } from 'dsl/meta/Metadata';
+import { AbstractMetadata } from './AbstractMetadata';
+import { WhenMetadata } from './WhenMetadata';
+import { VALIDATE } from '../lang/DefaultOperators';
+import { Metadata } from './Metadata';
 
 export class ValidationRuleMetadata extends AbstractMetadata {
   readonly type = 'VALIDATION';

@@ -1,8 +1,8 @@
-import { ContextAccessor } from 'dsl/ContextAccessor';
-import { Context } from 'dsl/Context';
-import { BooleanFunction } from 'dsl/lang/BooleanFunction';
-import { condition, Function } from 'dsl/lang/Function';
-import { ValueMetadata } from 'dsl/meta/ValueMetadata';
+import { ContextAccessor } from '../ContextAccessor';
+import { Context } from '../Context';
+import { BooleanFunction } from './BooleanFunction';
+import { condition, Function } from './Function';
+import { ValueMetadata } from '../meta/ValueMetadata';
 import {
   GREATER_OR_EQUALS,
   GREATER_THAN,
@@ -14,9 +14,9 @@ import {
   PLUS,
   SUM,
   TIMES,
-} from 'dsl/lang/DefaultOperators';
-import { BinaryMetadata } from 'dsl/meta/BinaryMetadata';
-import { NaryMetadata } from 'dsl/meta/NaryMetadata';
+} from './DefaultOperators';
+import { BinaryMetadata } from '../meta/BinaryMetadata';
+import { NaryMetadata } from '../meta/NaryMetadata';
 
 export class NumberFunction extends Function<number> {
   public static number(accessor: ContextAccessor<object, Context, number>): NumberFunction {

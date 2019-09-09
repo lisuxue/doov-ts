@@ -1,5 +1,5 @@
-import { Metadata } from 'dsl/meta/Metadata';
-import { Operator } from 'dsl/Operator';
+import { Metadata } from './Metadata';
+import { Operator } from '../Operator';
 
 export class TypeConverterMetadata implements Metadata {
   readonly type: 'TYPE_CONVERTER';

@@ -1,9 +1,9 @@
 import { Model, User } from '../../model';
-import * as DOOV from 'doov';
-import { Field } from 'dsl/Field';
-import { ValidationRule } from 'dsl/lang/ValidationRule';
-import { StringFunction } from 'dsl/lang/StringFunction';
-import { DefaultContext } from 'dsl/DefaultContext';
+import * as DOOV from '../../../src/doov';
+import { Field } from '../../../src/dsl/Field';
+import { ValidationRule } from '../../../src/dsl/lang/ValidationRule';
+import { StringFunction } from '../../../src/dsl/lang/StringFunction';
+import { DefaultContext } from '../../../src/dsl/DefaultContext';
 
 let model: Model;
 let user: User;
