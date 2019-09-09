@@ -26,8 +26,8 @@ import { IterableMetadata } from '../meta/IterableMetadata';
 
 export type FunctionConstructor<U, F extends Function<U>> = new (
   metadata: Metadata,
-  getter: Getter<object, Context, U | null>,
-  setter?: Setter<object, Context, U | null>
+  getter: Getter<object, Context, U | null | undefined>,
+  setter?: Setter<object, Context, U | null | undefined>
 ) => F;
 
 export class Function<T> implements ContextAccessor<object, Context, T>, DslBuilder {
