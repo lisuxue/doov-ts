@@ -57,7 +57,7 @@ export class Function<T> implements ContextAccessor<object, Context, T>, DslBuil
     return new Function(metadata, () => null, setter);
   }
 
-  public static lift<U, F extends Function<U>>(constructor: FunctionConstructor<U, F>, value: U): F {
+  public static lift<U, F extends Function<U>>(constructor: FunctionConstructor<U, F>, value: U | null | undefined): F {
     return new constructor(new ValueMetadata(value), () => value);
   }
 

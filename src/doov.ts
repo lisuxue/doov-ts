@@ -29,7 +29,7 @@ export function field<T extends object, V>(...path: (string | number)[]): Field<
   return Field.field(...path);
 }
 
-export function lift<U, F extends Function<U>>(constructor: FunctionConstructor<U, F>, value: U): F {
+export function lift<U, F extends Function<U>>(constructor: FunctionConstructor<U, F>, value: U | null | undefined): F {
   return Function.lift(constructor, value);
 }
 
