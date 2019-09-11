@@ -1,6 +1,7 @@
 import { MappingRule } from './MappingRule';
 import { Context } from '../Context';
 import { MultipleMappingsMetadata } from '../meta/MultipleMappingsMetadata';
+import { DefaultContext } from '../DefaultContext';
 
 export class Mappings implements MappingRule {
   readonly metadata: MultipleMappingsMetadata;
@@ -11,7 +12,16 @@ export class Mappings implements MappingRule {
     this.metadata = new MultipleMappingsMetadata(this.mappings.map(value => value.metadata));
   }
 
-  execute<M extends object>(model: M, ctx?: Context): M {
-    return this.mappings.reduce((mdl, mapping) => mapping.execute(mdl, ctx), model);
+  execute<M extends object>(input: M, ctx?: Context): M {
+    const context = ctx ? ctx : new DefaultContext();
+    return this.mappings.reduce((mdl, mapping) => mapping.execute(mdl, context), input);
+  }
+
+  executeOn<M extends object, O extends object>(input: M, output: O, ctx?: Context): O {
+    const context = ctx ? ctx : new DefaultContext();
+    this.mappings.forEach(m => {
+      m.executeOn(input, output, context);
+    });
+    return output;
   }
 }

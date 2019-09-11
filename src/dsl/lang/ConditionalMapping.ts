@@ -6,6 +6,7 @@ import { ConditionalMappingMetadata } from '../meta/ConditionalMappingMetadata';
 import { WhenMetadata } from '../meta/WhenMetadata';
 import { MultipleMappingsMetadata } from '../meta/MultipleMappingsMetadata';
 import { ELSE, THEN } from './DefaultOperators';
+import { DefaultContext } from '../DefaultContext';
 
 export class ConditionalMapping implements MappingRule {
   condition: BooleanFunction;
@@ -23,13 +24,31 @@ export class ConditionalMapping implements MappingRule {
     );
   }
 
-  execute<M extends object>(model: M, ctx?: Context): M {
-    if (this.condition.get(model, ctx)) {
-      return this.mappings.reduce((mdl, mapping) => mapping.execute(mdl, ctx), model);
+  execute<M extends object>(input: M, ctx?: Context): M {
+    const context = ctx ? ctx : new DefaultContext();
+    if (this.condition.get(input, ctx)) {
+      return this.mappings.reduce((mdl, mapping) => mapping.execute(mdl, context), input);
     } else if (this.elseMappings) {
-      return this.elseMappings.reduce((mdl, mapping) => mapping.execute(mdl, ctx), model);
+      return this.elseMappings.reduce((mdl, mapping) => mapping.execute(mdl, context), input);
     } else {
-      return model;
+      return input;
+    }
+  }
+
+  executeOn<M extends object, O extends object>(input: M, output: O, ctx?: Context): O {
+    const context = ctx ? ctx : new DefaultContext();
+    if (this.condition.get(input, ctx)) {
+      this.mappings.forEach(m => {
+        m.executeOn(input, output, context);
+      });
+      return output;
+    } else if (this.elseMappings) {
+      this.elseMappings.forEach(m => {
+        m.executeOn(input, output, context);
+      });
+      return output;
+    } else {
+      return output;
     }
   }
 

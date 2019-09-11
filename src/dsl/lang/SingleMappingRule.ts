@@ -15,12 +15,21 @@ export class SingleMappingRule<T> implements MappingRule {
     this.metadata = new SingleMappingMetadata(input.metadata, output.metadata);
   }
 
-  public execute<M extends object>(model: M, ctx?: Context): M {
+  public execute<M extends object>(input: M, ctx?: Context): M {
     const context = ctx ? ctx : new DefaultContext();
     if (this.output.set) {
-      return this.output.set(model, this.input.get(model, context), context) as M;
+      return this.output.set(input, this.input.get(input, context), context) as M;
     } else {
-      return model;
+      return input;
+    }
+  }
+
+  public executeOn<M extends object, O extends object>(input: M, output: O, ctx?: Context): O {
+    const context = ctx ? ctx : new DefaultContext();
+    if (this.output.set) {
+      return this.output.set(output, this.input.get(input, context), context) as O;
+    } else {
+      return output;
     }
   }
 }
