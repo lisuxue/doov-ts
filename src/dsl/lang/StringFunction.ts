@@ -43,9 +43,8 @@ export class StringFunction extends Function<string> {
   }
 
   public matches(regex: string | StringFunction): BooleanFunction {
-    const predicate = (value: string, str: string) => {
-      const match = value.match(str);
-      return match != null && match.length >= 1;
+    const predicate = (value: string, regexp: string) => {
+      return new RegExp(regexp).test(value);
     };
     if (regex instanceof StringFunction) {
       return new BooleanFunction(
