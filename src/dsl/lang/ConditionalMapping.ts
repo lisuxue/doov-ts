@@ -39,12 +39,12 @@ export class ConditionalMapping implements MappingRule {
     const context = ctx ? ctx : new DefaultContext();
     if (this.condition.get(input, ctx)) {
       this.mappings.forEach(m => {
-        m.executeOn(input, output, context);
+        output = m.executeOn(input, output, context);
       });
       return output;
     } else if (this.elseMappings) {
       this.elseMappings.forEach(m => {
-        m.executeOn(input, output, context);
+        output = m.executeOn(input, output, context);
       });
       return output;
     } else {

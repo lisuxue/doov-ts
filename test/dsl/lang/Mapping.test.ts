@@ -258,3 +258,52 @@ describe('static value mapping', () => {
     expect(fields).toContainEqual(path(link2.metadata.readable));
   });
 });
+
+describe('mapping null in and out', () => {
+  const mappings = DOOV.mappings(DOOV.mapNull(link1), DOOV.map('2').to(Function.lift(StringFunction, '3')));
+
+  it('execute mapping', () => {
+    let emptyObject = Object.freeze({});
+    const newObject = mappings.executeOn(model, emptyObject);
+    expect(name.get(newObject)).toBeUndefined();
+    expect(id.get(newObject)).toBeUndefined();
+    expect(link2.get(newObject)).toBeUndefined();
+    expect(link1.get(newObject)).toBeNull();
+  });
+
+  it('metadata fields', () => {
+    for (let child of mappings.metadata.children()) {
+      console.log(child.readable);
+    }
+    const fields = fieldsOf(mappings.metadata);
+    expect(fields).toContainEqual(path(link1.metadata.readable));
+  });
+});
+
+describe('mapping conditional in and out', () => {
+  const mappings = DOOV.mappings(
+    DOOV.when(link1.isNotNull()).then(DOOV.mapNull(link1)),
+    DOOV.when(link2.noneMatch('google.com', 'amazon.com').not())
+      .then(DOOV.map(1).to(id))
+      .otherwise(DOOV.map(0).to(id)),
+    DOOV.when(link1.length().greaterThan(4)).then()
+  );
+
+  it('execute mapping', () => {
+    let emptyObject = Object.freeze({});
+    const newObject = mappings.executeOn(model, emptyObject);
+    expect(name.get(newObject)).toBeUndefined();
+    expect(id.get(newObject)).toEqual(0);
+    expect(link2.get(newObject)).toBeUndefined();
+    expect(link1.get(newObject)).toBeNull();
+  });
+
+  it('metadata fields', () => {
+    for (let child of mappings.metadata.children()) {
+      console.log(child.readable);
+    }
+    const fields = fieldsOf(mappings.metadata);
+    expect(fields).toContainEqual(path(id.metadata.readable));
+    expect(fields).toContainEqual(path(link2.metadata.readable));
+  });
+});

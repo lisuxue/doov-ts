@@ -20,7 +20,7 @@ export class Mappings implements MappingRule {
   executeOn<M extends object, O extends object>(input: M, output: O, ctx?: Context): O {
     const context = ctx ? ctx : new DefaultContext();
     this.mappings.forEach(m => {
-      m.executeOn(input, output, context);
+      output = m.executeOn(input, output, context);
     });
     return output;
   }
