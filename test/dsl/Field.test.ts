@@ -8,10 +8,10 @@ import { StringFunction } from '../../src/dsl/lang/StringFunction';
 let model: Model;
 let user: User;
 
-const stringField = DOOV.field<Model, string>('user', 'name');
-const arrayField = DOOV.field<Model, string>('user', 'links', 0);
-const userIdField = DOOV.field<Model, string>('user', 'id').withTags('id');
-const birthDateField = DOOV.field<Model, Date>('user', 'birth').withPosition(1);
+const stringField = DOOV.field<string, Model>('user', 'name');
+const arrayField = DOOV.field<string, Model>('user', 'links', 0);
+const userIdField = DOOV.field<string, Model>('user', 'id').withTags('id');
+const birthDateField = DOOV.field<Date, Model>('user', 'birth').withPosition(1);
 const birthDateFunction = DOOV.date(birthDateField);
 const userIdFunction = DOOV.string(userIdField);
 const liftedDateFunction = DOOV.lift(DateFunction, new Date());

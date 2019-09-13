@@ -10,8 +10,8 @@ let user: User;
 const date = new Date(2019, 8, 11);
 const birthDate = new Date(2000, 0, 2);
 const dateFunction = DOOV.lift(DateFunction, date);
-const dateField = DOOV.date(DOOV.field<object, Date>('user', 'birth'));
-const nameField = DOOV.string(DOOV.field<object, string>('user', 'name'));
+const dateField = DOOV.date(DOOV.field<Date>('user', 'birth'));
+const nameField = DOOV.string(DOOV.field<string>('user', 'name'));
 const dateNameField = DOOV.dateIso(nameField);
 
 beforeEach(() => {

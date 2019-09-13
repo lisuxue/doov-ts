@@ -7,8 +7,8 @@ let model: Model;
 let user: User;
 
 const num = DOOV.lift(NumberFunction, 3);
-const id = DOOV.number(DOOV.field<Model, number>('user', 'id'));
-const nullField = DOOV.number(DOOV.field<Model, number>('user', 'a'));
+const id = DOOV.number(DOOV.field<number, Model>('user', 'id'));
+const nullField = DOOV.number(DOOV.field<number, Model>('user', 'a'));
 
 beforeEach(() => {
   model = new Model();

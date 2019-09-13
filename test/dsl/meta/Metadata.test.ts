@@ -8,10 +8,10 @@ let model: Model;
 let user: User;
 let metadata: Metadata | undefined;
 
-const nameField = DOOV.field<Model, string>('user', 'name');
+const nameField = DOOV.field<string, Model>('user', 'name');
 let name = DOOV.string(nameField);
-let link1 = DOOV.string(DOOV.field<Model, string>('user', 'links', 0));
-let id = DOOV.number(DOOV.field<Model, number>('user', 'id'));
+let link1 = DOOV.string(DOOV.field<string, Model>('user', 'links', 0));
+let id = DOOV.number(DOOV.field<number, Model>('user', 'id'));
 
 beforeEach(() => {
   model = new Model();

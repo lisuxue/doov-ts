@@ -20,7 +20,7 @@ export class Field<T extends object = object, C extends Context = Context, V = {
     this.metadata = metadata;
   }
 
-  public static field<T extends object, V>(...path: (string | number)[]): Field<T, Context, V> {
+  public static field<V, T extends object = object>(...path: (string | number)[]): Field<T, Context, V> {
     return new Field(new FieldMetadata(path));
   }
 

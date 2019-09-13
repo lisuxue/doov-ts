@@ -15,9 +15,9 @@ const someStrFunction = DOOV.lift(StringFunction, 'some');
 const nullField = DOOV.lift(StringFunction, null as any);
 const otherStrFunction = DOOV.lift(StringFunction, 'other');
 // re-wrap function, to test getter/setter interception
-const nameField = DOOV.f(DOOV.string(DOOV.field<Model, string>('user', 'name')));
-const undefinedField = DOOV.boolean(DOOV.field<Model, boolean>('user', 'a'));
-const booleanFunction = DOOV.f(DOOV.field<Model, boolean>('user', 'b'));
+const nameField = DOOV.f(DOOV.string(DOOV.field<string, Model>('user', 'name')));
+const undefinedField = DOOV.boolean(DOOV.field<boolean, Model>('user', 'a'));
+const booleanFunction = DOOV.f(DOOV.field<boolean, Model>('user', 'b'));
 
 beforeEach(() => {
   model = new Model();

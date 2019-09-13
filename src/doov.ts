@@ -25,7 +25,7 @@ export function f<T>(accessor: ContextAccessor<object, Context, T>): Function<T>
   return Function.function(accessor);
 }
 
-export function field<T extends object, V>(...path: (string | number)[]): Field<T, Context, V> {
+export function field<V, T extends object = object>(...path: (string | number)[]): Field<T, Context, V> {
   return Field.field(...path);
 }
 
