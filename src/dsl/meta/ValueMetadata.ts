@@ -7,7 +7,7 @@ export class ValueMetadata extends AbstractMetadata {
 
   public constructor(value: unknown | null) {
     super();
-    this.readable = String(value);
+    this.readable = JSON.stringify(value);
     this.value = value;
   }
 }
