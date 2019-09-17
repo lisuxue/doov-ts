@@ -13,7 +13,7 @@ const numberFunction = DOOV.lift(NumberFunction, 2);
 const stringFunction = DOOV.lift(StringFunction, 'link1');
 const iterableFunction = DOOV.lift(IterableFunction, [true, false] as boolean[]);
 const undefinedIterable = DOOV.lift(IterableFunction, undefined);
-const linksField = DOOV.iterable(DOOV.field<Model, string[]>('user', 'links'));
+const linksField = DOOV.iterable(DOOV.field<string[], Model>('user', 'links'));
 
 beforeEach(() => {
   model = new Model();
@@ -75,5 +75,10 @@ describe('iterable function', () => {
     model = linksField.set!(model, ['link1', 'link2']);
     expect(linksField.contains('link2').get(model)).toEqual(true);
     expect(linksField.contains(stringFunction).get(model)).toEqual(true);
+  });
+  it('iterable length', () => {
+    expect(linksField.isUndefined().get(model)).toEqual(true);
+    model = linksField.set!(model, ['link1', 'link2']);
+    expect(linksField.length().get(model)).toEqual(2);
   });
 });

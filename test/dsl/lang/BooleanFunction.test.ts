@@ -9,8 +9,8 @@ let user: User;
 const trueFunction = DOOV.lift(BooleanFunction, true);
 const falseFunction = DOOV.lift(BooleanFunction, false);
 const nullField = DOOV.lift(BooleanFunction, null as any);
-const trueField = DOOV.boolean(DOOV.field<Model, boolean>('user', 'b'));
-const undefinedField = DOOV.boolean(DOOV.field<Model, boolean>('user', 'a'));
+const trueField = DOOV.boolean(DOOV.field<boolean, Model>('user', 'b'));
+const undefinedField = DOOV.boolean(DOOV.field<boolean, Model>('user', 'a'));
 
 beforeEach(() => {
   model = new Model();

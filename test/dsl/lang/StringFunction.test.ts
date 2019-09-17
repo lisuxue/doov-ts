@@ -6,8 +6,8 @@ let model: Model;
 let user: User;
 
 const num4 = DOOV.lift(StringFunction, '#4');
-const name = DOOV.string(DOOV.field<Model, string>('user', 'name'));
-const link1 = DOOV.string(DOOV.field<Model, string>('user', 'links', 0));
+const name = DOOV.string(DOOV.field<string, Model>('user', 'name'));
+const link1 = DOOV.string(DOOV.field<string, Model>('user', 'links', 0));
 
 beforeEach(() => {
   model = new Model();

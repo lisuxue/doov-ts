@@ -11,10 +11,10 @@ import { biConverter } from '../../../src/doov';
 let model: Model;
 let user: User;
 
-const id = DOOV.number(DOOV.field<Model, number>('user', 'id'));
-const name = DOOV.string(DOOV.field<Model, string>('user', 'name'));
-const link1 = DOOV.string(DOOV.field<Model, string>('user', 'links', 0));
-const link2 = DOOV.string(DOOV.field<Model, string>('user', 'links', 1));
+const id = DOOV.number(DOOV.field<number, Model>('user', 'id'));
+const name = DOOV.string(DOOV.field<string, Model>('user', 'name'));
+const link1 = DOOV.string(DOOV.field<string, Model>('user', 'links', 0));
+const link2 = DOOV.string(DOOV.field<string, Model>('user', 'links', 1));
 
 const reverse = DOOV.converter((obj, input: Function<string>) => {
   const value = input.get(obj);
@@ -247,6 +247,55 @@ describe('static value mapping', () => {
     expect(id.get(model)).toEqual(4);
     expect(link2.get(model)).toEqual('google.com');
     expect(link1.get(model)).toEqual('google.com?q=amazon.com');
+  });
+
+  it('metadata fields', () => {
+    for (let child of mappings.metadata.children()) {
+      console.log(child.readable);
+    }
+    const fields = fieldsOf(mappings.metadata);
+    expect(fields).toContainEqual(path(id.metadata.readable));
+    expect(fields).toContainEqual(path(link2.metadata.readable));
+  });
+});
+
+describe('mapping null in and out', () => {
+  const mappings = DOOV.mappings(DOOV.mapNull(link1), DOOV.map('2').to(Function.lift(StringFunction, '3')));
+
+  it('execute mapping', () => {
+    let emptyObject = Object.freeze({});
+    const newObject = mappings.executeOn(model, emptyObject);
+    expect(name.get(newObject)).toBeUndefined();
+    expect(id.get(newObject)).toBeUndefined();
+    expect(link2.get(newObject)).toBeUndefined();
+    expect(link1.get(newObject)).toBeNull();
+  });
+
+  it('metadata fields', () => {
+    for (let child of mappings.metadata.children()) {
+      console.log(child.readable);
+    }
+    const fields = fieldsOf(mappings.metadata);
+    expect(fields).toContainEqual(path(link1.metadata.readable));
+  });
+});
+
+describe('mapping conditional in and out', () => {
+  const mappings = DOOV.mappings(
+    DOOV.when(link1.isNotNull()).then(DOOV.mapNull(link1)),
+    DOOV.when(link2.noneMatch('google.com', 'amazon.com').not())
+      .then(DOOV.map(1).to(id))
+      .otherwise(DOOV.map(0).to(id)),
+    DOOV.when(link1.length().greaterThan(4)).then()
+  );
+
+  it('execute mapping', () => {
+    let emptyObject = Object.freeze({});
+    const newObject = mappings.executeOn(model, emptyObject);
+    expect(name.get(newObject)).toBeUndefined();
+    expect(id.get(newObject)).toEqual(0);
+    expect(link2.get(newObject)).toBeUndefined();
+    expect(link1.get(newObject)).toBeNull();
   });
 
   it('metadata fields', () => {

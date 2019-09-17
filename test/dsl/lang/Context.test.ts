@@ -8,10 +8,10 @@ import { DefaultContext } from '../../../src/dsl/DefaultContext';
 let model: Model;
 let user: User;
 
-const B = DOOV.boolean(DOOV.field<Model, boolean>('user', 'b'));
-const ID = DOOV.number(DOOV.field<Model, number>('user', 'id'));
-const NAME: StringFunction = DOOV.string(Field.field<Model, string>('user', 'name'));
-const LINK1 = DOOV.string(DOOV.field<Model, string>('user', 'links', 0));
+const B = DOOV.boolean(DOOV.field<boolean, Model>('user', 'b'));
+const ID = DOOV.number(DOOV.field<number, Model>('user', 'id'));
+const NAME: StringFunction = DOOV.string(Field.field<string, Model>('user', 'name'));
+const LINK1 = DOOV.string(DOOV.field<string, Model>('user', 'links', 0));
 
 beforeEach(() => {
   model = new Model();

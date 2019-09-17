@@ -5,11 +5,11 @@ import * as DOOV from '../src/doov';
 let model: Model;
 let user: User;
 
-const name = DOOV.string(DOOV.field<Model, string>('user', 'name'));
-const a = DOOV.boolean(DOOV.field<Model, boolean>('user', 'b'));
-const id = DOOV.number(DOOV.field<Model, number>('user', 'id'));
-const link1 = DOOV.string(DOOV.field<Model, string>('user', 'links', 0));
-const link2 = DOOV.string(DOOV.field<Model, string>('user', 'links', 1));
+const name = DOOV.string(DOOV.field<string>('user', 'name'));
+const a = DOOV.boolean(DOOV.field<boolean>('user', 'b'));
+const id = DOOV.number(DOOV.field<number>('user', 'id'));
+const link1 = DOOV.string(DOOV.field<string>('user', 'links', 0));
+const link2 = DOOV.string(DOOV.field<string>('user', 'links', 1));
 
 beforeEach(() => {
   model = new Model();
