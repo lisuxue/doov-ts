@@ -76,4 +76,9 @@ describe('iterable function', () => {
     expect(linksField.contains('link2').get(model)).toEqual(true);
     expect(linksField.contains(stringFunction).get(model)).toEqual(true);
   });
+  it('iterable length', () => {
+    expect(linksField.isUndefined().get(model)).toEqual(true);
+    model = linksField.set!(model, ['link1', 'link2']);
+    expect(linksField.length().get(model)).toEqual(2);
+  });
 });

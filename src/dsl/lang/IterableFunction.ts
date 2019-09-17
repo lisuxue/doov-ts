@@ -4,9 +4,10 @@ import { Context } from '../Context';
 import { BooleanFunction } from './BooleanFunction';
 import { BinaryMetadata } from '../meta/BinaryMetadata';
 import { ValueMetadata } from '../meta/ValueMetadata';
-import { CONTAINS, CONTAINS_ALL, HAS_NOT_SIZE, HAS_SIZE, IS_EMPTY, IS_NOT_EMPTY } from './DefaultOperators';
+import { CONTAINS, CONTAINS_ALL, HAS_NOT_SIZE, HAS_SIZE, IS_EMPTY, IS_NOT_EMPTY, LENGTH } from './DefaultOperators';
 import { IterableMetadata } from '../meta/IterableMetadata';
 import { UnaryMetadata } from '../meta/UnaryMetadata';
+import { NumberFunction } from './NumberFunction';
 export class IterableFunction<T> extends Function<T[]> {
   public static iterable<T>(accessor: ContextAccessor<object, Context, T[]>): IterableFunction<T> {
     return new IterableFunction(accessor.metadata, accessor.get, accessor.set);
@@ -78,5 +79,19 @@ export class IterableFunction<T> extends Function<T[]> {
         condition(this, value, predicate, null)
       );
     }
+  }
+
+  public length(): NumberFunction {
+    return new NumberFunction(
+      new UnaryMetadata(this.metadata, LENGTH),
+      condition(
+        this,
+        undefined,
+        (left: T[]) => {
+          return left.length;
+        },
+        null
+      )
+    );
   }
 }
