@@ -21,7 +21,7 @@ beforeEach(() => {
   user.b = true;
   user.birth = birthDate;
   model.user = user;
-  jest.spyOn(global.Date, 'now').mockImplementationOnce(() => new Date('2018-05-14T00:00:00.000Z').valueOf());
+  jest.spyOn(global.Date, 'now').mockImplementation(() => new Date('2018-05-14T00:00:00.000Z').valueOf());
 });
 
 describe('date function', () => {
@@ -45,7 +45,7 @@ describe('date function', () => {
   });
   it('parse date', () => {
     const actual = DateFunction.dateFrom('20190501').get(model);
-    const expected = newUTCDate(2019, 4, 1, 0, 0, 0);
+    const expected = new Date(2019, 4, 1, 0, 0, 0);
     expect(actual).toEqual(expected);
   });
   it('new date', () => {
@@ -128,7 +128,7 @@ describe('date function', () => {
     expect(dateField.plusDays(DOOV.lift(NumberFunction, 15)).get(model)).toEqual(new Date(2000, 0, 17));
   });
   it('before value', () => {
-    expect(dateField.before(newUTCDate(2000, 0, 3)).get(model)).toEqual(true);
+    expect(dateField.before(new Date(2000, 0, 3)).get(model)).toEqual(true);
     expect(dateField.beforeOrEquals(new Date(2000, 0, 2)).get(model)).toEqual(true);
   });
   it('before function', () => {
@@ -136,7 +136,7 @@ describe('date function', () => {
     expect(dateField.beforeOrEquals(DateFunction.newLocalDate(2000, 0, 2)).get(model)).toEqual(true);
   });
   it('after value', () => {
-    expect(dateField.after(newUTCDate(1999, 11, 31)).get(model)).toEqual(true);
+    expect(dateField.after(new Date(1999, 11, 31)).get(model)).toEqual(true);
     expect(dateField.afterOrEquals(new Date(2000, 0, 2)).get(model)).toEqual(true);
   });
   it('after function', () => {
@@ -169,12 +169,12 @@ describe('date function', () => {
   });
   it('number of months since', () => {
     const monthsSince = DateFunction.nbFullMonthsSince(DateFunction.dateFrom('20010203'));
-    expect(monthsSince.get(model)).toEqual(206);
+    expect(monthsSince.get(model)).toEqual(207);
     const monthsSince2 = DateFunction.nbFullMonthsSince(DateFunction.dateFrom('20010229'));
     expect(monthsSince2.get(model)).toEqual(206);
   });
   it('number of months between value', () => {
-    const monthsSince = DateFunction.nbFullMonthsBetween(DateFunction.dateFrom('20010203'), newUTCDate(2010, 9, 30));
+    const monthsSince = DateFunction.nbFullMonthsBetween(DateFunction.dateFrom('20010203'), new Date(2010, 9, 30));
     expect(monthsSince.get(model)).toEqual(116);
   });
   it('number of months between function', () => {
@@ -185,7 +185,7 @@ describe('date function', () => {
 });
 
 describe('date iso function', () => {
-  const newDate = newUTCDate(2019, 6, 24);
+  const newDate = new Date(2019, 6, 24);
   model = dateNameField.set!(model, newDate);
   expect(model.user!.name).toEqual('20190724');
   expect(nameField.get(model)).toEqual('20190724');

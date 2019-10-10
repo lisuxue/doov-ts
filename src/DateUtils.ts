@@ -68,14 +68,14 @@ export function parse(yyyyMMdd: string): Date {
   const year = Number.parseInt(yyyyMMdd.slice(0, 4));
   const month = Number.parseInt(yyyyMMdd.slice(4, 6)) - 1;
   const day = Number.parseInt(yyyyMMdd.slice(6, 8));
-  return newUTCDate(year, month, day);
+  return new Date(year, month, day);
 }
 
 export function numberOfFullMonthsBetween(left: Date, right?: Date): number {
   const today = right ? right : now();
   const y = today.getFullYear() - left.getFullYear();
   const m = today.getMonth() - left.getMonth();
-  const d = today.getDay() - left.getDate();
+  const d = today.getDate() - left.getDate();
   const res = y * 12 + m;
   if (d >= 0) {
     return res;
