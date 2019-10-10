@@ -68,21 +68,21 @@ describe('format dates', () => {
     expect(formatTime(date2)).toEqual('121011');
   });
   it('parse yyyyMMdd', () => {
-    const expected = newUTCDate(2019, 3, 28);
+    const expected = new Date(2019, 3, 28);
     expect(parse('20190428')).toEqual(expected);
 
-    const expected2 = newUTCDate(2019, 11, 3);
+    const expected2 = new Date(2019, 11, 3);
     expect(parse('20191203')).toEqual(expected2);
   });
 
   it('format and parse yyyyMMdd', () => {
-    const expected = newUTCDate(2019, 3, 28);
+    const expected = new Date(2019, 3, 28);
     expect(parse(formatYYYYMMdd(expected))).toEqual(expected);
 
-    const expected2 = newUTCDate(2019, 11, 3);
+    const expected2 = new Date(2019, 11, 3);
     expect(parse(formatYYYYMMdd(expected2))).toEqual(expected2);
 
-    const expected3 = newUTCDate(2019, 11);
+    const expected3 = new Date(2019, 11);
     expect(parse(formatYYYYMMdd(expected3))).toEqual(expected3);
   });
   it('clone date', () => {

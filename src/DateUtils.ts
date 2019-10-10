@@ -31,23 +31,23 @@ export function newUTCDate(
 
 export function formatYYYYMMdd(date: Date): string {
   const utcDate = clone(date);
-  return utcDate.getUTCFullYear().toString() + pad(utcDate.getUTCMonth() + 1, 2) + pad(utcDate.getUTCDate(), 2);
+  return utcDate.getFullYear().toString() + pad(utcDate.getMonth() + 1, 2) + pad(utcDate.getDate(), 2);
 }
 
 export function formatddMMYYYY(date: Date): string {
   const utcDate = clone(date);
-  return pad(utcDate.getUTCDate(), 2) + pad(utcDate.getUTCMonth() + 1, 2) + utcDate.getUTCFullYear();
+  return pad(utcDate.getDate(), 2) + pad(utcDate.getMonth() + 1, 2) + utcDate.getFullYear();
 }
 
 export function formatReadable(date: Date): string {
   const utcDate = clone(date);
-  return pad(utcDate.getUTCDate(), 2) + '/' + pad(utcDate.getUTCMonth() + 1, 2) + '/' + utcDate.getUTCFullYear();
+  return pad(utcDate.getDate(), 2) + '/' + pad(utcDate.getMonth() + 1, 2) + '/' + utcDate.getFullYear();
 }
 
 export function formatMMMMYYYY(date: Date, locale?: string): string {
   const utcDate = clone(date);
   const monthFormat = new Intl.DateTimeFormat(locale, { month: 'long' });
-  return monthFormat.format(date) + ' ' + utcDate.getUTCFullYear();
+  return monthFormat.format(date) + ' ' + utcDate.getFullYear();
 }
 
 export function formatEEEEddMMMM(date: Date, locale?: string): string {
@@ -56,7 +56,7 @@ export function formatEEEEddMMMM(date: Date, locale?: string): string {
   const weekday = weekdayFormat.format(utcDate);
   const monthFormat = new Intl.DateTimeFormat(locale, { month: 'long' });
   const month = monthFormat.format(utcDate);
-  return weekday + ' ' + pad(utcDate.getUTCDate(), 2) + ' ' + month;
+  return weekday + ' ' + pad(utcDate.getDate(), 2) + ' ' + month;
 }
 
 export function formatTime(date: Date): string {
@@ -68,14 +68,14 @@ export function parse(yyyyMMdd: string): Date {
   const year = Number.parseInt(yyyyMMdd.slice(0, 4));
   const month = Number.parseInt(yyyyMMdd.slice(4, 6)) - 1;
   const day = Number.parseInt(yyyyMMdd.slice(6, 8));
-  return newUTCDate(year, month, day);
+  return new Date(year, month, day);
 }
 
 export function numberOfFullMonthsBetween(left: Date, right?: Date): number {
   const today = right ? right : now();
-  const y = today.getUTCFullYear() - left.getUTCFullYear();
-  const m = today.getUTCMonth() - left.getUTCMonth();
-  const d = today.getUTCDay() - left.getUTCDate();
+  const y = today.getFullYear() - left.getFullYear();
+  const m = today.getMonth() - left.getMonth();
+  const d = today.getDate() - left.getDate();
   const res = y * 12 + m;
   if (d >= 0) {
     return res;
