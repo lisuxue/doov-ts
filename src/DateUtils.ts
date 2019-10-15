@@ -82,3 +82,13 @@ export function numberOfFullMonthsBetween(left: Date, right?: Date): number {
   }
   return res - 1;
 }
+
+export function numberOfFullYearsBetween(left: Date, right: Date): number {
+  const y = right.getFullYear() - left.getFullYear();
+  const m = right.getMonth() - left.getMonth();
+  const d = right.getDate() - left.getDate();
+  if (m >= 0 && d >= 0) {
+    return y;
+  }
+  return y - 1;
+}

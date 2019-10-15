@@ -10,7 +10,7 @@ import { StepMap } from './dsl/lang/StepMap';
 import { MappingRule } from './dsl/lang/MappingRule';
 import { Mappings } from './dsl/lang/Mappings';
 import { NaryMetadata } from './dsl/meta/NaryMetadata';
-import { MATCH_ALL, MATCH_ANY, NONE_MATCH } from './dsl/lang/DefaultOperators';
+import { COUNT, MATCH_ALL, MATCH_ANY, NONE_MATCH, SUM } from './dsl/lang/DefaultOperators';
 import { BiStepMap } from './dsl/lang/BiStepMap';
 import { BiConverterFunction, BiTypeConverter } from './dsl/lang/BiTypeConverter';
 import { NaryConverterFunction, NaryTypeConverter } from './dsl/lang/NaryTypeConverter';
@@ -129,11 +129,20 @@ export function matchNone(...values: BooleanFunction[]): BooleanFunction {
 }
 
 export function count(...values: BooleanFunction[]): NumberFunction {
-  return new NumberFunction(new NaryMetadata(values.map(value => value.metadata), NONE_MATCH), (obj, ctx) => {
+  return new NumberFunction(new NaryMetadata(values.map(value => value.metadata), COUNT), (obj, ctx) => {
     return values.filter(value => {
       const v = value.get(obj, ctx);
       return v != null ? v : false;
     }).length;
+  });
+}
+
+export function sum(...values: NumberFunction[]): NumberFunction {
+  return new NumberFunction(new NaryMetadata(values.map(value => value.metadata), SUM), (obj, ctx) => {
+    return values.reduce((previous, value) => {
+      const v = value.get(obj, ctx);
+      return v != null ? previous + v : previous;
+    }, 0);
   });
 }
 

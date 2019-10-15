@@ -1,6 +1,7 @@
 import { Model, User } from './model';
 import { StringFunction } from '../src/dsl/lang/StringFunction';
 import * as DOOV from '../src/doov';
+import { NumberFunction } from '../src/doov';
 
 let model: Model;
 let user: User;
@@ -102,5 +103,27 @@ describe('doov map', () => {
     const booleanMapping = DOOV.map(DOOV.matchNone(name.eq('test'), a.eq(false))).to(a);
     model = booleanMapping.execute(model);
     expect(model!.user!.b).toEqual(false);
+  });
+});
+
+describe('doov sum', () => {
+  it('sum 1', () => {
+    const sum = DOOV.sum(name.length());
+    expect(sum.get(model)).toEqual(4);
+  });
+
+  it('sum 2', () => {
+    const sum = DOOV.sum(id, name.length());
+    expect(sum.get(model)).toEqual(5);
+  });
+
+  it('sum 3', () => {
+    const sum = DOOV.sum(id, name.length(), DOOV.lift(NumberFunction, 6));
+    expect(sum.get(model)).toEqual(11);
+  });
+
+  it('sum with null', () => {
+    const sum = DOOV.sum(id, name.length(), DOOV.lift(NumberFunction, null));
+    expect(sum.get(model)).toEqual(5);
   });
 });
