@@ -170,8 +170,10 @@ describe('date function', () => {
   it('number of months since', () => {
     const monthsSince = DateFunction.nbFullMonthsSince(DateFunction.dateFrom('20010203'));
     expect(monthsSince.get(model)).toEqual(207);
-    const monthsSince2 = DateFunction.nbFullMonthsSince(DateFunction.dateFrom('20010229'));
-    expect(monthsSince2.get(model)).toEqual(206);
+    const monthsSince2 = DateFunction.nbFullMonthsSince(DateFunction.dateFrom('20010329'));
+    expect(monthsSince2.get(model)).toEqual(205);
+    const monthsSince3 = DateFunction.nbFullMonthsSince(DateFunction.dateFrom('20010215'));
+    expect(monthsSince3.get(model)).toEqual(206);
   });
   it('number of months between value', () => {
     const monthsSince = DateFunction.nbFullMonthsBetween(DateFunction.dateFrom('20010203'), new Date(2010, 9, 30));
