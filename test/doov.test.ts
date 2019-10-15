@@ -49,6 +49,20 @@ describe('doov none match', () => {
   });
 });
 
+describe('doov count', () => {
+  it('count 0', () => {
+    expect(DOOV.count(name.eq('other'), a.eq(false)).get(model)).toEqual(0);
+  });
+
+  it('count 1', () => {
+    expect(DOOV.count(name.eq('test'), a.eq(false)).get(model)).toEqual(1);
+  });
+
+  it('count 2', () => {
+    expect(DOOV.count(name.eq('test'), a.eq(true)).get(model)).toEqual(2);
+  });
+});
+
 describe('doov when', () => {
   it('when validate execute result true', () => {
     const result = DOOV.when(name.eq('test'))
