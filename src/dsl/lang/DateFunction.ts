@@ -7,6 +7,7 @@ import { ValueMetadata } from '../meta/ValueMetadata';
 import {
   AFTER,
   AFTER_OR_EQUALS,
+  AGE_AT,
   BEFORE,
   BEFORE_OR_EQUALS,
   DATE_OF,
@@ -45,6 +46,7 @@ import {
   clone,
   now,
   numberOfFullMonthsBetween,
+  numberOfFullYearsBetween,
 } from '../../DateUtils';
 import { FunctionMetadata } from '../meta/FunctionMetadata';
 import { nullOrUndefined } from '../../Utils';
@@ -493,5 +495,19 @@ export class DateFunction extends Function<Date> {
         null
       )
     );
+  }
+
+  public ageAt(value: Date | DateFunction): NumberFunction {
+    if (value instanceof DateFunction) {
+      return new NumberFunction(
+        new BinaryMetadata(this.metadata, AGE_AT, value.metadata),
+        condition(this, value, numberOfFullYearsBetween, null)
+      );
+    } else {
+      return new NumberFunction(
+        new BinaryMetadata(this.metadata, AGE_AT, new ValueMetadata(value)),
+        condition(this, value, numberOfFullYearsBetween, null)
+      );
+    }
   }
 }

@@ -184,6 +184,17 @@ describe('date function', () => {
     const monthsSince = DateFunction.nbFullMonthsBetween(DateFunction.dateFrom('20010203'), dateFunction);
     expect(monthsSince.get(model)).toEqual(116);
   });
+  it('number of years between function', () => {
+    const birthday = DateFunction.dateFrom('20010203');
+    const yearsSince = birthday.ageAt(DateFunction.newDate(2010, 9, 30));
+    expect(yearsSince.get(model)).toEqual(9);
+    const birthday2 = DateFunction.dateFrom('20011003');
+    const yearsSince2 = birthday2.ageAt(DateFunction.newDate(2010, 9, 30));
+    expect(yearsSince2.get(model)).toEqual(9);
+    const birthday3 = DateFunction.dateFrom('20011010');
+    const yearsSince3 = birthday3.ageAt(new Date(2010, 9, 3));
+    expect(yearsSince3.get(model)).toEqual(8);
+  });
 });
 
 describe('date iso function', () => {

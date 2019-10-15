@@ -34,6 +34,7 @@ export const SUB_STRING: Operator = { readable: 'sub string' };
 export const MIN: Operator = { readable: 'min' };
 export const MAX: Operator = { readable: 'max' };
 export const SUM: Operator = { readable: 'sum' };
+export const COUNT: Operator = { readable: 'count' };
 export const LESSER_THAN: Operator = { readable: '<' };
 export const LESSER_OR_EQUALS: Operator = { readable: '<=' };
 export const GREATER_THAN: Operator = { readable: '>' };
@@ -74,6 +75,7 @@ export const YEAR_OF: Operator = { readable: 'year of' };
 export const DATE_OF: Operator = { readable: 'date of' };
 export const NB_OF_MONTHS_SINCE: Operator = { readable: 'number of months since' };
 export const NB_OF_MONTHS_BETWEEN: Operator = { readable: 'number of months between' };
+export const AGE_AT: Operator = { readable: 'age at' };
 
 // Iterable
 export const CONTAINS_ALL: Operator = { readable: 'contains all' };
