@@ -26,6 +26,8 @@
     "build": "rollup -c rollup.config.ts --environment INCLUDE_DEPS,BUILD:production && typedoc --out docs --mode file src",
     "test": "jest --watch",
     "test-ci": "cross-env NODE_ICU_DATA=node_modules/full-icu jest test --coverage --ci --reporters=default --reporters=jest-junit && prettier --check \"{./src/**/*.tsx,./src/**/*.ts,./src/**/*.json}\" && eslint \"./src/**\"",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm run test-ci",
     "lint": "eslint \"./src/**\"",
     "prettier": "prettier --write \"{./src/**/*.tsx,./src/**/*.ts,./src/**/*.json}\""
   },
