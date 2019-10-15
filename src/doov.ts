@@ -128,6 +128,15 @@ export function matchNone(...values: BooleanFunction[]): BooleanFunction {
   });
 }
 
+export function count(...values: BooleanFunction[]): NumberFunction {
+  return new NumberFunction(new NaryMetadata(values.map(value => value.metadata), NONE_MATCH), (obj, ctx) => {
+    return values.filter(value => {
+      const v = value.get(obj, ctx);
+      return v != null ? v : false;
+    }).length;
+  });
+}
+
 // Functions
 export { Function } from './dsl/lang/Function';
 export { BooleanFunction } from './dsl/lang/BooleanFunction';
