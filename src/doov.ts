@@ -154,6 +154,10 @@ export { StringFunction } from './dsl/lang/StringFunction';
 export { DateFunction } from './dsl/lang/DateFunction';
 export { IterableFunction } from './dsl/lang/IterableFunction';
 
+export { TypeConverter } from './dsl/lang/TypeConverter';
+export { BiTypeConverter } from './dsl/lang/BiTypeConverter';
+export { NaryTypeConverter } from './dsl/lang/NaryTypeConverter';
+
 export { DefaultContext } from './dsl/DefaultContext';
 export { Field } from './dsl/Field';
 
