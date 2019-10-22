@@ -78,12 +78,15 @@ describe('date function', () => {
   });
   it('with year', () => {
     expect(dateField.withYear(1990).get(model)).toEqual(new Date(1990, 0, 2));
+    expect(dateField.withYear(DOOV.lift(NumberFunction, 2000)).get(model)).toEqual(new Date(2000, 0, 2));
   });
   it('with month', () => {
     expect(dateField.withMonth(3).get(model)).toEqual(new Date(2000, 3, 2));
+    expect(dateField.withMonth(DOOV.lift(NumberFunction, 4)).get(model)).toEqual(new Date(2000, 4, 2));
   });
   it('with day', () => {
     expect(dateField.withDayOfMonth(28).get(model)).toEqual(new Date(2000, 0, 28));
+    expect(dateField.withDayOfMonth(DOOV.lift(NumberFunction, 2)).get(model)).toEqual(new Date(2000, 0, 2));
   });
   it('format ISO', () => {
     expect(dateField.formatISO().get(model)).toEqual('20000102');
