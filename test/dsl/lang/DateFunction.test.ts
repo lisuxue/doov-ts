@@ -178,6 +178,15 @@ describe('date function', () => {
     const monthsSince3 = DateFunction.nbFullMonthsSince(DateFunction.dateFrom('20010215'));
     expect(monthsSince3.get(model)).toEqual(206);
   });
+  it('number of years between', () => {
+    const monthsSince = DateFunction.nbFullYearsBetween(DateFunction.dateFrom('20010203'), new Date(2010, 9, 30));
+    expect(monthsSince.get(model)).toEqual(9);
+    const monthsSince2 = DateFunction.nbFullYearsBetween(
+      DateFunction.dateFrom('20001003'),
+      DateFunction.dateFrom('201010301003')
+    );
+    expect(monthsSince2.get(model)).toEqual(10);
+  });
   it('number of months between value', () => {
     const monthsSince = DateFunction.nbFullMonthsBetween(DateFunction.dateFrom('20010203'), new Date(2010, 9, 30));
     expect(monthsSince.get(model)).toEqual(116);

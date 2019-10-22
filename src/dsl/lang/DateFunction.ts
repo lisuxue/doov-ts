@@ -21,6 +21,7 @@ import {
   MONTH_OF,
   NB_OF_MONTHS_BETWEEN,
   NB_OF_MONTHS_SINCE,
+  NB_OF_YEARS_BETWEEN,
   PLUS_DAYS,
   PLUS_MONTHS,
   PLUS_YEARS,
@@ -373,6 +374,20 @@ export class DateFunction extends Function<Date> {
       return new NumberFunction(
         new BinaryMetadata(value.metadata, NB_OF_MONTHS_BETWEEN, new ValueMetadata(value2)),
         condition(value, value2, numberOfFullMonthsBetween, null)
+      );
+    }
+  }
+
+  public static nbFullYearsBetween(value: DateFunction, value2: Date | DateFunction): NumberFunction {
+    if (value2 instanceof DateFunction) {
+      return new NumberFunction(
+        new BinaryMetadata(value.metadata, NB_OF_YEARS_BETWEEN, value2.metadata),
+        condition(value, value2, numberOfFullYearsBetween, null)
+      );
+    } else {
+      return new NumberFunction(
+        new BinaryMetadata(value.metadata, NB_OF_YEARS_BETWEEN, new ValueMetadata(value2)),
+        condition(value, value2, numberOfFullYearsBetween, null)
       );
     }
   }
