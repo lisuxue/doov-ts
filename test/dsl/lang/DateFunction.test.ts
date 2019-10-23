@@ -28,6 +28,12 @@ describe('date function', () => {
   it('get date', () => {
     expect(dateFunction.get(model)).toEqual(date); // 2019-09-10T22:00:00.000Z
   });
+  it('date eq', () => {
+    const equalty = dateFunction.eq(date);
+    expect(equalty.get(model)).toEqual(true);
+    const equaltyNull = dateFunction.eq(DOOV.lift(DateFunction, null));
+    expect(equaltyNull.get(model)).toEqual(false);
+  });
   it('format iso date', () => {
     expect(dateFunction.formatISO().get(model)).toEqual('20190911');
   });

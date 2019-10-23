@@ -57,6 +57,14 @@ export class DateFunction extends Function<Date> {
   public static MAX_DATE = new Date(8640000000000000);
   public static MIN_DATE = new Date(-8640000000000000);
 
+  protected equals(v1: Date | null | undefined, v2: Date | null | undefined): boolean {
+    if (v1 && v2) {
+      return v1.getTime() === v2.getTime();
+    } else {
+      return super.equals(v1, v2);
+    }
+  }
+
   public static date(accessor: ContextAccessor<object, Context, Date>): DateFunction {
     return new DateFunction(accessor.metadata, accessor.get, accessor.set);
   }
