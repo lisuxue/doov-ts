@@ -189,6 +189,10 @@ export { NaryTypeConverter } from './dsl/lang/NaryTypeConverter';
 export { DefaultContext } from './dsl/DefaultContext';
 export { Field } from './dsl/Field';
 
+export { StepWhen } from './dsl/lang/StepWhen';
+export { ValidationRule } from './dsl/lang/ValidationRule';
+export { Result } from './dsl/Result';
+
 // Metadata
 export { AbstractMetadata } from './dsl/meta/AbstractMetadata';
 export { BinaryMetadata } from './dsl/meta/BinaryMetadata';
