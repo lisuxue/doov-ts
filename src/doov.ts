@@ -10,7 +10,10 @@ import { StepMap } from './dsl/lang/StepMap';
 import { MappingRule } from './dsl/lang/MappingRule';
 import { Mappings } from './dsl/lang/Mappings';
 import { NaryMetadata } from './dsl/meta/NaryMetadata';
-import { COUNT, MATCH_ALL, MATCH_ANY, NONE_MATCH, SUM } from './dsl/lang/DefaultOperators';
+import { UnaryMetadata } from './dsl/meta/UnaryMetadata';
+import { DslBuilder } from './dsl/DslBuilder';
+import { FieldMetadata } from './dsl/meta/FieldMetadata';
+import { COUNT, MATCH_ALL, MATCH_ANY, NONE_MATCH, POSITION, SUM, TAGS } from './dsl/lang/DefaultOperators';
 import { BiStepMap } from './dsl/lang/BiStepMap';
 import { BiConverterFunction, BiTypeConverter } from './dsl/lang/BiTypeConverter';
 import { NaryConverterFunction, NaryTypeConverter } from './dsl/lang/NaryTypeConverter';
@@ -20,6 +23,11 @@ import { IterableFunction } from './dsl/lang/IterableFunction';
 import { ConverterFunction, TypeConverter } from './dsl/lang/TypeConverter';
 import { ValueMetadata } from './dsl/meta/ValueMetadata';
 import { SingleMappingRule } from './dsl/lang/SingleMappingRule';
+// Utils
+import * as MetadataUtils from './dsl/meta/MetadataUtils';
+import * as DateUtils from './DateUtils';
+import * as Utils from './Utils';
+import * as Paths from './Paths';
 
 export function f<T>(accessor: ContextAccessor<object, Context, T>): Function<T> {
   return Function.function(accessor);
@@ -146,6 +154,26 @@ export function sum(...values: NumberFunction[]): NumberFunction {
   });
 }
 
+export function tags(value: DslBuilder): IterableFunction<string> {
+  return new IterableFunction(new UnaryMetadata(value.metadata, TAGS), () => {
+    if (value.metadata instanceof FieldMetadata) {
+      return value.metadata.tags;
+    } else {
+      return [];
+    }
+  });
+}
+
+export function position(value: DslBuilder): NumberFunction {
+  return new NumberFunction(new UnaryMetadata(value.metadata, POSITION), () => {
+    if (value.metadata instanceof FieldMetadata) {
+      return value.metadata.position;
+    } else {
+      return;
+    }
+  });
+}
+
 // Functions
 export { Function } from './dsl/lang/Function';
 export { BooleanFunction } from './dsl/lang/BooleanFunction';
@@ -178,12 +206,7 @@ export { ValidationRuleMetadata } from './dsl/meta/ValidationRuleMetadata';
 export { ValueMetadata } from './dsl/meta/ValueMetadata';
 export { WhenMetadata } from './dsl/meta/WhenMetadata';
 
-// Utils
-import * as MetadataUtils from './dsl/meta/MetadataUtils';
 export { MetadataUtils };
-import * as DateUtils from './DateUtils';
 export { DateUtils };
-import * as Utils from './Utils';
 export { Utils };
-import * as Paths from './Paths';
 export { Paths };

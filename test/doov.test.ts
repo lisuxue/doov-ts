@@ -8,9 +8,9 @@ let user: User;
 
 const name = DOOV.string(DOOV.field<string>('user', 'name'));
 const a = DOOV.boolean(DOOV.field<boolean>('user', 'b'));
-const id = DOOV.number(DOOV.field<number>('user', 'id'));
-const link1 = DOOV.string(DOOV.field<string>('user', 'links', 0));
-const link2 = DOOV.string(DOOV.field<string>('user', 'links', 1));
+const id = DOOV.number(DOOV.field<number>('user', 'id').withTags('id'));
+const link1 = DOOV.string(DOOV.field<string>('user', 'links', 0).withTags('link'));
+const link2 = DOOV.string(DOOV.field<string>('user', 'links', 1).withTags('link'));
 
 beforeEach(() => {
   model = new Model();
@@ -125,5 +125,21 @@ describe('doov sum', () => {
   it('sum with null', () => {
     const sum = DOOV.sum(id, name.length(), DOOV.lift(NumberFunction, null));
     expect(sum.get(model)).toEqual(5);
+  });
+});
+
+describe('tags and position', () => {
+  it('tags', () => {
+    expect(DOOV.tags(id).get(model)).toEqual(['id']);
+    expect(DOOV.tags(link1).get(model)).toEqual(['link']);
+    expect(DOOV.tags(link2).get(model)).toEqual(['link']);
+    expect(DOOV.tags(name).get(model)).toEqual([]);
+    expect(DOOV.tags(DOOV.lift(NumberFunction, 1)).get(model)).toEqual([]);
+  });
+  it('position', () => {
+    expect(DOOV.position(link1).get(model)).toEqual(0);
+    expect(DOOV.position(link2).get(model)).toEqual(1);
+    expect(DOOV.position(name).get(model)).toEqual(-1);
+    expect(DOOV.position(DOOV.lift(NumberFunction, 0)).get(model)).toBeUndefined();
   });
 });
