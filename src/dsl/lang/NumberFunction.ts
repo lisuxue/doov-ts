@@ -4,6 +4,7 @@ import { BooleanFunction } from './BooleanFunction';
 import { condition, Function } from './Function';
 import { ValueMetadata } from '../meta/ValueMetadata';
 import {
+  DIVIDE,
   GREATER_OR_EQUALS,
   GREATER_THAN,
   LESSER_OR_EQUALS,
@@ -178,12 +179,27 @@ export class NumberFunction extends Function<number> {
     const f = (left: number, right: number) => left * right;
     if (value instanceof NumberFunction) {
       return new NumberFunction(
-        new BinaryMetadata(this.metadata, MINUS, value.metadata),
+        new BinaryMetadata(this.metadata, TIMES, value.metadata),
         condition(this, value, f, null)
       );
     } else {
       return new NumberFunction(
         new BinaryMetadata(this.metadata, TIMES, new ValueMetadata(value)),
+        condition(this, value, f, null)
+      );
+    }
+  }
+
+  public divide(value: number | NumberFunction): NumberFunction {
+    const f = (left: number, right: number) => left / right;
+    if (value instanceof NumberFunction) {
+      return new NumberFunction(
+        new BinaryMetadata(this.metadata, DIVIDE, value.metadata),
+        condition(this, value, f, null)
+      );
+    } else {
+      return new NumberFunction(
+        new BinaryMetadata(this.metadata, DIVIDE, new ValueMetadata(value)),
         condition(this, value, f, null)
       );
     }

@@ -42,6 +42,7 @@ export const GREATER_OR_EQUALS: Operator = { readable: '>=' };
 export const PLUS: Operator = { readable: '+' };
 export const MINUS: Operator = { readable: '-' };
 export const TIMES: Operator = { readable: '*' };
+export const DIVIDE: Operator = { readable: '/' };
 export const TO: Operator = { readable: '->' };
 export const USING: Operator = { readable: 'using' };
 export const MULTIPLE_INPUTS: Operator = { readable: 'multiple inputs' };
@@ -75,6 +76,7 @@ export const YEAR_OF: Operator = { readable: 'year of' };
 export const DATE_OF: Operator = { readable: 'date of' };
 export const NB_OF_MONTHS_SINCE: Operator = { readable: 'number of months since' };
 export const NB_OF_MONTHS_BETWEEN: Operator = { readable: 'number of months between' };
+export const NB_OF_YEARS_BETWEEN: Operator = { readable: 'number of years between' };
 export const AGE_AT: Operator = { readable: 'age at' };
 
 // Iterable

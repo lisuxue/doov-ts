@@ -106,6 +106,22 @@ describe('number function', () => {
     expect(num.times(num).get(model)).toEqual(9);
   });
 
+  it('number divide value', () => {
+    expect(num.divide(-2).get(model)).toEqual(-1.5);
+  });
+
+  it('number divide function', () => {
+    expect(num.divide(num).get(model)).toEqual(1);
+  });
+
+  it('number divide undefined', () => {
+    expect(num.divide(DOOV.lift(NumberFunction, undefined)).get(model)).toEqual(null);
+  });
+
+  it('number divide by 0', () => {
+    expect(num.divide(DOOV.lift(NumberFunction, 0)).get(model)).toEqual(Infinity);
+  });
+
   it('number composed function', () => {
     expect(
       num

@@ -21,6 +21,7 @@ import {
   MONTH_OF,
   NB_OF_MONTHS_BETWEEN,
   NB_OF_MONTHS_SINCE,
+  NB_OF_YEARS_BETWEEN,
   PLUS_DAYS,
   PLUS_MONTHS,
   PLUS_YEARS,
@@ -39,14 +40,14 @@ import { BinaryMetadata } from '../meta/BinaryMetadata';
 import { NumberFunction } from './NumberFunction';
 import { StringFunction } from './StringFunction';
 import {
+  clone,
   formatddMMYYYY,
   formatYYYYMMdd,
   newUTCDate,
-  parse,
-  clone,
   now,
   numberOfFullMonthsBetween,
   numberOfFullYearsBetween,
+  parse,
 } from '../../DateUtils';
 import { FunctionMetadata } from '../meta/FunctionMetadata';
 import { nullOrUndefined } from '../../Utils';
@@ -55,6 +56,14 @@ import { NaryMetadata } from '../meta/NaryMetadata';
 export class DateFunction extends Function<Date> {
   public static MAX_DATE = new Date(8640000000000000);
   public static MIN_DATE = new Date(-8640000000000000);
+
+  protected equals(v1: Date | null | undefined, v2: Date | null | undefined): boolean {
+    if (v1 && v2) {
+      return v1.getTime() === v2.getTime();
+    } else {
+      return super.equals(v1, v2);
+    }
+  }
 
   public static date(accessor: ContextAccessor<object, Context, Date>): DateFunction {
     return new DateFunction(accessor.metadata, accessor.get, accessor.set);
@@ -377,50 +386,73 @@ export class DateFunction extends Function<Date> {
     }
   }
 
-  public withDayOfMonth(day: number): DateFunction {
-    return new DateFunction(
-      new BinaryMetadata(this.metadata, WITH_DAY_OF_MONTH, new ValueMetadata(day)),
-      condition(
-        this,
-        day,
-        (left: Date, right: number) => {
-          const newDate = clone(left);
-          newDate.setDate(right);
-          return newDate;
-        },
-        null
-      )
-    );
+  public static nbFullYearsBetween(value: DateFunction, value2: Date | DateFunction): NumberFunction {
+    if (value2 instanceof DateFunction) {
+      return new NumberFunction(
+        new BinaryMetadata(value.metadata, NB_OF_YEARS_BETWEEN, value2.metadata),
+        condition(value, value2, numberOfFullYearsBetween, null)
+      );
+    } else {
+      return new NumberFunction(
+        new BinaryMetadata(value.metadata, NB_OF_YEARS_BETWEEN, new ValueMetadata(value2)),
+        condition(value, value2, numberOfFullYearsBetween, null)
+      );
+    }
   }
-  public withMonth(month: number): DateFunction {
-    return new DateFunction(
-      new BinaryMetadata(this.metadata, WITH_MONTH, new ValueMetadata(month)),
-      condition(
-        this,
-        month,
-        (left: Date, right: number) => {
-          const newDate = clone(left);
-          newDate.setMonth(right);
-          return newDate;
-        },
-        null
-      )
-    );
+
+  public withDayOfMonth(day: number | NumberFunction): DateFunction {
+    const setDay = (left: Date, right: number) => {
+      const newDate = clone(left);
+      newDate.setDate(right);
+      return newDate;
+    };
+    if (day instanceof NumberFunction) {
+      return new DateFunction(
+        new BinaryMetadata(this.metadata, WITH_DAY_OF_MONTH, new ValueMetadata(day)),
+        condition(this, day, setDay, null)
+      );
+    } else {
+      return new DateFunction(
+        new BinaryMetadata(this.metadata, WITH_DAY_OF_MONTH, new ValueMetadata(day)),
+        condition(this, day, setDay, null)
+      );
+    }
   }
-  public withYear(year: number): DateFunction {
-    return new DateFunction(
-      new BinaryMetadata(this.metadata, WITH_YEAR, new ValueMetadata(year)),
-      condition(
-        this,
-        year,
-        (left: Date, right: number) => {
-          const newDate = clone(left);
-          newDate.setFullYear(right);
-          return newDate;
-        },
-        null
-      )
-    );
+  public withMonth(month: number | NumberFunction): DateFunction {
+    const setMonth = (left: Date, right: number) => {
+      const newDate = clone(left);
+      newDate.setMonth(right);
+      return newDate;
+    };
+    if (month instanceof NumberFunction) {
+      return new DateFunction(
+        new BinaryMetadata(this.metadata, WITH_MONTH, new ValueMetadata(month)),
+        condition(this, month, setMonth, null)
+      );
+    } else {
+      return new DateFunction(
+        new BinaryMetadata(this.metadata, WITH_MONTH, new ValueMetadata(month)),
+        condition(this, month, setMonth, null)
+      );
+    }
+  }
+  public withYear(year: number | NumberFunction): DateFunction {
+    const setYear = (left: Date, right: number) => {
+      const newDate = clone(left);
+      newDate.setFullYear(right);
+      return newDate;
+    };
+    if (year instanceof NumberFunction) {
+      return new DateFunction(
+        new BinaryMetadata(this.metadata, WITH_YEAR, new ValueMetadata(year)),
+        condition(this, year, setYear, null)
+      );
+    } else {
+      return new DateFunction(
+        new BinaryMetadata(this.metadata, WITH_YEAR, new ValueMetadata(year)),
+        condition(this, year, setYear, null)
+      );
+    }
   }
   public withFirstDayOfNextYear(): DateFunction {
     return new DateFunction(

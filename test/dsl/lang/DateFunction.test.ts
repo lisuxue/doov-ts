@@ -28,6 +28,12 @@ describe('date function', () => {
   it('get date', () => {
     expect(dateFunction.get(model)).toEqual(date); // 2019-09-10T22:00:00.000Z
   });
+  it('date eq', () => {
+    const equalty = dateFunction.eq(date);
+    expect(equalty.get(model)).toEqual(true);
+    const equaltyNull = dateFunction.eq(DOOV.lift(DateFunction, null));
+    expect(equaltyNull.get(model)).toEqual(false);
+  });
   it('format iso date', () => {
     expect(dateFunction.formatISO().get(model)).toEqual('20190911');
   });
@@ -78,12 +84,15 @@ describe('date function', () => {
   });
   it('with year', () => {
     expect(dateField.withYear(1990).get(model)).toEqual(new Date(1990, 0, 2));
+    expect(dateField.withYear(DOOV.lift(NumberFunction, 2000)).get(model)).toEqual(new Date(2000, 0, 2));
   });
   it('with month', () => {
     expect(dateField.withMonth(3).get(model)).toEqual(new Date(2000, 3, 2));
+    expect(dateField.withMonth(DOOV.lift(NumberFunction, 4)).get(model)).toEqual(new Date(2000, 4, 2));
   });
   it('with day', () => {
     expect(dateField.withDayOfMonth(28).get(model)).toEqual(new Date(2000, 0, 28));
+    expect(dateField.withDayOfMonth(DOOV.lift(NumberFunction, 2)).get(model)).toEqual(new Date(2000, 0, 2));
   });
   it('format ISO', () => {
     expect(dateField.formatISO().get(model)).toEqual('20000102');
@@ -174,6 +183,15 @@ describe('date function', () => {
     expect(monthsSince2.get(model)).toEqual(205);
     const monthsSince3 = DateFunction.nbFullMonthsSince(DateFunction.dateFrom('20010215'));
     expect(monthsSince3.get(model)).toEqual(206);
+  });
+  it('number of years between', () => {
+    const monthsSince = DateFunction.nbFullYearsBetween(DateFunction.dateFrom('20010203'), new Date(2010, 9, 30));
+    expect(monthsSince.get(model)).toEqual(9);
+    const monthsSince2 = DateFunction.nbFullYearsBetween(
+      DateFunction.dateFrom('20001003'),
+      DateFunction.dateFrom('201010301003')
+    );
+    expect(monthsSince2.get(model)).toEqual(10);
   });
   it('number of months between value', () => {
     const monthsSince = DateFunction.nbFullMonthsBetween(DateFunction.dateFrom('20010203'), new Date(2010, 9, 30));

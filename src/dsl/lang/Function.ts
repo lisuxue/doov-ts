@@ -108,16 +108,18 @@ export class Function<T> implements ContextAccessor<object, Context, T>, DslBuil
     );
   }
 
+  protected equals(v1: T | null | undefined, v2: T | null | undefined): boolean {
+    return v1 === v2;
+  }
+
   public eq(value: T | Function<T>): BooleanFunction {
     if (value instanceof Function) {
-      return new BooleanFunction(
-        new BinaryMetadata(this.metadata, EQ, value.metadata),
-        (obj, ctx) => this.get(obj, ctx) === value.get(obj, ctx)
+      return new BooleanFunction(new BinaryMetadata(this.metadata, EQ, value.metadata), (obj, ctx) =>
+        this.equals(this.get(obj, ctx), value.get(obj, ctx))
       );
     } else {
-      return new BooleanFunction(
-        new BinaryMetadata(this.metadata, EQ, new ValueMetadata(value)),
-        (obj, ctx) => this.get(obj, ctx) === value
+      return new BooleanFunction(new BinaryMetadata(this.metadata, EQ, new ValueMetadata(value)), (obj, ctx) =>
+        this.equals(this.get(obj, ctx), value)
       );
     }
   }
@@ -126,12 +128,12 @@ export class Function<T> implements ContextAccessor<object, Context, T>, DslBuil
     if (value instanceof Function) {
       return new BooleanFunction(
         new BinaryMetadata(this.metadata, NOT_EQ, value.metadata),
-        (obj, ctx) => this.get(obj, ctx) !== value.get(obj, ctx)
+        (obj, ctx) => !this.equals(this.get(obj, ctx), value.get(obj, ctx))
       );
     } else {
       return new BooleanFunction(
         new BinaryMetadata(this.metadata, NOT_EQ, new ValueMetadata(value)),
-        (obj, ctx) => this.get(obj, ctx) !== value
+        (obj, ctx) => !this.equals(this.get(obj, ctx), value)
       );
     }
   }
