@@ -89,3 +89,4 @@ export const HAS_NOT_SIZE: Operator = { readable: 'has not size' };
 // field
 export const POSITION: Operator = { readable: 'position of' };
 export const TAGS: Operator = { readable: 'tags of' };
+export const FUNCTIONS: Operator = { readable: 'functions' };

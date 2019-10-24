@@ -13,7 +13,7 @@ import { NaryMetadata } from './dsl/meta/NaryMetadata';
 import { UnaryMetadata } from './dsl/meta/UnaryMetadata';
 import { DslBuilder } from './dsl/DslBuilder';
 import { FieldMetadata } from './dsl/meta/FieldMetadata';
-import { COUNT, MATCH_ALL, MATCH_ANY, NONE_MATCH, POSITION, SUM, TAGS } from './dsl/lang/DefaultOperators';
+import { COUNT, FUNCTIONS, MATCH_ALL, MATCH_ANY, NONE_MATCH, POSITION, SUM, TAGS } from './dsl/lang/DefaultOperators';
 import { BiStepMap } from './dsl/lang/BiStepMap';
 import { BiConverterFunction, BiTypeConverter } from './dsl/lang/BiTypeConverter';
 import { NaryConverterFunction, NaryTypeConverter } from './dsl/lang/NaryTypeConverter';
@@ -82,8 +82,20 @@ export function map<T, U>(input: T | Function<T>, input2?: U | Function<U>) {
   }
 }
 
-export function mapNull<T>(output: Function<T>): SingleMappingRule<T> {
-  return new SingleMappingRule(new Function<T>(new ValueMetadata(null), _ => null), output);
+export function mapNull(...output: Function<any>[]): SingleMappingRule<unknown> {
+  if (output.length > 1) {
+    return new SingleMappingRule(
+      new Function<unknown>(new ValueMetadata(null), _ => null),
+      Function.consumer(new NaryMetadata(output.map(value => value.metadata), FUNCTIONS), (obj, val, ctx) => {
+        for (let out of output) {
+          obj = out.set ? out.set(obj, val, ctx) : obj;
+        }
+        return obj;
+      })
+    );
+  } else {
+    return new SingleMappingRule(new Function<unknown>(new ValueMetadata(null), _ => null), output[0]);
+  }
 }
 
 export function mapAll(...inputs: Function<any>[]): NaryStepMap {

@@ -260,14 +260,14 @@ describe('static value mapping', () => {
 });
 
 describe('mapping null in and out', () => {
-  const mappings = DOOV.mappings(DOOV.mapNull(link1), DOOV.map('2').to(Function.lift(StringFunction, '3')));
+  const mappings = DOOV.mappings(DOOV.mapNull(link1, link2), DOOV.map('2').to(Function.lift(StringFunction, '3')));
 
   it('execute mapping', () => {
     let emptyObject = Object.freeze({});
     const newObject = mappings.executeOn(model, emptyObject);
     expect(name.get(newObject)).toBeUndefined();
     expect(id.get(newObject)).toBeUndefined();
-    expect(link2.get(newObject)).toBeUndefined();
+    expect(link2.get(newObject)).toBeNull();
     expect(link1.get(newObject)).toBeNull();
   });
 
@@ -277,6 +277,7 @@ describe('mapping null in and out', () => {
     }
     const fields = fieldsOf(mappings.metadata);
     expect(fields).toContainEqual(path(link1.metadata.readable));
+    expect(fields).toContainEqual(path(link2.metadata.readable));
   });
 });
 
