@@ -209,6 +209,7 @@ export { Field } from './dsl/Field';
 
 export { StepWhen } from './dsl/lang/StepWhen';
 export { ValidationRule } from './dsl/lang/ValidationRule';
+export { SingleValidationRule } from './dsl/lang/SingleValidationRule';
 export { Result } from './dsl/Result';
 
 // Metadata
