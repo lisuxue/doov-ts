@@ -28,6 +28,8 @@ import * as MetadataUtils from './dsl/meta/MetadataUtils';
 import * as DateUtils from './DateUtils';
 import * as Utils from './Utils';
 import * as Paths from './Paths';
+import { ValidationRule } from './dsl/lang/ValidationRule';
+import { Validations } from './dsl/lang/Validations';
 
 export function f<T>(accessor: ContextAccessor<object, Context, T>): Function<T> {
   return Function.function(accessor);
@@ -119,6 +121,10 @@ export function naryConverter<V>(converter: NaryConverterFunction<V>, descriptio
 
 export function mappings(...mappings: MappingRule[]): Mappings {
   return new Mappings(...mappings);
+}
+
+export function validations(...validations: ValidationRule[]): Validations {
+  return new Validations(...validations);
 }
 
 export function matchAny(...values: BooleanFunction[]): BooleanFunction {
