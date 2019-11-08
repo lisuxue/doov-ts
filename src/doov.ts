@@ -85,7 +85,9 @@ export function map<T, U>(input: T | Function<T>, input2?: U | Function<U>) {
 }
 
 export function mapNull(...output: Function<any>[]): SingleMappingRule<unknown> {
-  if (output.length > 1) {
+  if (output.length == 1) {
+    return new SingleMappingRule(new Function<unknown>(new ValueMetadata(null), _ => null), output[0]);
+  } else {
     return new SingleMappingRule(
       new Function<unknown>(new ValueMetadata(null), _ => null),
       Function.consumer(new NaryMetadata(output.map(value => value.metadata), FUNCTIONS), (obj, val, ctx) => {
@@ -95,8 +97,6 @@ export function mapNull(...output: Function<any>[]): SingleMappingRule<unknown> 
         return obj;
       })
     );
-  } else {
-    return new SingleMappingRule(new Function<unknown>(new ValueMetadata(null), _ => null), output[0]);
   }
 }
 
