@@ -210,6 +210,7 @@ export { Field } from './dsl/Field';
 export { StepWhen } from './dsl/lang/StepWhen';
 export { ValidationRule } from './dsl/lang/ValidationRule';
 export { SingleValidationRule } from './dsl/lang/SingleValidationRule';
+export { Validations } from './dsl/lang/Validations';
 export { Result } from './dsl/Result';
 
 // Metadata
@@ -221,6 +222,7 @@ export { FunctionMetadata } from './dsl/meta/FunctionMetadata';
 export { IterableMetadata } from './dsl/meta/IterableMetadata';
 export { Metadata } from './dsl/meta/Metadata';
 export { MultipleMappingsMetadata } from './dsl/meta/MultipleMappingsMetadata';
+export { MultipleValidationsMetadata } from './dsl/meta/MultipleValidationsMetadata';
 export { NaryMetadata } from './dsl/meta/NaryMetadata';
 export { SingleMappingMetadata } from './dsl/meta/SingleMappingMetadata';
 export { TypeConverterMetadata } from './dsl/meta/TypeConverterMetadata';
