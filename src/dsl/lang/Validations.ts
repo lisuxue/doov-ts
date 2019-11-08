@@ -1,16 +1,16 @@
 import { ValidationRule } from './ValidationRule';
 import { Context } from '../Context';
-import { MultipleMappingsMetadata } from '../meta/MultipleMappingsMetadata';
 import { DefaultContext } from '../DefaultContext';
 import { Result } from '../Result';
+import { MultipleValidationsMetadata } from '../meta/MultipleValidationsMetadata';
 
 export class Validations implements ValidationRule {
-  readonly metadata: MultipleMappingsMetadata;
+  readonly metadata: MultipleValidationsMetadata;
   readonly validations: ValidationRule[];
 
   constructor(...validations: (Validations | ValidationRule)[]) {
     this.validations = validations.flatMap(value => (value instanceof Validations ? value.validations : [value]));
-    this.metadata = new MultipleMappingsMetadata(this.validations.map(value => value.metadata));
+    this.metadata = new MultipleValidationsMetadata(this.validations.map(value => value.metadata));
   }
 
   execute<M extends object>(model: M, ctx?: Context): Result {

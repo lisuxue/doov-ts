@@ -41,7 +41,16 @@ describe('metadata', () => {
     metadata = DOOV.when(name.length().greaterThan(id)).validate().metadata;
     expect(metadata.readable).toEqual('validate when user.name length > user.id');
   });
-
+  it('validations rule', () => {
+    metadata = DOOV.validations(
+      DOOV.when(name.length().greaterThan(id)).validate(),
+      DOOV.when(link1.isDefined().and(name.endsWith('st'))).validate()
+    ).metadata;
+    expect(metadata.children!()).toHaveLength(2);
+    expect(metadata.readable).toEqual(
+      'validate when user.name length > user.id , validate when user.links.0 is defined and user.name ends with "st"'
+    );
+  });
   it('fields of', () => {
     metadata = DOOV.when(name.length().greaterThan(id)).validate().metadata;
     const fields = fieldsOf(metadata);
