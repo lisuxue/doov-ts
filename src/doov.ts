@@ -28,6 +28,8 @@ import * as MetadataUtils from './dsl/meta/MetadataUtils';
 import * as DateUtils from './DateUtils';
 import * as Utils from './Utils';
 import * as Paths from './Paths';
+import { ValidationRule } from './dsl/lang/ValidationRule';
+import { Validations } from './dsl/lang/Validations';
 
 export function f<T>(accessor: ContextAccessor<object, Context, T>): Function<T> {
   return Function.function(accessor);
@@ -121,6 +123,10 @@ export function mappings(...mappings: MappingRule[]): Mappings {
   return new Mappings(...mappings);
 }
 
+export function validations(...validations: ValidationRule[]): Validations {
+  return new Validations(...validations);
+}
+
 export function matchAny(...values: BooleanFunction[]): BooleanFunction {
   return new BooleanFunction(new NaryMetadata(values.map(value => value.metadata), MATCH_ANY), (obj, ctx) => {
     return values.some(value => {
@@ -203,6 +209,8 @@ export { Field } from './dsl/Field';
 
 export { StepWhen } from './dsl/lang/StepWhen';
 export { ValidationRule } from './dsl/lang/ValidationRule';
+export { SingleValidationRule } from './dsl/lang/SingleValidationRule';
+export { Validations } from './dsl/lang/Validations';
 export { Result } from './dsl/Result';
 
 // Metadata
@@ -214,6 +222,7 @@ export { FunctionMetadata } from './dsl/meta/FunctionMetadata';
 export { IterableMetadata } from './dsl/meta/IterableMetadata';
 export { Metadata } from './dsl/meta/Metadata';
 export { MultipleMappingsMetadata } from './dsl/meta/MultipleMappingsMetadata';
+export { MultipleValidationsMetadata } from './dsl/meta/MultipleValidationsMetadata';
 export { NaryMetadata } from './dsl/meta/NaryMetadata';
 export { SingleMappingMetadata } from './dsl/meta/SingleMappingMetadata';
 export { TypeConverterMetadata } from './dsl/meta/TypeConverterMetadata';

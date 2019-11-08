@@ -4,6 +4,7 @@ import { DslBuilder } from '../DslBuilder';
 import { MappingRule } from './MappingRule';
 import { ConditionalMapping } from './ConditionalMapping';
 import { WhenMetadata } from '../meta/WhenMetadata';
+import { SingleValidationRule } from './SingleValidationRule';
 
 export class StepWhen implements DslBuilder {
   readonly condition: BooleanFunction;
@@ -15,7 +16,7 @@ export class StepWhen implements DslBuilder {
   }
 
   public validate(): ValidationRule {
-    return new ValidationRule(this);
+    return new SingleValidationRule(this);
   }
 
   public then(...mappings: MappingRule[]): ConditionalMapping {
