@@ -4,6 +4,7 @@ export class Model {
 
 export class User {
   public id: number;
+  public id2?: number;
   public name?: string;
   public links?: string[];
   public b?: boolean;
