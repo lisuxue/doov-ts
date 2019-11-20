@@ -193,7 +193,7 @@ export function position(value: DslBuilder): NumberFunction {
 }
 
 // Functions
-export { Function } from './dsl/lang/Function';
+export { condition, Function } from './dsl/lang/Function';
 export { BooleanFunction } from './dsl/lang/BooleanFunction';
 export { NumberFunction } from './dsl/lang/NumberFunction';
 export { StringFunction } from './dsl/lang/StringFunction';

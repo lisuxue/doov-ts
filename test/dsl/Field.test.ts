@@ -10,10 +10,12 @@ let user: User;
 
 const stringField = DOOV.field<string, Model>('user', 'name');
 const arrayField = DOOV.field<string, Model>('user', 'links', 0);
-const userIdField = DOOV.field<string, Model>('user', 'id').withTags('id');
+const userIdField = DOOV.field<number, Model>('user', 'id')
+  .withSiblings(['user', 'id2'])
+  .withTags('id');
 const birthDateField = DOOV.field<Date, Model>('user', 'birth').withPosition(1);
 const birthDateFunction = DOOV.date(birthDateField);
-const userIdFunction = DOOV.string(userIdField);
+const userIdFunction = DOOV.number(userIdField);
 const liftedDateFunction = DOOV.lift(DateFunction, new Date());
 const liftedStringFunction = DOOV.lift(StringFunction, 'name');
 
@@ -97,5 +99,11 @@ describe('set field', () => {
         .contains('id')
         .get(model)
     ).toEqual(true);
+  });
+
+  describe('field siblings', () => {
+    model = userIdField.set(model, 8);
+    expect(model.user!.id).toBe(8);
+    expect(model.user!.id2).toBe(8);
   });
 });

@@ -1,4 +1,4 @@
-import { getter, setter } from '../Paths';
+import { getter, setPath, setter } from '../Paths';
 import { ContextAccessor } from './ContextAccessor';
 import { Context } from './Context';
 import { Getter } from '../Getter';
@@ -15,9 +15,15 @@ export class Field<T extends object = object, C extends Context = Context, V = {
   public readonly metadata: FieldMetadata;
 
   public constructor(metadata: FieldMetadata) {
-    this.get = getter(...metadata.path);
-    this.set = setter(...metadata.path);
     this.metadata = metadata;
+    this.get = getter(...metadata.path);
+    if (this.metadata.siblings && this.metadata.siblings.length > 0) {
+      this.set = (obj, val, _) => {
+        return setPath(this.metadata.siblings.reduce((m, p) => setPath(m, val, ...p), obj), val, ...metadata.path);
+      };
+    } else {
+      this.set = setter(...metadata.path);
+    }
   }
 
   public static field<V, T extends object = object>(...path: (string | number)[]): Field<T, Context, V> {
@@ -25,11 +31,15 @@ export class Field<T extends object = object, C extends Context = Context, V = {
   }
 
   public withPosition(value: number): Field<T, C, V> {
-    return new Field(new FieldMetadata(this.metadata.path, this.metadata.tags, value));
+    return new Field(new FieldMetadata(this.metadata.path, this.metadata.tags, value, this.metadata.siblings));
   }
 
   public withTags(...value: string[]): Field<T, C, V> {
-    return new Field(new FieldMetadata(this.metadata.path, value, this.metadata.position));
+    return new Field(new FieldMetadata(this.metadata.path, value, this.metadata.position, this.metadata.siblings));
+  }
+
+  public withSiblings(...value: (string | number)[][]): Field<T, C, V> {
+    return new Field(new FieldMetadata(this.metadata.path, this.metadata.tags, this.metadata.position, value));
   }
 
   public position(): NumberFunction {

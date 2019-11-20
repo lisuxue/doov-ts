@@ -11,6 +11,10 @@
       "url": "https://github.com/ozangunalp"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/doov-io/doov-ts.git"
+  },
   "source": "src/doov.ts",
   "main": "dist/doov.js",
   "umd:name": "DOOV",
