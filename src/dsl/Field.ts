@@ -17,7 +17,7 @@ export class Field<T extends object = object, C extends Context = Context, V = {
   public constructor(metadata: FieldMetadata) {
     this.metadata = metadata;
     this.get = getter(...metadata.path);
-    if (this.metadata.siblings.length > 0) {
+    if (this.metadata.siblings && this.metadata.siblings.length > 0) {
       this.set = (obj, val, _) => {
         return setPath(this.metadata.siblings.reduce((m, p) => setPath(m, val, ...p), obj), val, ...metadata.path);
       };
