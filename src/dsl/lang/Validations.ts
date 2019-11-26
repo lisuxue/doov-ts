@@ -16,8 +16,8 @@ export class Validations implements ValidationRule {
   execute<M extends object>(model: M, ctx?: Context): Result {
     const context = ctx ? ctx : new DefaultContext();
     return (
-      this.validations.flatMap(rule => rule.execute(model, context)).find(result => !result.value) ||
-      new Result(true, context)
+      this.validations.flatMap(rule => rule.execute(model, context)).find(result => result.value === true) ||
+      new Result(false, context)
     );
   }
 }
