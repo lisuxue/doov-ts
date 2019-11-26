@@ -9,7 +9,7 @@ export class Mappings implements MappingRule {
   readonly mappings: MappingRule[];
 
   constructor(...mappings: (Mappings | MappingRule)[]) {
-    this.mappings = flatMap(mappings);
+    this.mappings = flatMap(mappings, t => (t instanceof Mappings ? t.mappings : [t]));
     this.metadata = new MultipleMappingsMetadata(this.mappings.map(value => value.metadata));
   }
 

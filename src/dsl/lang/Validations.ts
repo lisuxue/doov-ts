@@ -10,7 +10,7 @@ export class Validations implements ValidationRule {
   readonly validations: ValidationRule[];
 
   constructor(...validations: (Validations | ValidationRule)[]) {
-    this.validations = flatMap(validations);
+    this.validations = flatMap(validations, v => (v instanceof Validations ? v.validations : [v]));
     this.metadata = new MultipleValidationsMetadata(this.validations.map(value => value.metadata));
   }
 

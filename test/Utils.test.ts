@@ -8,6 +8,12 @@ describe('flat array', () => {
 
   it('should work with one level', () => {
     const flatArray = [1, 2, 3, 4, 5];
+    const arrayToFlatten = [1, 2, { v: [3, 4, 5] }];
+    expect(flatMap(arrayToFlatten, v => (typeof v === 'number' ? [v] : v.v))).toStrictEqual(flatArray);
+  });
+
+  it('should work with one level', () => {
+    const flatArray = [1, 2, 3, 4, 5];
     const arrayToFlatten = [1, 2, [3, 4, 5]];
     expect(flatMap(arrayToFlatten)).toStrictEqual(flatArray);
   });
