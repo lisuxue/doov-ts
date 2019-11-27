@@ -31,7 +31,7 @@ export function fieldsOf(metadata: Metadata): (string | number)[][] {
   if (m.type == 'FIELD') {
     return [m.path];
   } else if (metadata.children) {
-    return metadata.children().flatMap(value => fieldsOf(value));
+    return metadata.children().reduce((acc, value) => acc.concat(fieldsOf(value)), [] as (string | number)[][]);
   } else {
     return [];
   }

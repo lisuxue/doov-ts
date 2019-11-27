@@ -2,13 +2,14 @@ import { MappingRule } from './MappingRule';
 import { Context } from '../Context';
 import { MultipleMappingsMetadata } from '../meta/MultipleMappingsMetadata';
 import { DefaultContext } from '../DefaultContext';
+import { flatMap } from '../../Utils';
 
 export class Mappings implements MappingRule {
   readonly metadata: MultipleMappingsMetadata;
   readonly mappings: MappingRule[];
 
   constructor(...mappings: (Mappings | MappingRule)[]) {
-    this.mappings = mappings.flatMap(value => (value instanceof Mappings ? value.mappings : [value]));
+    this.mappings = flatMap(mappings, t => (t instanceof Mappings ? t.mappings : [t]));
     this.metadata = new MultipleMappingsMetadata(this.mappings.map(value => value.metadata));
   }
 
