@@ -213,6 +213,8 @@ export { SingleValidationRule } from './dsl/lang/SingleValidationRule';
 export { Validations } from './dsl/lang/Validations';
 export { Result } from './dsl/Result';
 
+export { MappingRule };
+
 // Metadata
 export { AbstractMetadata } from './dsl/meta/AbstractMetadata';
 export { BinaryMetadata } from './dsl/meta/BinaryMetadata';
@@ -235,3 +237,5 @@ export { MetadataUtils };
 export { DateUtils };
 export { Utils };
 export { Paths };
+
+export { GetHtml, Lang } from './dsl/meta/ast/HtmlRenderer';
