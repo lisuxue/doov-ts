@@ -96,3 +96,4 @@ export const HAS_NOT_SIZE: OperatorReturnType = { readable: 'has not size', retu
 export const POSITION: OperatorReturnType = { readable: 'position of', returnType: 'OTHER' };
 export const TAGS: OperatorReturnType = { readable: 'tags of', returnType: 'OTHER' };
 export const FUNCTIONS: OperatorReturnType = { readable: 'functions', returnType: 'OTHER' };
+export const FIELD_PROP: OperatorReturnType = { readable: ':', returnType: 'OTHER' };
